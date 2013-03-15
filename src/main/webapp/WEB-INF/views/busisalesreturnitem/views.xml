@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="busiSalesReturnItem/list">
+        <put-attribute name="body" value="/WEB-INF/views/busisalesreturnitem/busisalesreturnitem_list.jsp" />
+    </definition>
+    <definition extends="default" name="busiSalesReturnItem/show">
+        <put-attribute name="body" value="/WEB-INF/views/busisalesreturnitem/busisalesreturnitem_show.jsp" />
+    </definition>
+    <definition extends="default" name="busiSalesReturnItem/update">
+        <put-attribute name="body" value="/WEB-INF/views/busisalesreturnitem/busisalesreturnitem_edit.jsp" />
+    </definition>
+    <definition extends="default" name="busiSalesReturnItem/create">
+        <put-attribute name="body" value="/WEB-INF/views/busisalesreturnitem/busisalesreturnitem_edit.jsp" />
+    </definition>
+</tiles-definitions>

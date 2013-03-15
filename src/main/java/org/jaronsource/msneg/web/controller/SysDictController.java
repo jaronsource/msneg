@@ -38,13 +38,13 @@ public class SysDictController extends BaseController {
 		return "sysDict/list";
 	}
 	
-	@RequestMapping(value = "/{recordId}/update", method = GET)
-    public String update(@PathVariable("recordId") Integer recordId, Model model) {
-        model.addAttribute("sysDict", sysDictService.findByPk(recordId));
+	@RequestMapping(value = "/{dictId}/update", method = GET)
+    public String update(@PathVariable("dictId") Integer dictId, Model model) {
+        model.addAttribute("sysDict", sysDictService.findByPk(dictId));
         return "sysDict/update";
 	}	
 	
-	@RequestMapping(value = "/{recordId}/update", method = POST)
+	@RequestMapping(value = "/{dictId}/update", method = POST)
     public String update(@Valid @ModelAttribute SysDict sysDict, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysDict", sysDict);
@@ -52,7 +52,7 @@ public class SysDictController extends BaseController {
         }
 
         sysDictService.save(sysDict);
-        return "redirect:/sysDict/" + sysDict.getRecordId() + "/show";
+        return "redirect:/sysDict/" + sysDict.getDictId() + "/show";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
@@ -70,19 +70,19 @@ public class SysDictController extends BaseController {
         }
 
         sysDictService.save(sysDict);
-        return "redirect:/sysDict/" + sysDict.getRecordId() + "/show";
+        return "redirect:/sysDict/" + sysDict.getDictId() + "/show";
     }	
 	
-	@RequestMapping(value = "/{recordId}/show", method = GET)
-    public String show(@PathVariable("recordId") Integer recordId, Model model) {
-        SysDict sysDict = sysDictService.findByPk(recordId);
+	@RequestMapping(value = "/{dictId}/show", method = GET)
+    public String show(@PathVariable("dictId") Integer dictId, Model model) {
+        SysDict sysDict = sysDictService.findByPk(dictId);
 		model.addAttribute("sysDict", sysDict);
         return "sysDict/show";
     }
     
-    @RequestMapping(value = "/{recordId}/remove", method = GET)
-    public String remove(@PathVariable("recordId") Integer recordId, Model model) {
-        sysDictService.remove(recordId);
+    @RequestMapping(value = "/{dictId}/remove", method = GET)
+    public String remove(@PathVariable("dictId") Integer dictId, Model model) {
+        sysDictService.remove(dictId);
         return "redirect:/sysDict";
     }
 }

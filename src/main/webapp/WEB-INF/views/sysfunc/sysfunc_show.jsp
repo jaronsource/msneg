@@ -15,15 +15,11 @@
                 <td>${sysFunc.funcId}</td>
             </tr>
 	    	<tr>
-                <td>功能名</td>
+                <td>名称</td>
                 <td>${sysFunc.funcName}</td>
             </tr>
 	    	<tr>
-                <td>功能组编码</td>
-                <td>${sysFunc.funcGroupcode}</td>
-            </tr>
-	    	<tr>
-                <td>功能地址</td>
+                <td>地址</td>
                 <td>${sysFunc.funcUrl}</td>
             </tr>
 	    	<tr>
@@ -31,12 +27,12 @@
                 <td>${sysFunc.funcRemarks}</td>
             </tr>
 	    	<tr>
-                <td>功能级别</td>
-                <td>${sysFunc.funcLevel}</td>
+                <td>父功能</td>
+                <td>${sysFunc.sysFunc}</td>
             </tr>
 	    	<tr>
-                <td>父功能</td>
-                <td>${sysFunc.parentId}</td>
+                <td>功能组</td>
+                <td>${sysFunc.funcGroupcode}</td>
             </tr>
 	    	<tr>
                 <td>序号</td>

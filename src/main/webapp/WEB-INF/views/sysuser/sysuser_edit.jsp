@@ -19,7 +19,12 @@
 	        </c:if>
 	        <form:hidden path="userId" />
 	        
-	        <form:label path="userName">用户名</form:label>
+	        <form:label path="sysDept">部门</form:label>
+	        <form:input path="sysDept" />
+	        <form:errors path="sysDept" cssClass="error" element="div" />
+	        <p/>
+	        
+	        <form:label path="userName">姓名</form:label>
 	        <form:input path="userName" />
 	        <form:errors path="userName" cssClass="error" element="div" />
 	        <p/>

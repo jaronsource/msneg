@@ -14,7 +14,7 @@ import com.ccesun.framework.core.dao.support.EntityUtils;
 @Table(name="sys_role")
 public class SysRole implements IEntity<Integer> {
 	
-	private static final long serialVersionUID = 1319015296L;
+	private static final long serialVersionUID = 1222691226L;
 	
 	/** 主键 */
 	@Id

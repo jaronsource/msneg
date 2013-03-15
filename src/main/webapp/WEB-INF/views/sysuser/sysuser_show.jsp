@@ -15,7 +15,11 @@
                 <td>${sysUser.userId}</td>
             </tr>
 	    	<tr>
-                <td>用户名</td>
+                <td>部门</td>
+                <td>${sysUser.sysDept}</td>
+            </tr>
+	    	<tr>
+                <td>姓名</td>
                 <td>${sysUser.userName}</td>
             </tr>
 	    	<tr>

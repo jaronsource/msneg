@@ -8,7 +8,7 @@
     
     <c:set var="labelNew" value="新建" />
     <c:set var="labelUpdate" value="更新" />
-    <spring:eval expression="sysDict.recordId == null ? labelNew:labelUpdate" var="formTitle"/>
+    <spring:eval expression="sysDict.dictId == null ? labelNew:labelUpdate" var="formTitle"/>
 
     <div class="span10">
     <form:form modelAttribute="sysDict" id="sysDictForm" method="post">
@@ -17,7 +17,7 @@
 	        <c:if test="${not empty message}">
 	            <div id="message" class="${message.type}">${message.message}</div>
 	        </c:if>
-	        <form:hidden path="recordId" />
+	        <form:hidden path="dictId" />
 	        
 	        <form:label path="dictType">类型</form:label>
 	        <form:input path="dictType" />
@@ -27,6 +27,11 @@
 	        <form:label path="dictKey">键</form:label>
 	        <form:input path="dictKey" />
 	        <form:errors path="dictKey" cssClass="error" element="div" />
+	        <p/>
+	        
+	        <form:label path="parentKey">父级键</form:label>
+	        <form:input path="parentKey" />
+	        <form:errors path="parentKey" cssClass="error" element="div" />
 	        <p/>
 	        
 	        <form:label path="dictValue0">值0</form:label>
@@ -47,11 +52,6 @@
 	        <form:label path="dictValue3">值3</form:label>
 	        <form:input path="dictValue3" />
 	        <form:errors path="dictValue3" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="parentKey">父级KEY</form:label>
-	        <form:input path="parentKey" />
-	        <form:errors path="parentKey" cssClass="error" element="div" />
 	        <p/>
 	        
 	        

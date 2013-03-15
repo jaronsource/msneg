@@ -19,17 +19,12 @@
 	        </c:if>
 	        <form:hidden path="funcId" />
 	        
-	        <form:label path="funcName">功能名</form:label>
+	        <form:label path="funcName">名称</form:label>
 	        <form:input path="funcName" />
 	        <form:errors path="funcName" cssClass="error" element="div" />
 	        <p/>
 	        
-	        <form:label path="funcGroupcode">功能组编码</form:label>
-	        <form:input path="funcGroupcode" />
-	        <form:errors path="funcGroupcode" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="funcUrl">功能地址</form:label>
+	        <form:label path="funcUrl">地址</form:label>
 	        <form:input path="funcUrl" />
 	        <form:errors path="funcUrl" cssClass="error" element="div" />
 	        <p/>
@@ -39,14 +34,14 @@
 	        <form:errors path="funcRemarks" cssClass="error" element="div" />
 	        <p/>
 	        
-	        <form:label path="funcLevel">功能级别</form:label>
-	        <form:input path="funcLevel" />
-	        <form:errors path="funcLevel" cssClass="error" element="div" />
+	        <form:label path="sysFunc">父功能</form:label>
+	        <form:input path="sysFunc" />
+	        <form:errors path="sysFunc" cssClass="error" element="div" />
 	        <p/>
 	        
-	        <form:label path="parentId">父功能</form:label>
-	        <form:input path="parentId" />
-	        <form:errors path="parentId" cssClass="error" element="div" />
+	        <form:label path="funcGroupcode">功能组</form:label>
+	        <form:input path="funcGroupcode" />
+	        <form:errors path="funcGroupcode" cssClass="error" element="div" />
 	        <p/>
 	        
 	        <form:label path="funcOrder">序号</form:label>

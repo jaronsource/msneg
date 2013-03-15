@@ -14,13 +14,13 @@ import com.ccesun.framework.core.dao.support.EntityUtils;
 @Table(name="sys_dict")
 public class SysDict implements IEntity<Integer> {
 	
-	private static final long serialVersionUID = 607936013L;
+	private static final long serialVersionUID = 46956787L;
 	
 	/** 主键 */
 	@Id
 	@GeneratedValue
-	@Column(name="record_id")
-	private Integer recordId;
+	@Column(name="dict_id")
+	private Integer dictId;
 	
 	/** 类型 */
 	@Column(name="dict_type")
@@ -29,6 +29,10 @@ public class SysDict implements IEntity<Integer> {
 	/** 键 */
 	@Column(name="dict_key")
 	private String dictKey;
+	
+	/** 父级键 */
+	@Column(name="parent_key")
+	private String parentKey;
 	
 	/** 值0 */
 	@Column(name="dict_value0")
@@ -46,16 +50,12 @@ public class SysDict implements IEntity<Integer> {
 	@Column(name="dict_value3")
 	private String dictValue3;
 	
-	/** 父级KEY */
-	@Column(name="parent_key")
-	private String parentKey;
-	
-	public void setRecordId(Integer recordId) {
-		this.recordId = recordId;
+	public void setDictId(Integer dictId) {
+		this.dictId = dictId;
 	}
 	
-	public Integer getRecordId() {
-		return recordId;
+	public Integer getDictId() {
+		return dictId;
 	}
 	
 	public void setDictType(String dictType) {
@@ -72,6 +72,14 @@ public class SysDict implements IEntity<Integer> {
 	
 	public String getDictKey() {
 		return dictKey;
+	}
+	
+	public void setParentKey(String parentKey) {
+		this.parentKey = parentKey;
+	}
+	
+	public String getParentKey() {
+		return parentKey;
 	}
 	
 	public void setDictValue0(String dictValue0) {
@@ -106,17 +114,9 @@ public class SysDict implements IEntity<Integer> {
 		return dictValue3;
 	}
 	
-	public void setParentKey(String parentKey) {
-		this.parentKey = parentKey;
-	}
-	
-	public String getParentKey() {
-		return parentKey;
-	}
-	
 	@Override
 	@Transient
 	public boolean isNew() {
-		return EntityUtils.isNew(this.recordId);
+		return EntityUtils.isNew(this.dictId);
 	}
 }

@@ -10,12 +10,11 @@
     	<h3>列表</h3>
 	    <form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
 	    	<form:input path="form['funcId_eq_int']" id="search_funcId" placeholder="主键"/>
-	    	<form:input path="form['funcName_eq']" id="search_funcName" placeholder="功能名"/>
-	    	<form:input path="form['funcGroupcode_eq']" id="search_funcGroupcode" placeholder="功能组编码"/>
-	    	<form:input path="form['funcUrl_eq']" id="search_funcUrl" placeholder="功能地址"/>
+	    	<form:input path="form['funcName_eq']" id="search_funcName" placeholder="名称"/>
+	    	<form:input path="form['funcUrl_eq']" id="search_funcUrl" placeholder="地址"/>
 	    	<form:input path="form['funcRemarks_eq']" id="search_funcRemarks" placeholder="描述"/>
-	    	<form:input path="form['funcLevel_eq_int']" id="search_funcLevel" placeholder="功能级别"/>
-	    	<form:input path="form['parentId_eq_int']" id="search_parentId" placeholder="父功能"/>
+	    	<form:input path="form['sysFunc_eq']" id="search_sysFunc" placeholder="父功能"/>
+	    	<form:input path="form['funcGroupcode_eq']" id="search_funcGroupcode" placeholder="功能组"/>
 	    	<form:input path="form['funcOrder_eq_int']" id="search_funcOrder" placeholder="序号"/>
 	    	<button type="submit" class="btn"><i class="icon-search"></i> 搜索</button>
 	    </form:form>
@@ -23,12 +22,11 @@
 	    <table class="table table-bordered table-hover"> 
 	    	<tr>
 		    	<td>主键</td>
-		    	<td>功能名</td>
-		    	<td>功能组编码</td>
-		    	<td>功能地址</td>
+		    	<td>名称</td>
+		    	<td>地址</td>
 		    	<td>描述</td>
-		    	<td>功能级别</td>
 		    	<td>父功能</td>
+		    	<td>功能组</td>
 		    	<td>序号</td>
 		    	<td>操作</td>
 	    	</tr>
@@ -36,11 +34,10 @@
 	    	<tr>
 		    	<td>${entry.funcId}</td>
 		    	<td>${entry.funcName}</td>
-		    	<td>${entry.funcGroupcode}</td>
 		    	<td>${entry.funcUrl}</td>
 		    	<td>${entry.funcRemarks}</td>
-		    	<td>${entry.funcLevel}</td>
-		    	<td>${entry.parentId}</td>
+		    	<td>${entry.sysFunc}</td>
+		    	<td>${entry.funcGroupcode}</td>
 		    	<td>${entry.funcOrder}</td>
 		    	<td>
 		    		<a href="${baseUrl}/${entry.funcId}/show" class="btn btn-small"><i class="icon-eye-open"></i></a> 

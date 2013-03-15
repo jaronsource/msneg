@@ -6,6 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.Transient;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
@@ -14,7 +19,7 @@ import com.ccesun.framework.core.dao.support.EntityUtils;
 @Table(name="sys_func")
 public class SysFunc implements IEntity<Integer> {
 	
-	private static final long serialVersionUID = 1328943636L;
+	private static final long serialVersionUID = 730872035L;
 	
 	/** 主键 */
 	@Id
@@ -22,15 +27,11 @@ public class SysFunc implements IEntity<Integer> {
 	@Column(name="func_id")
 	private Integer funcId;
 	
-	/** 功能名 */
+	/** 名称 */
 	@Column(name="func_name")
 	private String funcName;
 	
-	/** 功能组编码 */
-	@Column(name="func_groupcode")
-	private String funcGroupcode;
-	
-	/** 功能地址 */
+	/** 地址 */
 	@Column(name="func_url")
 	private String funcUrl;
 	
@@ -38,13 +39,15 @@ public class SysFunc implements IEntity<Integer> {
 	@Column(name="func_remarks")
 	private String funcRemarks;
 	
-	/** 功能级别 */
-	@Column(name="func_level")
-	private Integer funcLevel;
-	
 	/** 父功能 */
-	@Column(name="parent_id")
-	private Integer parentId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="parent_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	private SysFunc sysFunc;
+	
+	/** 功能组 */
+	@Column(name="func_groupcode")
+	private String funcGroupcode;
 	
 	/** 序号 */
 	@Column(name="func_order")
@@ -66,14 +69,6 @@ public class SysFunc implements IEntity<Integer> {
 		return funcName;
 	}
 	
-	public void setFuncGroupcode(String funcGroupcode) {
-		this.funcGroupcode = funcGroupcode;
-	}
-	
-	public String getFuncGroupcode() {
-		return funcGroupcode;
-	}
-	
 	public void setFuncUrl(String funcUrl) {
 		this.funcUrl = funcUrl;
 	}
@@ -90,20 +85,20 @@ public class SysFunc implements IEntity<Integer> {
 		return funcRemarks;
 	}
 	
-	public void setFuncLevel(Integer funcLevel) {
-		this.funcLevel = funcLevel;
+	public void setSysFunc(SysFunc sysFunc) {
+		this.sysFunc = sysFunc;
 	}
 	
-	public Integer getFuncLevel() {
-		return funcLevel;
+	public SysFunc getSysFunc() {
+		return sysFunc;
 	}
 	
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
+	public void setFuncGroupcode(String funcGroupcode) {
+		this.funcGroupcode = funcGroupcode;
 	}
 	
-	public Integer getParentId() {
-		return parentId;
+	public String getFuncGroupcode() {
+		return funcGroupcode;
 	}
 	
 	public void setFuncOrder(Integer funcOrder) {

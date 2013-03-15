@@ -10,7 +10,8 @@
     	<h3>列表</h3>
 	    <form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
 	    	<form:input path="form['userId_eq_int']" id="search_userId" placeholder="主键"/>
-	    	<form:input path="form['userName_eq']" id="search_userName" placeholder="用户名"/>
+	    	<form:input path="form['sysDept_eq']" id="search_sysDept" placeholder="部门"/>
+	    	<form:input path="form['userName_eq']" id="search_userName" placeholder="姓名"/>
 	    	<form:input path="form['realName_eq']" id="search_realName" placeholder="姓名"/>
 	    	<form:input path="form['passwd_eq']" id="search_passwd" placeholder="密码"/>
 	    	<form:input path="form['isAvailable_eq_int']" id="search_isAvailable" placeholder="是否可用"/>
@@ -20,7 +21,8 @@
 	    <table class="table table-bordered table-hover"> 
 	    	<tr>
 		    	<td>主键</td>
-		    	<td>用户名</td>
+		    	<td>部门</td>
+		    	<td>姓名</td>
 		    	<td>姓名</td>
 		    	<td>密码</td>
 		    	<td>是否可用</td>
@@ -29,6 +31,7 @@
 	    	<c:forEach items="${sysUserPage.content}" var="entry">
 	    	<tr>
 		    	<td>${entry.userId}</td>
+		    	<td>${entry.sysDept}</td>
 		    	<td>${entry.userName}</td>
 		    	<td>${entry.realName}</td>
 		    	<td>${entry.passwd}</td>

@@ -6,6 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.Transient;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
@@ -14,7 +19,7 @@ import com.ccesun.framework.core.dao.support.EntityUtils;
 @Table(name="sys_user")
 public class SysUser implements IEntity<Integer> {
 	
-	private static final long serialVersionUID = 942892104L;
+	private static final long serialVersionUID = 933022119L;
 	
 	/** 主键 */
 	@Id
@@ -22,7 +27,13 @@ public class SysUser implements IEntity<Integer> {
 	@Column(name="user_id")
 	private Integer userId;
 	
-	/** 用户名 */
+	/** 部门 */
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="dept_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	private SysDept sysDept;
+	
+	/** 姓名 */
 	@Column(name="user_name")
 	private String userName;
 	
@@ -44,6 +55,14 @@ public class SysUser implements IEntity<Integer> {
 	
 	public Integer getUserId() {
 		return userId;
+	}
+	
+	public void setSysDept(SysDept sysDept) {
+		this.sysDept = sysDept;
+	}
+	
+	public SysDept getSysDept() {
+		return sysDept;
 	}
 	
 	public void setUserName(String userName) {
