@@ -1,0 +1,108 @@
+@charset "utf-8";
+
+/* background none */
+.bg_none{ background:none !important;}
+
+
+.tl{ text-align:left!important;}
+/* border */
+
+/* color */
+.red{color:#C00;}
+
+/* form 元素 */
+.radio{ position:relative; top:-2px;}
+.textarea{ width:98%; min-height:30px;}
+/* input */
+.input_style{ padding:2px 0 2px 5px; height:20px; border:1px solid #d6d4d5; font-size:14px;}
+.input_text{ padding:2px 0 2px 5px; height:16px; border:1px solid #d6d4d5; font-size:14px; color:#C00;}
+.input_money{ text-align:right;padding:2px 2px 2px 5px; height:16px; width:95px; border:1px solid #d6d4d5; font-size:14px; color:#C00;}
+
+/* width */
+.w_172{ width:172px !important;}
+.w_40{ width:30px !important;}
+.w_50{ width:50px !important;}
+.w_70{ width:70px !important;}
+.wb90{ width:90%;}
+.wb95{ width:95%;}
+
+/* button */
+.button{ margin-top:25px;}
+.button.center{ text-align:center;}
+.button li{ display:inline; margin-right:3px;}
+
+.sys_btnBox{ text-align:right;}
+.sys_btnBox.bom_btn{ text-align:left;}
+.bom_btn{ padding:10px 0;}
+.sys_btnBox input{ margin: 0 1px; font-size:14px; cursor:pointer;}
+
+.money{ font-size:14px; color:#F00; font-weight:bold;}
+/* 开单系统 */
+.sales_index{ text-align:center; margin:20px 30px;}
+.sales_index li{ display:inline-block; margin:30px;}
+
+.tbl_w{ border:1px solid #afafaf; color:#666666; }
+.tbl_w th,
+.tbl_w td{ background:#ededed; text-align:center; padding:2px; border:1px solid #afafaf;}
+.tbl_w td{ background:#fff;padding:1px 2px 1px 6px;text-align:left; }
+
+.tbl_l{ border:1px solid #afafaf; color:#666666; }
+.tbl_l th,
+.tbl_l td{ background:#ededed; text-align:center; padding:2px; border:1px solid #afafaf;}
+.tbl_l td{ background:#fff;padding:1px 2px 1px 2px;}
+.tbl_l td a{ text-decoration:underline;}
+
+.com_box h3{ position:relative; line-height:1.8; font-size:14px;  background:#dadada; border:1px solid #afafaf; border-bottom:0; text-align:center; }
+.com_box h3.title_line{ margin-top:5px;}
+.com_box h3 a{ position:absolute;  top:2px; right:5px; font-weight:normal; text-decoration: underline; border-left:1px solid #CCC; padding-left:5px;}
+.com_box h3 a.add_tr{ right:40px;}
+
+
+
+/* checklist */
+.check_list { width:520px; overflow:hidden; height:100%;}
+.check_list li{ float:left; width:239px; padding-left:20px;}
+
+
+/* tbl_view */
+.tbl_view{ border:none; border-top:2px solid #3e3c3d;}
+.tbl_view th,
+.tbl_view td{ padding:13px 0; border:none; border:1px solid #cdd1d2; border-right:none;}
+.tbl_view th{ background:#f2f3f5;}
+.tbl_view td{ padding-left:19px;}
+
+/* tbl_view_board */
+.tbl_view_board{ margin-top:19px; border:none; border-top:2px solid #3e3c3d; text-align:left;}
+.tbl_view_board thead th{ background:#f2f3f4;}
+.tbl_view_board th,
+.tbl_view_board td{ border:none; padding:9px 0 9px 10px; border-bottom:1px solid #cdd1d2;}
+.tbl_view_board th{ padding-left:20px; color:#757575; background:url(/images/ico/bg01_event.gif) right center no-repeat;}
+.tbl_view_board td{ border-bottom:1px solid #cdd1d2; color:#b4b4b4;}
+.tbl_view_board .content{ padding:0;}
+
+/* search */
+.search{ position:relative;}
+.search .input_style{ width:180px; padding:6px 0 5px 5px;}
+.search .btn{ position:absolute; left:160px; top:7px;}
+
+
+/* tabs */
+#tabs{ margin-top:15px;}
+
+
+
+
+
+/* paging */
+.paging{ position:relative;}
+.paging .sys_btnBox{position:absolute; top:0; right:2px;}
+.paging ul{ text-align:left; margin-top:30px;}
+.paging li{ display:inline; padding:0 1px;}
+.paging li a,
+.paging li strong{ display:inline-block; padding:1px 7px; border:1px solid #CCC; line-height:20px; color:#696969;}
+.paging li strong{ color:#444b65;}
+
+/* text_path */
+.text_path{ position:relative; margin-bottom:18px; text-align:right;}
+.text_path span{ position:absolute; top:5px; right:5px;}
+

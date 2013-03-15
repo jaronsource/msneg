@@ -1,0 +1,6 @@
+@charset "utf-8";
+/* for styles */
+@import url("default.css");
+@import url("ui.css");
+@import url("layout.css");
+@import url("common.css");

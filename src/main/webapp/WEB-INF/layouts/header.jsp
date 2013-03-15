@@ -1,24 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<spring:url value="/" var="baseUrl"/>
-<div class="container-fluid">
-	<spring:message code="application_name" var="headerText" />
-	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-		<span class="icon-bar"></span> 
-		<span class="icon-bar"></span> 
-		<span class="icon-bar"></span>
-	</a> 
-	<a class="brand" href="#">${headerText}</a>
-	<div class="nav-collapse collapse">
-		<p class="navbar-text pull-right">
-			Logged in as <a href="#" class="navbar-link">Username</a>
-		</p>
-		<ul class="nav">
-			<li class="active"><a href="${baseUrl }">首页</a></li>
-			<li><a href="#about">关于</a></li>
-			<li><a href="#contact">联系我们</a></li>
-		</ul>
-	</div>
-	<!--/.nav-collapse -->
+<h1><a href="#this"><img src="${pageContext.request.contextPath}/images/guide/logo.png" width="301" height="59" alt="MSNEG" /></a></h1>
+<p class="admin"><a href="#this"><img src="${pageContext.request.contextPath}/images/ico/ico03.jpg" width="16" height="16" alt="设置" />设置</a> <a href="#this"><img src="${pageContext.request.contextPath}/images/ico/ico04.jpg" width="16" height="16" alt="切换用户" />切换用户</a> <a href="#this"><img src="${pageContext.request.contextPath}/images/ico/ico05.jpg" width="16" height="16" alt="刷新" />刷新</a> <a href="#this"><img src="${pageContext.request.contextPath}/images/ico/ico06.jpg" width="16" height="16" alt="帮助" />帮助</a></p>
+<div class="bar">
+	<p><span class="user">您好：9527</span>       
+	<span class="bumen">隶属：销售二部</span>      
+	<span class="news_text">新消息</span>      
+	<span class="date">2012.11.20 星期六</span>      
+	<span class="help">系统提示：<a href="#">订单975已经下单，等待出货处理</a></span> 
+	<a href="#this" class="out_link">安全退出</a></p>
 </div>
-

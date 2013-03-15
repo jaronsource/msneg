@@ -8,6 +8,15 @@
         <dependent-module archiveName="core-2.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/core/core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="plugin-dictionary-2.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/plugin-dictionary/plugin-dictionary">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="plugin-security-2.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/plugin-security/plugin-security">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="plugin-area-2.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/plugin-area/plugin-area">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="msneg"/>
         <property name="java-output-path" value="/msneg/target/classes"/>
     </wb-module>

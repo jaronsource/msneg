@@ -1,23 +1,25 @@
 package org.jaronsource.msneg.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
-import javax.persistence.Transient;
-import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
+import com.ccesun.framework.core.dao.support.IEntity;
+import com.ccesun.framework.plugins.security.domain.IPermission;
 
 @Entity
 @Table(name="sys_func")
-public class SysFunc implements IEntity<Integer> {
+public class SysFunc implements IEntity<Integer>, IPermission {
 	
 	private static final long serialVersionUID = 730872035L;
 	
@@ -43,7 +45,7 @@ public class SysFunc implements IEntity<Integer> {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="parent_id")
 	@NotFound(action=NotFoundAction.IGNORE)
-	private SysFunc sysFunc;
+	private SysFunc parent;
 	
 	/** 功能组 */
 	@Column(name="func_groupcode")
@@ -85,14 +87,14 @@ public class SysFunc implements IEntity<Integer> {
 		return funcRemarks;
 	}
 	
-	public void setSysFunc(SysFunc sysFunc) {
-		this.sysFunc = sysFunc;
+	public SysFunc getParent() {
+		return parent;
 	}
-	
-	public SysFunc getSysFunc() {
-		return sysFunc;
+
+	public void setParent(SysFunc parent) {
+		this.parent = parent;
 	}
-	
+
 	public void setFuncGroupcode(String funcGroupcode) {
 		this.funcGroupcode = funcGroupcode;
 	}
@@ -113,5 +115,45 @@ public class SysFunc implements IEntity<Integer> {
 	@Transient
 	public boolean isNew() {
 		return EntityUtils.isNew(this.funcId);
+	}
+
+	@Override
+	public String getCode() {
+		return funcId == null ? null : funcId.toString();
+	}
+
+	@Override
+	public String getName() {
+		return funcName;
+	}
+
+	@Override
+	public String getGroupCode() {
+		return funcGroupcode;
+	}
+
+	@Override
+	public String getParentCode() {
+		return parent == null ? null : parent.getCode();
+	}
+
+	@Override
+	public String getUrl() {
+		return funcUrl;
+	}
+
+	@Override
+	public Integer getOrder() {
+		return funcOrder;
+	}
+
+	@Override
+	public Boolean getReadable() {
+		return true;
+	}
+
+	@Override
+	public Boolean getEditable() {
+		return true;
 	}
 }

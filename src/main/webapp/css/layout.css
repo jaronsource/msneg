@@ -1,0 +1,95 @@
+@charset "utf-8";
+
+/* body */
+body{ background:#e1e1e1 url(../images/bg/bg_wrap.gif) center top repeat-y; font-size:14px;}
+#login_outer{ position:absolute; height:400px; width:100%; top:50%; margin-top:-200px; background:url(../images/guide/bg_login.jpg) center 45px no-repeat;}
+.login{ width:990px; height:400px; margin:0 auto; background:url(../images/guide/bg_login01.jpg) 0 0 no-repeat; position:relative;}
+.login h2{ position:absolute; top:205px; left:212px; font-size:30px; color:#ca2fbb;}
+.login p.news{ position:absolute; bottom:50px; right:530px; text-align:right; font-size:14px; text-decoration:underline; color:#06347f;}
+.login .login_form{ width:250px; margin-left:500px; padding:20px 25px; position:relative; }
+.login .login_form h3{ background:url(../images/common/title_login.jpg) 0 0  no-repeat; width:250px; height:60px; text-indent:-5000px; overflow:hidden; }
+.login .login_form p{ margin-top:14px;}
+.login .login_form p.tanzheng{ margin-left:54px; line-height:30px; overflow:hidden; height:32px;  margin-right:20px;}
+.login .login_form p.tanzheng span{ display:inline-block; border:1px solid #d6d4d5; height:30px; width:80px; float:left; margin-right:10px;}
+.login .login_form p.tanzheng a{ text-decoration:underline; color:#00F;}
+.login .login_form p.id_worong{ margin-left:54px; color:#F00; background: url(../images/ico/ico01.jpg) 0 center no-repeat; padding-left:24px;}
+.login .login_form p.btn_login{ position:absolute; top:280px; left:25px; width:250px;}
+.login .login_form p.btn_login a{ margin:0 2px;}
+
+
+#wrap{ width:1200px; margin:0 auto;}
+#header{ position:relative; height:128px;}
+#header h1{ position:absolute; top:20px; left:0;}
+#header p.admin{ position:absolute; top:60px; text-align:right; right:5px; }
+#header p.admin img{ padding-right:5px; position:relative; top:-2px;}
+#header p.admin a{ margin-left:10px;}
+#header p.admin a{ color:#666;}
+#header .bar{ background: url(../images/bg/bg_bar.jpg) 0 0 no-repeat; bottom:10px; left:0; width:1200px; height:29px; line-height:29px; position:absolute;}
+#header .bar span{ padding-left:20px; background-position:0 center; display:block; float:left; background-repeat:no-repeat; margin-left:30px;}
+#header .bar span.user{ background-image:url(../images/ico/ico07.jpg); margin-left:15px;}
+#header .bar span.bumen{ background-image:url(../images/ico/ico08.jpg);}
+#header .bar span.news_text{ background-image:url(../images/ico/ico09.jpg);}
+#header .bar span.date{ background-image:url(../images/ico/ico10.jpg);}
+#header .bar span.help{ background-image:url(../images/ico/ico11.jpg);}
+.bar a.out_link{ height:29px; display:block; background:url(../images/ico/line.jpg) left top no-repeat; line-height:29px; color:#666; padding:0 15px; position:absolute; top:0; right:0;}
+
+#left{ float:left; width:144px; border-right:1px solid #999;}
+.lnb{ overflow:hidden; height:100%;}
+.lnb li{ float:left; width:135px; margin-bottom:8px; }
+.lnb li a{ display:block; background-repeat:no-repeat; height:38px; overflow:hidden; text-indent:-5000px;}
+.lnb li .lnb01{ background-image:url(../images/guide/lnb01.gif);}
+.lnb li .lnb02{ background-image:url(../images/guide/lnb02.gif);}
+.lnb li .lnb03{ background-image:url(../images/guide/lnb03.gif);}
+.lnb li .lnb04{ background-image:url(../images/guide/lnb04.gif);}
+.lnb li .lnb05{ background-image:url(../images/guide/lnb05.gif);}
+.lnb li .lnb06{ background-image:url(../images/guide/lnb06.gif);}
+.lnb li .lnb07{ background-image:url(../images/guide/lnb07.gif);}
+.lnb li .lnb08{ background-image:url(../images/guide/lnb08.gif);}
+.lnb li .lnb09{ background-image:url(../images/guide/lnb09.gif);}
+.lnb li .lnb10{ background-image:url(../images/guide/lnb10.gif);}
+.lnb li .lnb11{ background-image:url(../images/guide/lnb11.gif);}
+.lnb li .lnb12{ background-image:url(../images/guide/lnb12.gif);}
+
+.lnb li .lnb01:hover,
+.lnb li .lnb01.hover{ background-image:url(../images/guide/lnb01_on.jpg);}
+.lnb li .lnb02:hover,
+.lnb li .lnb02.hover{ background-image:url(../images/guide/lnb02_on.jpg);}
+.lnb li .lnb03:hover,
+.lnb li .lnb03.hover{ background-image:url(../images/guide/lnb03_on.jpg);}
+.lnb li .lnb04:hover,
+.lnb li .lnb04.hover{ background-image:url(../images/guide/lnb04_on.jpg);}
+.lnb li .lnb05:hover,
+.lnb li .lnb05.hover{ background-image:url(../images/guide/lnb05_on.jpg);}
+.lnb li .lnb06:hover,
+.lnb li .lnb06.hover{ background-image:url(../images/guide/lnb06_on.jpg);}
+.lnb li .lnb07:hover,
+.lnb li .lnb07.hover{ background-image:url(../images/guide/lnb07_on.jpg);}
+.lnb li .lnb08:hover,
+.lnb li .lnb08.hover{ background-image:url(../images/guide/lnb08_on.jpg);}
+.lnb li .lnb09:hover,
+.lnb li .lnb09.hover{ background-image:url(../images/guide/lnb09_on.jpg);}
+.lnb li .lnb10:hover,
+.lnb li .lnb10.hover{ background-image:url(../images/guide/lnb10_on.jpg);}
+.lnb li .lnb11:hover,
+.lnb li .lnb11.hover{ background-image:url(../images/guide/lnb11_on.jpg);}
+.lnb li .lnb12:hover,
+.lnb li .lnb12.hover{ background-image:url(../images/guide/lnb12_on.jpg);}
+
+
+#content{ float:right;  width:1020px;}
+.title_box{ position:relative; border-bottom:1px solid #CCC; height:30px;}
+.title_box h2{ font-size:18px; line-height:1.8;}
+.title_box p{ position:absolute; top:4px; right:0;}
+.title_box div.sys_btnBox{ position:absolute; top:2px; right:2px;}
+
+
+.customer{  padding:4px; border:1px solid #CCC; margin-top:10px; position:relative;}
+.customer h4{ padding-left:30px; position: relative;}
+.customer h4 a{ position: absolute; top:0; right:0; text-decoration:underline;}
+.customer dl{border-top: 1px dashed #E7CDAE; margin: 0 5px; overflow: hidden; padding: 4px 0 2px; display:none;  }
+.customer dl dt{float: left; font-weight: bold; line-height: 25px; text-align: right; width: 100px;}
+.customer dl dd{ float: left; overflow: hidden; position: relative; text-align:left!important;}
+.customer dl dd a{ padding:2px;}
+.customer dl dd a:hover,
+.customer dl dd a.curr{ background:#4598D2; color:#fff;}
+

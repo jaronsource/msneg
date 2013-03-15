@@ -1,23 +1,25 @@
 package org.jaronsource.msneg.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
-import javax.persistence.Transient;
-import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
+import com.ccesun.framework.core.dao.support.IEntity;
+import com.ccesun.framework.plugins.security.domain.ISecurityUser;
 
 @Entity
 @Table(name="sys_user")
-public class SysUser implements IEntity<Integer> {
+public class SysUser implements IEntity<Integer>, ISecurityUser {
 	
 	private static final long serialVersionUID = 933022119L;
 	
@@ -101,5 +103,10 @@ public class SysUser implements IEntity<Integer> {
 	@Transient
 	public boolean isNew() {
 		return EntityUtils.isNew(this.userId);
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return true;
 	}
 }
