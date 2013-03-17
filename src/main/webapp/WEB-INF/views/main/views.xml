@@ -6,4 +6,8 @@
     </definition>
     
     <definition name="main/login" template="/WEB-INF/views/main/login.jsp" />
+    
+    <definition extends="default" name="main/sales">
+        <put-attribute name="body" value="/WEB-INF/views/main/sales.jsp" />
+    </definition>
 </tiles-definitions>

@@ -44,7 +44,28 @@
     <!-- Creates the Spring Container shared by all Servlets and Filters -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>    
+    </listener>
+
+	<servlet>
+		<servlet-name>validateCodeServlet</servlet-name>
+		<servlet-class>com.ccesun.framework.plugins.security.validatecode.ValidateCodeServlet</servlet-class>
+		<init-param>
+			<param-name>width</param-name>
+			<param-value>80</param-value>
+		</init-param>
+		<init-param>
+			<param-name>height</param-name>
+			<param-value>30</param-value>
+		</init-param>
+		<init-param>
+			<param-name>codeCount</param-name>
+			<param-value>4</param-value>
+		</init-param>
+		<init-param>
+			<param-name>lineCount</param-name>
+			<param-value>40</param-value>
+		</init-param>
+	</servlet>
 
     <!-- Processes application requests -->
 	<servlet>
@@ -64,4 +85,9 @@
         <servlet-name>webmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
+    <servlet-mapping>
+		<servlet-name>validateCodeServlet</servlet-name>
+		<url-pattern>*.images</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -41,10 +41,11 @@
 			<beans:property name="noPermUrl" value="/login" />
 			<beans:property name="excludesPath">
 				<beans:list>
-					<beans:value type="java.lang.String">/main</beans:value>
+					<!-- <beans:value type="java.lang.String">/main</beans:value>
 					<beans:value type="java.lang.String">/login</beans:value>
 					<beans:value type="java.lang.String">/logout</beans:value>
-					<beans:value type="java.lang.String">/plugin</beans:value>
+					<beans:value type="java.lang.String">/plugin</beans:value> -->
+					<beans:value type="java.lang.String">/</beans:value>
 				</beans:list>
 			</beans:property>
 		</beans:bean>
