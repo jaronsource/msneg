@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import org.jaronsource.msneg.domain.BusiClient;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.service.BusiSalesService;
 import com.ccesun.framework.core.dao.support.Page;
@@ -57,8 +58,17 @@ public class BusiSalesController extends BaseController {
 	
 	@RequestMapping(value = "/create", method = GET)
     public String create(Model model) {
+		BusiClient busiClient = new BusiClient();
 		BusiSales busiSales = new BusiSales();
-        model.addAttribute("busiSales", busiSales);
+		BusiSalesForm form = new BusiSalesForm();
+		form.setBusiSales(busiSales);
+		form.setBusiClient(busiClient);
+		
+		String salesCode = busiSalesService.generateSalesCode();
+		
+        model.addAttribute("form", form);
+        getHttpSession().setAttribute("salesCode", salesCode);
+        
         return "busiSales/create";
     }
     

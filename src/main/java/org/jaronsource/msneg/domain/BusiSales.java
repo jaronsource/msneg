@@ -34,13 +34,11 @@ public class BusiSales implements IEntity<Integer> {
 	/** 销售部门 */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="dept_id")
-	@NotFound(action=NotFoundAction.IGNORE)
 	private SysDept sysDept;
 	
 	/** 经手人 */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
-	@NotFound(action=NotFoundAction.IGNORE)
 	private SysUser sysUser;
 	
 	/** 创建时间 */
@@ -58,7 +56,6 @@ public class BusiSales implements IEntity<Integer> {
 	/** 客户ID */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="client_id")
-	@NotFound(action=NotFoundAction.IGNORE)
 	private BusiClient busiClient;
 	
 	/** 状态 */

@@ -19,4 +19,9 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		return busiSalesDao;
 	}
 
+	@Override
+	public String generateSalesCode() {
+		return "12N1211B017";
+	}
+
 }

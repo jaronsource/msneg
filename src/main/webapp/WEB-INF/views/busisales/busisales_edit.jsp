@@ -2,119 +2,236 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<div class="row">
-    
-    <spring:url value="/busiSales" var="baseUrl"/>    
-    
-    <c:set var="labelNew" value="新建" />
-    <c:set var="labelUpdate" value="更新" />
-    <spring:eval expression="busiSales.salesId == null ? labelNew:labelUpdate" var="formTitle"/>
+<%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
+<%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
+<dict:loadDictList type="item_type" var="item_type" />
+<dict:loadDictList type="serv_logis" var="serv_logis" />
+<dict:loadDictList type="serv_getmethod" var="serv_getmethod" />
+<dict:loadDictList type="serv_installmethod" var="serv_installmethod" />
 
-    <div class="span10">
-    <form:form modelAttribute="busiSales" id="busiSalesForm" method="post">
-		<fieldset>
-			<legend>${formTitle}</legend>
-	        <c:if test="${not empty message}">
-	            <div id="message" class="${message.type}">${message.message}</div>
-	        </c:if>
-	        <form:hidden path="salesId" />
-	        
-	        <form:label path="salesCode">编码</form:label>
-	        <form:input path="salesCode" />
-	        <form:errors path="salesCode" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="sysDept">销售部门</form:label>
-	        <form:input path="sysDept" />
-	        <form:errors path="sysDept" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="sysUser">经手人</form:label>
-	        <form:input path="sysUser" />
-	        <form:errors path="sysUser" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="createTime">创建时间</form:label>
-	        <form:input path="createTime" />
-	        <form:errors path="createTime" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="salesRemarks">备注</form:label>
-	        <form:input path="salesRemarks" />
-	        <form:errors path="salesRemarks" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="salesTypeKey">销售单类型</form:label>
-	        <form:input path="salesTypeKey" />
-	        <form:errors path="salesTypeKey" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="busiClient">客户ID</form:label>
-	        <form:input path="busiClient" />
-	        <form:errors path="busiClient" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="salesStateKey">状态</form:label>
-	        <form:input path="salesStateKey" />
-	        <form:errors path="salesStateKey" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="servLogisKey">物流信息</form:label>
-	        <form:input path="servLogisKey" />
-	        <form:errors path="servLogisKey" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="servGetmethodKey">取货方式</form:label>
-	        <form:input path="servGetmethodKey" />
-	        <form:errors path="servGetmethodKey" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="servInstallmethodKey">安装方式</form:label>
-	        <form:input path="servInstallmethodKey" />
-	        <form:errors path="servInstallmethodKey" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="feeSum">总金额</form:label>
-	        <form:input path="feeSum" />
-	        <form:errors path="feeSum" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="feePrepay">预付金额</form:label>
-	        <form:input path="feePrepay" />
-	        <form:errors path="feePrepay" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="feePrepayCash">预付金现金</form:label>
-	        <form:input path="feePrepayCash" />
-	        <form:errors path="feePrepayCash" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="feePrepayCard">预付金刷卡</form:label>
-	        <form:input path="feePrepayCard" />
-	        <form:errors path="feePrepayCard" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="feeRemain">剩余尾款</form:label>
-	        <form:input path="feeRemain" />
-	        <form:errors path="feeRemain" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="otherRemarks">其他备注</form:label>
-	        <form:input path="otherRemarks" />
-	        <form:errors path="otherRemarks" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="salesContract">合同条款</form:label>
-	        <form:input path="salesContract" />
-	        <form:errors path="salesContract" cssClass="error" element="div" />
-	        <p/>
-	        
-	        
-	        <button type="submit" class="btn btn-primary">提交</button>
-	        <button type="reset" class="btn">重置</button>
-	        <a href="${baseUrl}" class="btn">返回列表</a>
-        </fieldset>              
-    </form:form>   
-    </div>
-
+<script>
+function addSaleItems(element) {
+	var $tr = $('<tr></tr>');
+	var $td1 = $('<td><select name="itemTypeKey" class="itemTypeKey"></select></td>');
+	<c:forEach items="${item_type}" var="entry">
+		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td1.find('select'));
+	</c:forEach>
+	var $td2 = $('<td><input type="text" name="itemName" class="wb95 input_text" class="itemName" /></td>');
+	var $td3 = $('<td><select name="itemUnit" class="itemUnit"></select></td>');
+	var $td4 = $('<td><input type="text" name="itemAmount" class="wb50 input_text" class="itemAmount" /></td>');
+	var $td5 = $('<td><input type="text" name="itemPrice" class="wb50 input_text" class="itemPrice" /></td>');
+	var $td6 = $('<td><span class="money">0.00</span</td>');
+	var $td7 = $('<td><input type="text" name="itemRemarks" class="wb95 input_text" class="itemRemarks" /></td>');
+	var $td8 = $('<td><span class="green">有货</span></td>');
+	
+	$tr.append($td1).append($td2).append($td3).append($td4).append($td5).append($td6).append($td7).append($td8);
+	$tr.appendTo(element);
+}
+</script>
+<security:securityUser var="user"/>
+<div class="title_box">
+	<h2>开据销售单</h2>
+	<div class="sys_btnBox">
+		<input type="button" value="保存" /> <input type="button" value="提交" /> <input type="button" value="预览" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+	</div>
 </div>
+<div class="customer">
+	<p>快速查找客户：<input type="text" name="" class="input_text w_172" value="请输入电话号码" id="" /> <input type="button" value="确定" /></p>
+</div>
+<form:form modelAttribute="form">
+<div class="order_box">
+<!--box-->
+	<div class="com_box">
+		<h3 class="title_line">客户信息<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
+				<col width="15%" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>客户名称</th>
+					<td><form:input path="busiClient.clientName" cssClass="wb90 input_text" /></td>
+					<th>物业地址</th>
+					<td colspan="5"><form:input path="busiClient.address" cssClass="wb95 input_text" /></td>
+				</tr>
+				<tr>
+					<th>联系电话</th>
+					<td><form:input path="busiClient.areacode" cssClass="w_40 input_text" /> - <form:input path="busiClient.phone" cssClass="w_70 input_text" /></td>
+					<th>联系手机</th>
+					<td><form:input path="busiClient.cellPhone" cssClass="wb90 input_text" /></td>
+					<th>出单部门</th>
+					<td>${user.dept.deptName }</td>
+					<th>单据经手</th>
+					<td>${user.realName }</td>
+				</tr>
+				<tr>
+					<th>单据编号</th>
+					<td>${salesCode }</td>
+					<th>相关备注</th>
+					<td colspan="5"<form:input path="busiSales.salesRemarks" cssClass="wb95 input_text" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+	<!--box-->
+	<div class="com_box">
+		<h3>商品信息<a href="#this" class="add_tr" id="addSalesItems">添加商品信息行</a><a href="#this" class="toggle_table">折叠</a></h3>
+		<table id="items" width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="50" />
+				<col width="400" />
+				<col width="*" />
+				<col width="80" />
+				<col width="80" />
+				<col width="90" />
+				<col width="200" />
+				<col width="200" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>类别</th>
+					<th>名称/货号/型号</th>
+					<th>单位</th>
+					<th>数量</th>
+					<th>单价</th>
+					<th>合计</th>
+					<th>信息备注</th>
+					<th>系统关联提示</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<script>
+			for (var i = 0; i < 5; i++) {
+				addSaleItems($('#items tbody'));
+			}
+		</script>
+	</div>
+	<!--//box-->
+	<!--box-->
+	<div class="com_box">
+		<h3>安装/取送/服务部分<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
+				<col width="23%" />
+				<col width="10%" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>物流信息</th>
+					<td>
+						<c:forEach items="${serv_logis}" var="entry" >
+							<form:radiobutton cssClass="servLogisKey radio"  path="busiSales.servLogisKey" value="${entry.dictKey}" />${entry.dictValue0}
+						</c:forEach>
+					</td>
+					<th>取送方式</th>
+					<td>
+						<c:forEach items="${serv_getmethod}" var="entry" >
+							<form:radiobutton cssClass="servGetmethodKey radio"  path="busiSales.servGetmethodKey" value="${entry.dictKey}" />${entry.dictValue0}
+						</c:forEach>
+					</td>
+					<th>安装方式</th>
+					<td>
+						<c:forEach items="${serv_installmethod}" var="entry" >
+							<form:radiobutton cssClass="servInstallmethodKey radio"  path="busiSales.servInstallmethodKey" value="${entry.dictKey}" />${entry.dictValue0}
+						</c:forEach>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+	
+	<!--box-->
+	<div class="com_box">
+		<h3>财务结算部分<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="10%" />
+				<col width="14%" />
+				<col width="10%" />
+				<col width="40%" />
+				<col width="10%" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>总金额</th>
+					<td><span class="money" id="feeSumDisplay">￥ 0.00</span></td>
+					<form:hidden path="busiSales.feeSum" id="feeSum" />
+					<th>预付金额</th>
+					<td><input type="checkbox" id="checkCash" /> 现金 ￥ <form:input cssClass="input_money" path="busiSales.feePrepayCash" id="feePrepayCash" disabled="disabled"/>  <input type="checkbox" id="checkMoney" /> 刷卡 ￥ <form:input cssClass="input_money" path="busiSales.feePrepayCard" id="feePrepayCard" disabled="disabled"/></td>
+					<script>
+						$('#checkCash').click(function() {
+							if ($(this).attr('checked') == true) {
+								$('#feePrepayCash').attr('disabled', false);
+							} else {
+								$('#feePrepayCash').attr('disabled', true);
+							}
+						});
+						$('#feeCard').click(function() {
+							if ($(this).attr('checked') == true) {
+								$('#feePrepayCard').attr('disabled', false);
+							} else {
+								$('#feePrepayCard').attr('disabled', true);
+							}
+						});
+					</script>
+					<th>剩余尾款</th>
+					<td><span class="money" id="feeRemainDisplay">￥ 0.00</span></td>
+					<form:hidden path="busiSales.feeRemain" id="feeRemain" />
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+	<!--box-->
+	<div class="com_box">
+		<h3>其他信息备注部分<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<td><form:textarea path="busiSales.otherRemarks" cssClass="textarea" cols="" rows="" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+	<!--box-->
+	<div class="com_box">
+		<h3>本单附带合同条款编辑部分<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<td><form:textarea path="busiSales.salesContract" cssClass="textarea" cols="" rows="" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+</div>
+</form:form>

@@ -10,9 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import com.ccesun.framework.core.dao.support.EntityUtils;
 import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.plugins.security.domain.ISecurityUser;
@@ -32,10 +29,9 @@ public class SysUser implements IEntity<Integer>, ISecurityUser {
 	/** 部门 */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="dept_id")
-	@NotFound(action=NotFoundAction.IGNORE)
-	private SysDept sysDept;
+	private SysDept dept;
 	
-	/** 姓名 */
+	/** 用户名 */
 	@Column(name="user_name")
 	private String userName;
 	
@@ -59,14 +55,14 @@ public class SysUser implements IEntity<Integer>, ISecurityUser {
 		return userId;
 	}
 	
-	public void setSysDept(SysDept sysDept) {
-		this.sysDept = sysDept;
+	public SysDept getDept() {
+		return dept;
 	}
-	
-	public SysDept getSysDept() {
-		return sysDept;
+
+	public void setDept(SysDept dept) {
+		this.dept = dept;
 	}
-	
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}

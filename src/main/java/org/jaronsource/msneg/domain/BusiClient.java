@@ -26,6 +26,10 @@ public class BusiClient implements IEntity<Integer> {
 	@Column(name="client_name")
 	private String clientName;
 	
+	/** 区号 */
+	@Column(name="areacode")
+	private String areacode;
+	
 	/** 电话 */
 	@Column(name="phone")
 	private String phone;
@@ -78,6 +82,14 @@ public class BusiClient implements IEntity<Integer> {
 		return address;
 	}
 	
+	public String getAreacode() {
+		return areacode;
+	}
+
+	public void setAreacode(String areacode) {
+		this.areacode = areacode;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

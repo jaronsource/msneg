@@ -5,4 +5,6 @@ import com.ccesun.framework.core.service.ISearchFormSupportService;
 
 public interface BusiSalesService extends ISearchFormSupportService<BusiSales, Integer> {
 
+	String generateSalesCode();
+
 }
