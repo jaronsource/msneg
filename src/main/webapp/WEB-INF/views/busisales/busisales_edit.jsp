@@ -16,29 +16,125 @@ function addSaleItems(element) {
 	<c:forEach items="${item_type}" var="entry">
 		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td1.find('select'));
 	</c:forEach>
-	var $td2 = $('<td><input type="text" name="itemName" class="wb95 input_text" class="itemName" /></td>');
-	var $td3 = $('<td><select name="itemUnit" class="itemUnit"></select></td>');
-	var $td4 = $('<td><input type="text" name="itemAmount" class="wb50 input_text" class="itemAmount" /></td>');
-	var $td5 = $('<td><input type="text" name="itemPrice" class="wb50 input_text" class="itemPrice" /></td>');
-	var $td6 = $('<td><span class="money">0.00</span</td>');
-	var $td7 = $('<td><input type="text" name="itemRemarks" class="wb95 input_text" class="itemRemarks" /></td>');
-	var $td8 = $('<td><span class="green">有货</span></td>');
+	var $td2 = $('<td><input type="hidden" name="itemId" /><input type="text" name="itemName" class="wb95 input_text itemName" /></td>');
+	var $td3 = $('<td><span class="green itemUnit"></span> </td>');
+	var $td4 = $('<td><input type="text" name="itemAmount" class="wb50 input_text itemAmount" value="0" /></td>');
+	var $td5 = $('<td>¥ <input type="text" class="w_50 input_text itemPrice" readonly="readonly" value="0.00" /></td>');
+	var $td6 = $('<td><input type="hidden" name="itemSum" />¥ <span class="money itemSum">0.00</span></td>');
+	var $td7 = $('<td><input type="text" name="itemRemarks" class="wb95 input_text itemRemarks" /></td>');
+	var $td8 = $('<td><span class="green stockAmount"></span></td>');
 	
 	$tr.append($td1).append($td2).append($td3).append($td4).append($td5).append($td6).append($td7).append($td8);
 	$tr.appendTo(element);
+	
+	$td2.find('.itemName').autocomplete(
+			{
+				source : function(request, response) {
+					
+					var $parent = $($(this)[0].element).parents('tr');
+					var itemTypeValue = $parent.find('.itemTypeKey').val();
+					request['itemType'] = itemTypeValue;
+					
+					$.getJSON('${pageContext.request.contextPath}/busiItem/ajaxFindItem', request, function(data) {
+						response(data); 
+					});
+				}
+				,autoFocus: true
+				,select: function(event, ui) {
+					var $parent = $(this).parents('tr');
+					$parent.find('input[name=itemId]').val(ui.item.itemId);
+					$parent.find('.itemPrice').val(ui.item.price);
+					$parent.find('.itemUnit').text(ui.item.unit);
+					var stock = parseInt(ui.item.stockAmount) == 0 ? '没货' : '有货(' + ui.item.stockAmount + ')';
+					$parent.find('.stockAmount').text(stock);
+				}
+			});
+	
+	$td4.find(".itemAmount, .itemPrice").keyup(function() {
+		var $parent = $(this).parents('tr');
+		var itemPriceValue = parseFloat($parent.find('.itemPrice').val());
+		itemPriceValue = isNaN(itemPriceValue) ? 0 : itemPriceValue;
+		var itemAmountValue = parseFloat($parent.find('.itemAmount').val());
+		itemAmountValue = isNaN(itemAmountValue) ? 0 : itemAmountValue;
+		
+		var itemSumValue = itemPriceValue * itemAmountValue;
+		$parent.find('.itemSum').text(itemSumValue);
+		$parent.find('input[name=itemSum]').val(itemSumValue.toFixed(2));
+		
+		sumTotal();
+	});
+	
+}
+
+function sumTotal () {
+	var total = 0;
+	$('.itemAmount').each(function () {
+		var price = parseFloat($(this).parents('tr').find('.itemPrice').val());
+		price = isNaN(price) ? 0 : price;
+		var amount = parseInt($(this).val());
+		amount = isNaN(amount) ? 0 : amount;
+		total += price * amount;
+		
+	});
+	
+	$('#feeSumDisplay').text(total.toFixed(2));
+	$('#feeSum').val(total);
+	
+	feeRemain();
+	
+}
+
+function feeRemain() {
+	var feePrepayCash = parseFloat($('#feePrepayCash').val());
+	feePrepayCash = isNaN(feePrepayCash) ? 0 : feePrepayCash;
+	var feePrepayCard = parseFloat($('#feePrepayCard').val());
+	feePrepayCard = isNaN(feePrepayCard) ? 0 : feePrepayCard;
+	
+	var total = $('#feeSum').val();
+	var remain = total - feePrepayCash - feePrepayCard;
+	
+	$('#feeRemainDisplay').text(remain.toFixed(2));
+	$('#feeRemain').val(remain); 
+	
 }
 </script>
 <security:securityUser var="user"/>
 <div class="title_box">
 	<h2>开据销售单</h2>
 	<div class="sys_btnBox">
-		<input type="button" value="保存" /> <input type="button" value="提交" /> <input type="button" value="预览" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<input type="button" id="submitBtn" value="保存" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<script>
+			$('#submitBtn').click(function() { $('#busiSalesForm').submit(); });
+		</script>
 	</div>
 </div>
 <div class="customer">
-	<p>快速查找客户：<input type="text" name="" class="input_text w_172" value="请输入电话号码" id="" /> <input type="button" value="确定" /></p>
+	<p>快速查找客户：<input type="text" name="clientPhone" class="input_text w_172" id="clientPhoneTerm" placeholder="请输入电话号码" /> <input type="button" value="确定" /></p>
+	<script>
+	$('#clientPhoneTerm').autocomplete(
+			{
+				source : function(request, response) {
+					
+					$.getJSON('${pageContext.request.contextPath}/busiClient/ajaxFindClient', request, function(data) {
+						response(data); 
+					});
+				}
+				,autoFocus: true
+				,select: function(event, ui) {
+					$('#clientId').val(ui.item.clientId);
+					$('#clientName').val(ui.item.clientName);
+					$('#address').val(ui.item.address);
+					$('#areacode').val(ui.item.areacode);
+					$('#phone').val(ui.item.phone);
+					$('#cellPhone').val(ui.item.cellPhone);
+				}
+				,open: function() { $('.ui-menu').width(300); } 
+			});
+	</script>
 </div>
-<form:form modelAttribute="form">
+<form:form modelAttribute="form" id="busiSalesForm">
+<form:hidden path="busiSales.busiClient.clientId" id="clientId"/>
+<form:hidden path="busiSales.salesCode" value="${salesCode}"/>
 <div class="order_box">
 <!--box-->
 	<div class="com_box">
@@ -57,15 +153,15 @@ function addSaleItems(element) {
 			<tbody>
 				<tr>
 					<th>客户名称</th>
-					<td><form:input path="busiClient.clientName" cssClass="wb90 input_text" /></td>
+					<td><form:input path="busiSales.busiClient.clientName" cssClass="wb90 input_text" id="clientName"/></td>
 					<th>物业地址</th>
-					<td colspan="5"><form:input path="busiClient.address" cssClass="wb95 input_text" /></td>
+					<td colspan="5"><form:input path="busiSales.busiClient.address" cssClass="wb95 input_text" id="address"/></td>
 				</tr>
 				<tr>
 					<th>联系电话</th>
-					<td><form:input path="busiClient.areacode" cssClass="w_40 input_text" /> - <form:input path="busiClient.phone" cssClass="w_70 input_text" /></td>
+					<td><form:input path="busiSales.busiClient.areacode" cssClass="w_40 input_text" id="areacode" /> - <form:input path="busiSales.busiClient.phone" cssClass="w_70 input_text" id="phone" /></td>
 					<th>联系手机</th>
-					<td><form:input path="busiClient.cellPhone" cssClass="wb90 input_text" /></td>
+					<td><form:input path="busiSales.busiClient.cellPhone" cssClass="wb90 input_text" id="cellPhone"/></td>
 					<th>出单部门</th>
 					<td>${user.dept.deptName }</td>
 					<th>单据经手</th>
@@ -75,7 +171,7 @@ function addSaleItems(element) {
 					<th>单据编号</th>
 					<td>${salesCode }</td>
 					<th>相关备注</th>
-					<td colspan="5"<form:input path="busiSales.salesRemarks" cssClass="wb95 input_text" /></td>
+					<td colspan="5"><form:input path="busiSales.salesRemarks" cssClass="wb95 input_text" /></td>
 				</tr>
 			</tbody>
 		</table>
@@ -85,13 +181,18 @@ function addSaleItems(element) {
 	<!--box-->
 	<div class="com_box">
 		<h3>商品信息<a href="#this" class="add_tr" id="addSalesItems">添加商品信息行</a><a href="#this" class="toggle_table">折叠</a></h3>
+		<script>
+			$('#addSalesItems').click(function() {
+				addSaleItems($('#items tbody'));
+			});
+		</script>
 		<table id="items" width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
 			<colgroup>
 				<col width="50" />
 				<col width="400" />
-				<col width="*" />
+				<col width="50" />
 				<col width="80" />
-				<col width="80" />
+				<col width="120" />
 				<col width="90" />
 				<col width="200" />
 				<col width="200" />
@@ -134,20 +235,20 @@ function addSaleItems(element) {
 				<tr>
 					<th>物流信息</th>
 					<td>
-						<c:forEach items="${serv_logis}" var="entry" >
-							<form:radiobutton cssClass="servLogisKey radio"  path="busiSales.servLogisKey" value="${entry.dictKey}" />${entry.dictValue0}
+						<c:forEach items="${serv_logis}" var="entry" varStatus="status">
+							<input type="radio" class="servLogisKey radio"  name="busiSales.servLogisKey" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if> />${entry.dictValue0}
 						</c:forEach>
 					</td>
 					<th>取送方式</th>
 					<td>
-						<c:forEach items="${serv_getmethod}" var="entry" >
-							<form:radiobutton cssClass="servGetmethodKey radio"  path="busiSales.servGetmethodKey" value="${entry.dictKey}" />${entry.dictValue0}
+						<c:forEach items="${serv_getmethod}" var="entry" varStatus="status">
+							<input type="radio" class="servGetmethodKey radio" name="busiSales.servGetmethodKey" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
 						</c:forEach>
 					</td>
 					<th>安装方式</th>
 					<td>
-						<c:forEach items="${serv_installmethod}" var="entry" >
-							<form:radiobutton cssClass="servInstallmethodKey radio"  path="busiSales.servInstallmethodKey" value="${entry.dictKey}" />${entry.dictValue0}
+						<c:forEach items="${serv_installmethod}" var="entry" varStatus="status">
+							<input type="radio" class="servInstallmethodKey radio" name="busiSales.servInstallmethodKey" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
 						</c:forEach>
 					</td>
 				</tr>
@@ -172,28 +273,32 @@ function addSaleItems(element) {
 			<tbody>
 				<tr>
 					<th>总金额</th>
-					<td><span class="money" id="feeSumDisplay">￥ 0.00</span></td>
+					<td><span class="money" >¥ <span id="feeSumDisplay">0.00</span></span></td>
 					<form:hidden path="busiSales.feeSum" id="feeSum" />
-					<th>预付金额</th>
-					<td><input type="checkbox" id="checkCash" /> 现金 ￥ <form:input cssClass="input_money" path="busiSales.feePrepayCash" id="feePrepayCash" disabled="disabled"/>  <input type="checkbox" id="checkMoney" /> 刷卡 ￥ <form:input cssClass="input_money" path="busiSales.feePrepayCard" id="feePrepayCard" disabled="disabled"/></td>
+					<th>预付金额</th> 
+					<td><input type="checkbox" id="checkCash" /> 现金 ¥ <form:input cssClass="input_money" path="busiSales.feePrepayCash" id="feePrepayCash" disabled="true" value="0.00"/>  <input type="checkbox" id="checkCard" /> 刷卡 ¥ <form:input cssClass="input_money" path="busiSales.feePrepayCard" id="feePrepayCard" disabled="true" value="0.00"/></td>
 					<script>
 						$('#checkCash').click(function() {
-							if ($(this).attr('checked') == true) {
+							if ($(this).is(':checked')) { 
 								$('#feePrepayCash').attr('disabled', false);
 							} else {
-								$('#feePrepayCash').attr('disabled', true);
+								$('#feePrepayCash').attr('disabled', true); 
+								$('#feePrepayCash').val('0.00');
 							}
 						});
-						$('#feeCard').click(function() {
-							if ($(this).attr('checked') == true) {
+						$('#checkCard').click(function() {
+							if ($(this).is(':checked')) {
 								$('#feePrepayCard').attr('disabled', false);
 							} else {
 								$('#feePrepayCard').attr('disabled', true);
+								$('#feePrepayCard').val('0.00');
 							}
 						});
+						
+						$('#feePrepayCash, #feePrepayCard').keyup(feeRemain);
 					</script>
 					<th>剩余尾款</th>
-					<td><span class="money" id="feeRemainDisplay">￥ 0.00</span></td>
+					<td><span class="money" > ¥ <span id="feeRemainDisplay">0.00</span></span></td>
 					<form:hidden path="busiSales.feeRemain" id="feeRemain" />
 				</tr>
 			</tbody>

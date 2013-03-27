@@ -1,19 +1,17 @@
 package org.jaronsource.msneg.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
-import javax.persistence.Transient;
-import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
+import com.ccesun.framework.core.dao.support.IEntity;
 
 @Entity
 @Table(name="busi_sales_item")
@@ -30,18 +28,16 @@ public class BusiSalesItem implements IEntity<Integer> {
 	/** 销售单ID */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="sales_id")
-	@NotFound(action=NotFoundAction.IGNORE)
 	private BusiSales busiSales;
 	
 	/** 商品ID */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="item_id")
-	@NotFound(action=NotFoundAction.IGNORE)
 	private BusiItem busiItem;
 	
 	/** 商品数量 */
 	@Column(name="item_amount")
-	private String itemAmount;
+	private Integer itemAmount;
 	
 	/** 合计 */
 	@Column(name="item_sum")
@@ -51,6 +47,13 @@ public class BusiSalesItem implements IEntity<Integer> {
 	@Column(name="item_remarks")
 	private String itemRemarks;
 	
+	public BusiSalesItem() {}
+	
+	public BusiSalesItem(Integer salesItemId) {
+		super();
+		this.salesItemId = salesItemId;
+	}
+
 	public void setSalesItemId(Integer salesItemId) {
 		this.salesItemId = salesItemId;
 	}
@@ -75,14 +78,14 @@ public class BusiSalesItem implements IEntity<Integer> {
 		return busiItem;
 	}
 	
-	public void setItemAmount(String itemAmount) {
-		this.itemAmount = itemAmount;
-	}
-	
-	public String getItemAmount() {
+	public Integer getItemAmount() {
 		return itemAmount;
 	}
-	
+
+	public void setItemAmount(Integer itemAmount) {
+		this.itemAmount = itemAmount;
+	}
+
 	public void setItemSum(Integer itemSum) {
 		this.itemSum = itemSum;
 	}

@@ -50,6 +50,16 @@ public class BusiItem implements IEntity<Integer> {
 	@Column(name="item_type_key")
 	private String itemTypeKey;
 	
+	/** 库存数量 */
+	@Column(name="item_stock_amount")
+	private Integer itemStockAmount;
+	
+	public BusiItem() {}
+	
+	public BusiItem(Integer itemId) {
+		this.itemId = itemId;
+	}
+	
 	public void setItemId(Integer itemId) {
 		this.itemId = itemId;
 	}
@@ -114,6 +124,14 @@ public class BusiItem implements IEntity<Integer> {
 		return itemTypeKey;
 	}
 	
+	public Integer getItemStockAmount() {
+		return itemStockAmount;
+	}
+
+	public void setItemStockAmount(Integer itemStockAmount) {
+		this.itemStockAmount = itemStockAmount;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

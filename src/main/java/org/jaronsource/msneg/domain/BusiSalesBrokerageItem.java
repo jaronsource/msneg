@@ -1,19 +1,17 @@
 package org.jaronsource.msneg.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
-import javax.persistence.Transient;
-import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
+import com.ccesun.framework.core.dao.support.IEntity;
 
 @Entity
 @Table(name="busi_sales_brokerage_item")
@@ -30,14 +28,12 @@ public class BusiSalesBrokerageItem implements IEntity<Integer> {
 	/** 提成单ID */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="brok_id")
-	@NotFound(action=NotFoundAction.IGNORE)
 	private BusiSalesBrokerage busiSalesBrokerage;
 	
 	/** 商品ID */
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="item_id")
-	@NotFound(action=NotFoundAction.IGNORE)
-	private BusiItem busiItem;
+	@JoinColumn(name="sales_item_id")
+	private BusiSalesItem busiSaleItem;
 	
 	/** 返销 */
 	@Column(name="brok_return")
@@ -83,14 +79,14 @@ public class BusiSalesBrokerageItem implements IEntity<Integer> {
 		return busiSalesBrokerage;
 	}
 	
-	public void setBusiItem(BusiItem busiItem) {
-		this.busiItem = busiItem;
+	public BusiSalesItem getBusiSaleItem() {
+		return busiSaleItem;
 	}
-	
-	public BusiItem getBusiItem() {
-		return busiItem;
+
+	public void setBusiSaleItem(BusiSalesItem busiSaleItem) {
+		this.busiSaleItem = busiSaleItem;
 	}
-	
+
 	public void setBrokReturn(Integer brokReturn) {
 		this.brokReturn = brokReturn;
 	}

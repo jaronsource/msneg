@@ -97,6 +97,10 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 	@Column(name="create_time")
 	private String createTime;
 	
+	/** 结算方式 */
+	@Column(name="clear_method_key")
+	private String clearMethodKey;
+	
 	public void setMakeupId(Integer makeupId) {
 		this.makeupId = makeupId;
 	}
@@ -241,6 +245,14 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 		return createTime;
 	}
 	
+	public String getClearMethodKey() {
+		return clearMethodKey;
+	}
+
+	public void setClearMethodKey(String clearMethodKey) {
+		this.clearMethodKey = clearMethodKey;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

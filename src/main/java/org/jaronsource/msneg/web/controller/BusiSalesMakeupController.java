@@ -15,10 +15,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.jaronsource.msneg.domain.BusiSalesMakeup;
+import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesMakeupService;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
+import com.ccesun.framework.plugins.security.SecurityTokenHolder;
+import com.ccesun.framework.util.DateUtils;
 
 @RequestMapping("/busiSalesMakeup")
 @Controller
@@ -64,13 +67,17 @@ public class BusiSalesMakeupController extends BaseController {
     
 	@RequestMapping(value = "/create", method = POST)
     public String create(@Valid BusiSalesMakeup busiSalesMakeup, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("busiSalesMakeup", busiSalesMakeup);
-            return "busiSalesMakeup/create";
-        }
+        //if (bindingResult.hasErrors()) {
+        //   model.addAttribute("busiSalesMakeup", busiSalesMakeup);
+        //   return "busiSalesMakeup/create";
+        //}
 
-        busiSalesMakeupService.save(busiSalesMakeup);
-        return "redirect:/busiSalesMakeup/" + busiSalesMakeup.getMakeupId() + "/show";
+		SysUser currentUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		busiSalesMakeup.setSysUser(currentUser);
+		String currentTime = DateUtils.currentDateTime();
+		busiSalesMakeup.setCreateTime(currentTime);
+		busiSalesMakeupService.save(busiSalesMakeup);
+        return "busiSalesMakeup/create";
     }	
 	
 	@RequestMapping(value = "/{makeupId}/show", method = GET)

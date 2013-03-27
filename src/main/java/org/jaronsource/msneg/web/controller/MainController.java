@@ -50,7 +50,7 @@ public class MainController extends BaseController {
 		try {
 			String userName = loginForm.getUsername();
 			String password = loginForm.getPasswd();
-			Boolean rememberme = Boolean.FALSE;
+			Boolean rememberme = Boolean.TRUE;
 			String validateCode = loginForm.getValidateCode();
 			
 			securityService.login(request, response, new String[] {userName}, password, rememberme, validateCode);
@@ -71,7 +71,7 @@ public class MainController extends BaseController {
 			model.addAttribute("errMsg", errMsg);
 			return "main/login";
 		}
-		return "redirect:/main";
+		return "main/index";
 	}
 	
 	@RequestMapping(value="/logout", method = {GET})
@@ -83,6 +83,16 @@ public class MainController extends BaseController {
 	@RequestMapping(value="/sales", method = {GET})
 	public String sales() {
 		return "main/sales";
+	}
+	
+	@RequestMapping(value="/orders", method = {GET})
+	public String orders() {
+		return "main/orders";
+	}
+	
+	@RequestMapping(value="/bills", method = {GET})
+	public String bills() {
+		return "main/bills";
 	}
 	
 }

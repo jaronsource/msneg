@@ -1,7 +1,18 @@
 package org.jaronsource.msneg.web.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import java.util.List;
+
 import javax.validation.Valid;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.jaronsource.msneg.domain.BusiClient;
+import org.jaronsource.msneg.service.BusiClientService;
+import org.jaronsource.msneg.utils.PhoneUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +22,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import org.jaronsource.msneg.domain.BusiClient;
-import org.jaronsource.msneg.service.BusiClientService;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
@@ -84,6 +93,31 @@ public class BusiClientController extends BaseController {
     public String remove(@PathVariable("clientId") Integer clientId, Model model) {
         busiClientService.remove(clientId);
         return "redirect:/busiClient";
+    }
+    
+    @RequestMapping(value = "/ajaxFindClient", method = GET)
+    @ResponseBody
+    public JSONArray ajaxFindClient(@RequestParam("term") String term, Model model) {
+        List<BusiClient> busiClientList = busiClientService.findClientByTerm(term);
+        
+    	JSONArray result = new JSONArray();
+    	for (BusiClient busiClient : busiClientList) {
+    		JSONObject jsonObject = new JSONObject();
+    		jsonObject.element("label", String.format("%s %s %s", 
+    				busiClient.getClientName(), 
+    				PhoneUtils.decode(busiClient.getAreacode(), busiClient.getPhone()), 
+    				busiClient.getCellPhone()));
+    		jsonObject.element("value", busiClient.getClientName());
+    		jsonObject.element("clientId", busiClient.getClientId());
+    		jsonObject.element("clientName", busiClient.getClientName());
+    		jsonObject.element("address", busiClient.getAddress());
+    		jsonObject.element("areacode", busiClient.getAreacode());
+    		jsonObject.element("phone", busiClient.getPhone());
+    		jsonObject.element("cellPhone", busiClient.getCellPhone());
+    		result.add(jsonObject);
+		}
+    	
+    	return result;
     }
 }
 

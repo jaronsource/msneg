@@ -7,11 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
 
 @Entity
 @Table(name="sys_dept")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class SysDept implements IEntity<Integer> {
 	
 	private static final long serialVersionUID = 1835069915L;

@@ -49,3 +49,42 @@ values ('serv_installmethod', 'B', '托管安装');
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('serv_installmethod', 'C', '店付');
 
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'return_reason', '返销事由');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('return_reason', 'A', '剩余');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('return_reason', 'B', '破损');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('return_reason', 'C', '误差');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('return_reason', 'D', '工时');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('return_reason', 'E', '协商');
+
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'clear_method', '结算形式');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('clear_method', 'A', '现金');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('clear_method', 'B', '财务挂记');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('clear_method', 'C', '内部抵扣');
+
+
+
+ 	
+
+
+
+

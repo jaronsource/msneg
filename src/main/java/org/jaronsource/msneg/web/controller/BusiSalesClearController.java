@@ -15,10 +15,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.jaronsource.msneg.domain.BusiSalesClear;
+import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesClearService;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
+import com.ccesun.framework.plugins.security.SecurityTokenHolder;
 
 @RequestMapping("/busiSalesClear")
 @Controller
@@ -68,9 +70,12 @@ public class BusiSalesClearController extends BaseController {
             model.addAttribute("busiSalesClear", busiSalesClear);
             return "busiSalesClear/create";
         }
-
+        
+        SysUser currentUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+        busiSalesClear.setSysUser(currentUser);
+        
         busiSalesClearService.save(busiSalesClear);
-        return "redirect:/busiSalesClear/" + busiSalesClear.getClearId() + "/show";
+        return "busiSalesClear/create";
     }	
 	
 	@RequestMapping(value = "/{clearId}/show", method = GET)

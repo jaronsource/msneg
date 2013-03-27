@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -19,6 +21,7 @@ import com.ccesun.framework.plugins.security.domain.IPermission;
 
 @Entity
 @Table(name="sys_func")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class SysFunc implements IEntity<Integer>, IPermission {
 	
 	private static final long serialVersionUID = 730872035L;

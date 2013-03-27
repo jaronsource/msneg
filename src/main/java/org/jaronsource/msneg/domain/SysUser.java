@@ -2,7 +2,6 @@ package org.jaronsource.msneg.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -10,12 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.ccesun.framework.core.dao.support.EntityUtils;
 import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.plugins.security.domain.ISecurityUser;
 
 @Entity
 @Table(name="sys_user")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class SysUser implements IEntity<Integer>, ISecurityUser {
 	
 	private static final long serialVersionUID = 933022119L;
@@ -27,7 +30,7 @@ public class SysUser implements IEntity<Integer>, ISecurityUser {
 	private Integer userId;
 	
 	/** 部门 */
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="dept_id")
 	private SysDept dept;
 	
