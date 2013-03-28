@@ -3,63 +3,92 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="pg" uri="http://www.ccesun.com/tags/pager" %>
-<div class="row">
-    <spring:url value="/busiOrders" var="baseUrl"/>  
-    
-    <div class="span10"> 
-    	<h3>列表</h3>
-	    <form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
-	    	<form:input path="form['ordersId_eq_int']" id="search_ordersId" placeholder="主键"/>
-	    	<form:input path="form['busiClient_eq']" id="search_busiClient" placeholder="客户ID"/>
-	    	<form:input path="form['ordersTypeKeys_eq']" id="search_ordersTypeKeys" placeholder="定金类型"/>
-	    	<form:input path="form['ordersRemarks_eq']" id="search_ordersRemarks" placeholder="备注"/>
-	    	<form:input path="form['ordersUseKey_eq']" id="search_ordersUseKey" placeholder="定金用途"/>
-	    	<form:input path="form['ordersReturnKey_eq']" id="search_ordersReturnKey" placeholder="定金返还"/>
-	    	<form:input path="form['ordersSum_eq_int']" id="search_ordersSum" placeholder="总金额"/>
-	    	<form:input path="form['ordersCash_eq_int']" id="search_ordersCash" placeholder="现金"/>
-	    	<form:input path="form['ordersCard_eq_int']" id="search_ordersCard" placeholder="刷卡"/>
-	    	<form:input path="form['otherRemarks_eq']" id="search_otherRemarks" placeholder="其他信息部分"/>
-	    	<button type="submit" class="btn"><i class="icon-search"></i> 搜索</button>
-	    </form:form>
-    
-	    <table class="table table-bordered table-hover"> 
-	    	<tr>
-		    	<td>主键</td>
-		    	<td>客户ID</td>
-		    	<td>定金类型</td>
-		    	<td>备注</td>
-		    	<td>定金用途</td>
-		    	<td>定金返还</td>
-		    	<td>总金额</td>
-		    	<td>现金</td>
-		    	<td>刷卡</td>
-		    	<td>其他信息部分</td>
-		    	<td>操作</td>
-	    	</tr>
-	    	<c:forEach items="${busiOrdersPage.content}" var="entry">
-	    	<tr>
-		    	<td>${entry.ordersId}</td>
-		    	<td>${entry.busiClient}</td>
-		    	<td>${entry.ordersTypeKeys}</td>
-		    	<td>${entry.ordersRemarks}</td>
-		    	<td>${entry.ordersUseKey}</td>
-		    	<td>${entry.ordersReturnKey}</td>
-		    	<td>${entry.ordersSum}</td>
-		    	<td>${entry.ordersCash}</td>
-		    	<td>${entry.ordersCard}</td>
-		    	<td>${entry.otherRemarks}</td>
-		    	<td>
-		    		<a href="${baseUrl}/${entry.ordersId}/show" class="btn btn-small"><i class="icon-eye-open"></i></a> 
-		    		<a href="${baseUrl}/${entry.ordersId}/update" class="btn btn-small"><i class="icon-edit"></i></a> 
-		    		<a href="${baseUrl}/${entry.ordersId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')"><i class="icon-remove-sign"></i></a> 
-		    	</td>
-	    	</tr>	
-	    	</c:forEach>
-	    </table> 
-    	
-    	<pg:pager url="${baseUrl}" page="${busiOrdersPage}" />
-    	<%@ include file="/WEB-INF/pagers/pager-default.jsp" %>
-    	<a href="${baseUrl}/create" class="btn"><i class="icon-file"></i> 新建</a>
-    </div>
+<%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
 
+<dict:loadDictList type="orders_state" var="orders_state" />
+<div class="title_box">
+		<h2>定金单管理</h2>
+	</div>
+	<div class="customer">
+	<form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
+		<p>手工输入定金单号
+			<input type="text" name="" class="input_text w_172" value="" id="" />
+			<form:input path="form['ordersCode_blk']" id="search_ordersCode" cssClass="input_text w_172" placeholder="定金单号"/>
+			快速查找客户：
+			<form:input path="form['client.cellPhone_blk']" id="search_clientCellPhone" cssClass="input_text w_172" placeholder="客户电话号码"/>
+			<form:hidden path="form['ordersStateKey_eq']" id="search_ordersStateKey" />
+			<form:hidden path="form['sysDept.deptId_eq_int']" id="search_deptId" />
+			<form:hidden path="form['createTime_let']" id="search_createTime" />
+			<button type="submit" class="btn"><i class="icon-search"></i> 搜索</button>
+		</p>
+	</form:form>
+	</div>
+	<div class="customer">
+	<h4><a href="javascript: void(0)" id="toggleFilter">定金单筛选</a></h4>
+	<dl>
+		<dt>类型筛选：</dt>
+		<dd><a href="javascript: void(0)" class="ordersStateKey" value="">全部</a>
+		<c:forEach items="${orders_state}" var="entry" varStatus="status">
+			<a href="javascript: void(0)" class="ordersStateKey" value="${entry.dictKey}">${entry.dictValue0}</a>
+		</c:forEach>
+		</dd> 
+	</dl>
+	<dl>
+		<dt>部门筛选：</dt>
+		<dd><a href="javascript: void(0)" >全部部门</a> <a href="javascript: void(0)">销售一部</a> <a href="javascript: void(0)">销售二部</a> <a href="javascript: void(0)">销售三部</a></dd>
+	</dl>
+	<dl>
+		<dt>时间筛选：</dt>
+		<dd><a href="javascript: void(0)">所有历史时间</a> <a href="javascript: void(0)" >最近一周</a> <a href="javascript: void(0)">最近一个月</a> <a href="javascript: void(0)">最近三个月</a> </dd>
+	</dl>
+	<script>
+		$('#toggleFilter').toggle(function() {
+				$('dl').show();
+			}, function() {
+				$('dl').hide();
+			});
+	</script>
+</div>
+<div class="order_box"> 
+	<!--box-->
+<div class="com_box">
+	<h3 class="title_line">订单信息列表<a href="#this" class="toggle_table">折叠</a></h3>
+	<table width="100%" border="1" class="tbl_l" cellspacing="0" cellpadding="0">
+			<colgroup>
+			<col width="100" />
+			<col width="100" />
+			<col width="40%" />
+			<col width="80" />
+			<col width="150" />
+			<col width="100" />
+			<col width="*" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th>日期/时间</th>
+				<th>订单号</th>
+				<th>单据简明</th>
+				<th>单据状态</th>
+				<th>部门</th>
+				<th>经手人</th>
+				<th>快速操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${busiOrdersPage.content}" var="entry">
+			<tr>
+				<td>${entry.createTime }</td>
+				<td><a href="#this">${entry.ordersCode }</a></td>
+				<td class="tl">${entry.ordersRemark }</td>
+				<td><dict:lookupDictValue key="${entry.orderStateKey }" type="orders_state" /></td>
+				<td class="tl">${entry.sysDept.deptName }</td>
+				<td class="tl">${entry.sysUser.realName }</td>
+				<td><input type="button" value="使用" onclick="window.location='useOrders';" /><input type="button" value="退回" onclick="window.location='returnOrders'" /></td>
+			</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	<pg:pager url="${baseUrl}" page="${busiSalesPage}" />
+    <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>			
+</div>
 </div>

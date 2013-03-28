@@ -1,7 +1,16 @@
 package org.jaronsource.msneg.web.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import java.util.List;
+
 import javax.validation.Valid;
 
+import org.jaronsource.msneg.domain.BusiOrders;
+import org.jaronsource.msneg.domain.SysDept;
+import org.jaronsource.msneg.service.BusiOrdersService;
+import org.jaronsource.msneg.service.SysDeptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import org.jaronsource.msneg.domain.BusiOrders;
-import org.jaronsource.msneg.service.BusiOrdersService;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
@@ -29,11 +34,18 @@ public class BusiOrdersController extends BaseController {
 	@Autowired
 	private BusiOrdersService busiOrdersService;
 	
+	@Autowired
+	private SysDeptService sysDeptService;
+	
 	@RequestMapping(method = {GET, POST})
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
+		List<SysDept> depts = sysDeptService.findSalesByType("A");
+		//String 
+		
 		Page<BusiOrders> busiOrdersPage = busiOrdersService.findPage(searchForm);
 		model.addAttribute("busiOrdersPage", busiOrdersPage);
+		model.addAttribute("depts", depts);
 		
 		return "busiOrders/list";
 	}

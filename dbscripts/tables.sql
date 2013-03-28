@@ -505,6 +505,7 @@ DROP TABLE IF EXISTS `msneg`.`busi_orders` ;
 
 CREATE  TABLE IF NOT EXISTS `msneg`.`busi_orders` (
   `orders_id` INT NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `orders_code` VARCHAR(255) NOT NULL COMMENT '定金单编号' ,
   `client_id` INT NOT NULL COMMENT '客户ID' ,
   `orders_type_keys` VARCHAR(255) NULL COMMENT '定金类型' ,
   `orders_remarks` VARCHAR(255) NULL COMMENT '备注' ,
@@ -514,6 +515,7 @@ CREATE  TABLE IF NOT EXISTS `msneg`.`busi_orders` (
   `orders_cash` INT NULL COMMENT '现金' ,
   `orders_card` INT NULL COMMENT '刷卡' ,
   `other_remarks` VARCHAR(255) NULL COMMENT '其他信息部分' ,
+  `orders_state_key` VARCHAR(255) NULL COMMENT '定金单状态' ,
   PRIMARY KEY (`orders_id`) ,
   INDEX `fk_busi_orders_busi_client1_idx` (`client_id` ASC) ,
   CONSTRAINT `fk_busi_orders_busi_client1`

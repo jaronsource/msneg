@@ -1,19 +1,18 @@
 package org.jaronsource.msneg.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Table;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.Transient;
-import javax.persistence.ManyToOne;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.ccesun.framework.core.annotation.DocDescription;
-import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
+import com.ccesun.framework.core.dao.support.IEntity;
 
 @Entity
 @Table(name="busi_orders")
@@ -27,6 +26,11 @@ public class BusiOrders implements IEntity<Integer> {
 	@GeneratedValue
 	@Column(name="orders_id")
 	private Integer ordersId;
+	
+	/***/
+	@DocDescription("定金单编号")
+	@Column(name="orders_code")
+	private String ordersCode;
 	
 	/***/
 	@DocDescription("客户ID")
@@ -74,6 +78,20 @@ public class BusiOrders implements IEntity<Integer> {
 	@Column(name="other_remarks")
 	private String otherRemarks;
 	
+	@DocDescription("定金单状态")
+	@Column(name="orders_state_key")
+	private String ordersStateKey;
+	
+	@DocDescription("定金单状态")
+	@JoinColumn(name="orders_state_key")
+	private SysDept sysDept;
+	
+	@DocDescription("定金单状态")
+	@JoinColumn(name="orders_state_key")
+	private SysUser sysUser;
+	
+	private String createTime;
+	
 	public void setOrdersId(Integer ordersId) {
 		this.ordersId = ordersId;
 	}
@@ -82,6 +100,14 @@ public class BusiOrders implements IEntity<Integer> {
 		return ordersId;
 	}
 	
+	public String getOrdersCode() {
+		return ordersCode;
+	}
+
+	public void setOrdersCode(String ordersCode) {
+		this.ordersCode = ordersCode;
+	}
+
 	public void setBusiClient(BusiClient busiClient) {
 		this.busiClient = busiClient;
 	}
@@ -154,6 +180,38 @@ public class BusiOrders implements IEntity<Integer> {
 		return otherRemarks;
 	}
 	
+	public String getOrdersStateKey() {
+		return ordersStateKey;
+	}
+
+	public void setOrdersStateKey(String ordersStateKey) {
+		this.ordersStateKey = ordersStateKey;
+	}
+
+	public SysDept getSysDept() {
+		return sysDept;
+	}
+
+	public void setSysDept(SysDept sysDept) {
+		this.sysDept = sysDept;
+	}
+
+	public SysUser getSysUser() {
+		return sysUser;
+	}
+
+	public void setSysUser(SysUser sysUser) {
+		this.sysUser = sysUser;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

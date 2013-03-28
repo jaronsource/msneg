@@ -82,6 +82,30 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('clear_method', 'C', '内部抵扣');
 
 
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'orders_state', '定金单状态');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_state', 'A', '未使用');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_state', 'B', '已使用');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_state', 'C', '已退');
+
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'dept_type', '部门类型');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('dept_type', 'A', '销售');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('dept_type', 'B', '财务');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('dept_type', 'C', '仓库');
 
  	
 

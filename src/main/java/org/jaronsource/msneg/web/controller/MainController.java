@@ -85,11 +85,6 @@ public class MainController extends BaseController {
 		return "main/sales";
 	}
 	
-	@RequestMapping(value="/orders", method = {GET})
-	public String orders() {
-		return "main/orders";
-	}
-	
 	@RequestMapping(value="/bills", method = {GET})
 	public String bills() {
 		return "main/bills";
