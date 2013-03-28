@@ -35,11 +35,15 @@
 	</dl>
 	<dl>
 		<dt>部门筛选：</dt>
-		<dd><a href="javascript: void(0)" >全部部门</a> <a href="javascript: void(0)">销售一部</a> <a href="javascript: void(0)">销售二部</a> <a href="javascript: void(0)">销售三部</a></dd>
+		<dd><a href="javascript: void(0)" class="deptId" value="" >全部部门</a> 
+		<c:forEach items="${depts}" var="entry" varStatus="status">
+			<a href="javascript: void(0)" class="deptId" value="${entry.deptId}">${entry.deptName}</a>
+		</c:forEach>
+		</dd>
 	</dl>
 	<dl>
 		<dt>时间筛选：</dt>
-		<dd><a href="javascript: void(0)">所有历史时间</a> <a href="javascript: void(0)" >最近一周</a> <a href="javascript: void(0)">最近一个月</a> <a href="javascript: void(0)">最近三个月</a> </dd>
+		<dd><a href="javascript: void(0)" class="createTime" value="">所有历史时间</a> <a href="javascript: void(0)" class="createTime" value="${weekTime }" >最近一周</a> <a href="javascript: void(0)" class="createTime" value="${monthTime }">最近一个月</a> <a href="javascript: void(0)" class="createTime" value="${threeMonthTime}">最近三个月</a> </dd>
 	</dl>
 	<script>
 		$('#toggleFilter').toggle(function() {
@@ -88,7 +92,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<pg:pager url="${baseUrl}" page="${busiSalesPage}" />
+	<pg:pager url="${baseUrl}" page="${busiOrdersPage}" />
     <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>			
 </div>
 </div>

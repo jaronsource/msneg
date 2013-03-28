@@ -1,4 +1,8 @@
-insert into sys_dept (dept_name) values ('部门一');
+insert into sys_dept (dept_name, dept_type_key) values ('销售一部', 'A');
+insert into sys_dept (dept_name, dept_type_key) values ('销售二部', 'A');
+insert into sys_dept (dept_name, dept_type_key) values ('销售三部', 'A');
+insert into sys_dept (dept_name, dept_type_key) values ('销售四部', 'A');
+
 insert into sys_user (dept_id, user_name, real_name, passwd) values (1, 'admin', 'admin', 'admin');
 
 insert into busi_item

@@ -3,6 +3,7 @@ package org.jaronsource.msneg.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
+import com.ccesun.framework.util.DateUtils;
 
 @RequestMapping("/busiOrders")
 @Controller
@@ -41,11 +43,17 @@ public class BusiOrdersController extends BaseController {
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
 		List<SysDept> depts = sysDeptService.findSalesByType("A");
-		//String 
+		Date now = new Date();
+		String weekTime = DateUtils.format(DateUtils.addDays(now, 7), DateUtils.PATTERN_DATETIME) ;
+		String monthTime = DateUtils.format(DateUtils.addDays(now, 30), DateUtils.PATTERN_DATETIME) ;
+		String threeMonthTime = DateUtils.format(DateUtils.addDays(now, 90), DateUtils.PATTERN_DATETIME) ;
 		
 		Page<BusiOrders> busiOrdersPage = busiOrdersService.findPage(searchForm);
 		model.addAttribute("busiOrdersPage", busiOrdersPage);
 		model.addAttribute("depts", depts);
+		model.addAttribute("weekTime", weekTime);
+		model.addAttribute("monthTime", monthTime);
+		model.addAttribute("threeMonthTime", threeMonthTime);
 		
 		return "busiOrders/list";
 	}

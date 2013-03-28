@@ -24,7 +24,7 @@ public class SysDeptServiceImpl extends SearchFormSupportService<SysDept, Intege
 	@Override
 	public List<SysDept> findSalesByType(String deptType) {
 
-		String jpql = "select o from SysDept o where o.deptType = ?";
+		String jpql = "select o from SysDept o where o.deptTypeKey = ?";
 		return getDao().find(jpql, deptType);
 	}
 
