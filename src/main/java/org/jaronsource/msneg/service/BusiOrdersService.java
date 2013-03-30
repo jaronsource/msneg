@@ -5,4 +5,6 @@ import com.ccesun.framework.core.service.ISearchFormSupportService;
 
 public interface BusiOrdersService extends ISearchFormSupportService<BusiOrders, Integer> {
 
+	String generateOrdersCode();
+
 }

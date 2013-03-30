@@ -62,6 +62,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		busiSales.setSysDept(currentUser.getDept());
 		busiSales.setSysUser(currentUser);
 		busiSales.setCreateTime(DateUtils.currentDateTime());
+		busiSales.setSalesStateKey("A");
 		save(busiSales);
 		
 		for (BusiSalesItem busiSalesItem : busiSalesItems) {

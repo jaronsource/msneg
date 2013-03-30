@@ -11,46 +11,74 @@
 	</div>
 	<div class="customer">
 	<form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
-		<p>手工输入定金单号
-			<input type="text" name="" class="input_text w_172" value="" id="" />
+		<p>定金单号：
 			<form:input path="form['ordersCode_blk']" id="search_ordersCode" cssClass="input_text w_172" placeholder="定金单号"/>
-			快速查找客户：
-			<form:input path="form['client.cellPhone_blk']" id="search_clientCellPhone" cssClass="input_text w_172" placeholder="客户电话号码"/>
+			客户电话号码：
+			<form:input path="form['busiClient.cellPhone_blk']" id="search_busiClientCellPhone" cssClass="input_text w_172" placeholder="客户电话号码"/>
 			<form:hidden path="form['ordersStateKey_eq']" id="search_ordersStateKey" />
 			<form:hidden path="form['sysDept.deptId_eq_int']" id="search_deptId" />
-			<form:hidden path="form['createTime_let']" id="search_createTime" />
+			<form:hidden path="form['createTime_elt']" id="search_createTime" />
 			<button type="submit" class="btn"><i class="icon-search"></i> 搜索</button>
 		</p>
 	</form:form>
 	</div>
 	<div class="customer">
-	<h4><a href="javascript: void(0)" id="toggleFilter">定金单筛选</a></h4>
+	<h4>定金单筛选<a href="#this" class="toggle_table">折叠</a></h4> 
 	<dl>
 		<dt>类型筛选：</dt>
-		<dd><a href="javascript: void(0)" class="ordersStateKey" value="">全部</a>
+		<dd><a href="javascript: void(0)" class="ordersStateKey filter" value="">全部</a>
 		<c:forEach items="${orders_state}" var="entry" varStatus="status">
-			<a href="javascript: void(0)" class="ordersStateKey" value="${entry.dictKey}">${entry.dictValue0}</a>
+			<a href="javascript: void(0)" class="ordersStateKey filter" value="${entry.dictKey}">${entry.dictValue0}</a>
 		</c:forEach>
 		</dd> 
 	</dl>
 	<dl>
 		<dt>部门筛选：</dt>
-		<dd><a href="javascript: void(0)" class="deptId" value="" >全部部门</a> 
+		<dd><a href="javascript: void(0)" class="deptId filter" value="" >全部部门</a> 
 		<c:forEach items="${depts}" var="entry" varStatus="status">
-			<a href="javascript: void(0)" class="deptId" value="${entry.deptId}">${entry.deptName}</a>
+			<a href="javascript: void(0)" class="deptId filter" value="${entry.deptId}">${entry.deptName}</a>
 		</c:forEach>
 		</dd>
 	</dl>
 	<dl>
 		<dt>时间筛选：</dt>
-		<dd><a href="javascript: void(0)" class="createTime" value="">所有历史时间</a> <a href="javascript: void(0)" class="createTime" value="${weekTime }" >最近一周</a> <a href="javascript: void(0)" class="createTime" value="${monthTime }">最近一个月</a> <a href="javascript: void(0)" class="createTime" value="${threeMonthTime}">最近三个月</a> </dd>
+		<dd><a href="javascript: void(0)" class="createTime filter" value="">所有历史时间</a> <a href="javascript: void(0)" class="createTime filter" value="${weekTime }" >最近一周</a> <a href="javascript: void(0)" class="createTime filter" value="${monthTime }">最近一个月</a> <a href="javascript: void(0)" class="createTime filter" value="${threeMonthTime}">最近三个月</a> </dd>
 	</dl>
 	<script>
-		$('#toggleFilter').toggle(function() {
-				$('dl').show();
-			}, function() {
-				$('dl').hide();
-			});
+		$('.ordersStateKey').each(function() {
+			var value = $('#search_ordersStateKey').val();
+			if (value == $(this).attr('value'))
+				$(this).addClass('curr');
+		});
+		
+		$('.deptId').each(function() {
+			var value = $('#search_deptId').val();
+			if (value == $(this).attr('value'))
+				$(this).addClass('curr');
+		});
+		
+		$('.createTime').each(function() {
+			var value = $('#search_createTime').val();
+			if (value == $(this).attr('value'))
+				$(this).addClass('curr');
+		});
+		
+		$('.filter').click(function() {
+			$(this).siblings().removeClass('curr');
+			$(this).addClass('curr');
+		});
+		
+		$('.ordersStateKey').click(function() {
+			$('#search_ordersStateKey').val($(this).attr('value'));
+		});
+		
+		$('.deptId').click(function() {
+			$('#search_deptId').val($(this).attr('value'));
+		});
+		
+		$('.createTime').click(function() {
+			$('#search_createTime').val($(this).attr('value'));
+		});
 	</script>
 </div>
 <div class="order_box"> 
@@ -59,13 +87,13 @@
 	<h3 class="title_line">订单信息列表<a href="#this" class="toggle_table">折叠</a></h3>
 	<table width="100%" border="1" class="tbl_l" cellspacing="0" cellpadding="0">
 			<colgroup>
+			<col width="200" />
 			<col width="100" />
-			<col width="100" />
-			<col width="40%" />
+			<col width="*" />
 			<col width="80" />
 			<col width="150" />
 			<col width="100" />
-			<col width="*" />
+			<col width="120" />
 		</colgroup>
 		<thead>
 			<tr>
@@ -83,16 +111,21 @@
 			<tr>
 				<td>${entry.createTime }</td>
 				<td><a href="#this">${entry.ordersCode }</a></td>
-				<td class="tl">${entry.ordersRemark }</td>
-				<td><dict:lookupDictValue key="${entry.orderStateKey }" type="orders_state" /></td>
+				<td class="tl">${entry.ordersRemarks }</td>
+				<td><dict:lookupDictValue key="${entry.ordersStateKey }" type="orders_state" /></td>
 				<td class="tl">${entry.sysDept.deptName }</td>
 				<td class="tl">${entry.sysUser.realName }</td>
-				<td><input type="button" value="使用" onclick="window.location='useOrders';" /><input type="button" value="退回" onclick="window.location='returnOrders'" /></td>
+				<td><input type="button" value="使用" onclick="window.location='busiOrders/useOrders?ordersId=${entry.ordersId }';" /><input type="button" value="退回" onclick="window.location='busiOrders/returnOrders?ordersId=${entry.ordersId }'" /></td>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<pg:pager url="${baseUrl}" page="${busiOrdersPage}" />
-    <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>			
+	<div class="paging"> 
+		<pg:pager url="${baseUrl}" page="${busiOrdersPage}" />
+	    <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>	
+	    <div class="sys_btnBox">
+			<input type="button" value="创建新定金单" onclick="window.location='busiOrders/create'" />
+		</div>	
+	</div>	
 </div>
 </div>

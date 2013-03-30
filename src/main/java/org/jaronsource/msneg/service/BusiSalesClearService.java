@@ -5,4 +5,5 @@ import com.ccesun.framework.core.service.ISearchFormSupportService;
 
 public interface BusiSalesClearService extends ISearchFormSupportService<BusiSalesClear, Integer> {
 
+	long countBySalesId(Integer salesId);
 }

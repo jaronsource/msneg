@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<project name="msneg" default="initdb" basedir=".">
+	
+	<property environment="env" />
+	<property file="src/main/resources/jdbc.properties" />
+	
+	<target name="initdb">
+		<sql 
+			driver="${jdbc.driverClassName}" 
+			url="${jdbc.url}" 
+			userid="${jdbc.username}" 
+			password="${jdbc.password}" 
+			onerror="continue">
+			
+			<classpath>
+				<pathelement location="${env.M2_REPO}/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar" />
+			</classpath>
+			
+			<!--<transaction src="dbscripts/tables.sql" />-->
+			<transaction src="dbscripts/init_dict.sql" />
+			<transaction src="dbscripts/init.sql" />
+		</sql>
+
+	</target>
+
+</project>

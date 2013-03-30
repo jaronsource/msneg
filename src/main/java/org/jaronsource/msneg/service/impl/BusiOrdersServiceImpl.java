@@ -19,4 +19,9 @@ public class BusiOrdersServiceImpl extends SearchFormSupportService<BusiOrders, 
 		return busiOrdersDao;
 	}
 
+	@Override
+	public String generateOrdersCode() {
+		return "12N1211B017";
+	}
+
 }

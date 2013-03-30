@@ -6,6 +6,9 @@ import org.jaronsource.msneg.service.BusiSalesMakeupService;
 import com.ccesun.framework.core.service.SearchFormSupportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.ccesun.framework.core.dao.support.IDao;
+import com.ccesun.framework.core.dao.support.QCriteria;
+import com.ccesun.framework.core.dao.support.QCriteria.Op;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,4 +22,10 @@ public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSal
 		return busiSalesMakeupDao;
 	}
 
+	@Override
+	public long countBySalesId(Integer salesId) {
+		QCriteria c = new QCriteria();
+		c.addEntry("busiSales.salesId", Op.EQ, salesId);
+		return count(c);
+	}
 }

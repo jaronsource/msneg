@@ -5,13 +5,13 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <div class="sales_index">
 	<ul>
-		<li><a href="${pageContext.request.contextPath }/busiSales/create"><img src="${pageContext.request.contextPath }/images/ico/ico_sale01.gif" width="159" height="168" alt="销售单" /></a></li>
-		<li><a href="${pageContext.request.contextPath }/busiSales/create"><img src="${pageContext.request.contextPath }/images/ico/ico_sale02.gif" width="159" height="168" alt="内售单" /></a></li>
+		<li><a href="${pageContext.request.contextPath }/busiSales/create?salesType=A"><img src="${pageContext.request.contextPath }/images/ico/ico_sale01.gif" width="159" height="168" alt="销售单" /></a></li>
+		<li><a href="${pageContext.request.contextPath }/busiSales/create?salesType=B"><img src="${pageContext.request.contextPath }/images/ico/ico_sale02.gif" width="159" height="168" alt="内售单" /></a></li>
 		<li><a href="${pageContext.request.contextPath }/busiSalesReturn/create"><img src="${pageContext.request.contextPath }/images/ico/ico_sale03.gif" width="159" height="168" alt="返售单" /></a></li>
 		</ul>
 		<ul><li><a href="${pageContext.request.contextPath }/busiSalesClear/create"><img src="${pageContext.request.contextPath }/images/ico/ico_sale04.gif" width="159" height="168" alt="结算单" /></a></li>
-		<li><a href="${pageContext.request.contextPath }/busiSalesWorking/create"><img src="${pageContext.request.contextPath }/images/ico/ico_sale05.gif" width="159" height="168" alt="工时单" /></a></li>
+		<li><a href="javascript: void(0)"><img src="${pageContext.request.contextPath }/images/ico/ico_sale05.gif" width="159" height="168" alt="工时单" style="opacity: 0.3" /></a></li>
 		<li><a href="${pageContext.request.contextPath }/busiSalesMakeup/create"><img src="${pageContext.request.contextPath }/images/ico/ico_sale06.gif" width="159" height="168" alt="补价单" /></a></li>
-		<li><a href="${pageContext.request.contextPath }/busiSalesBrokerage/create"><img src="${pageContext.request.contextPath }/images/ico/ico_sale07.gif" width="159" height="168" alt="提成单" /></a></li>
+		<li><a href="javascript: void(0)"><img src="${pageContext.request.contextPath }/images/ico/ico_sale07.gif" width="159" height="168" alt="提成单" style="opacity: 0.3"  /></a></li>
 	</ul>
 </div>

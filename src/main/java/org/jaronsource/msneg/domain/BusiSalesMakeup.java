@@ -1,19 +1,17 @@
 package org.jaronsource.msneg.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
-import javax.persistence.Transient;
-import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.ccesun.framework.core.dao.support.IEntity;
 import com.ccesun.framework.core.dao.support.EntityUtils;
+import com.ccesun.framework.core.dao.support.IEntity;
 
 @Entity
 @Table(name="busi_sales_makeup")
@@ -34,7 +32,6 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 	/** 经手人 */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
-	@NotFound(action=NotFoundAction.IGNORE)
 	private SysUser sysUser;
 	
 	/** 新增临时性损耗费用 */
@@ -100,6 +97,11 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 	/** 结算方式 */
 	@Column(name="clear_method_key")
 	private String clearMethodKey;
+	
+	/** 销售单 */
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="sales_id")
+	private BusiSales busiSales;
 	
 	public void setMakeupId(Integer makeupId) {
 		this.makeupId = makeupId;
@@ -251,6 +253,14 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 
 	public void setClearMethodKey(String clearMethodKey) {
 		this.clearMethodKey = clearMethodKey;
+	}
+
+	public BusiSales getBusiSales() {
+		return busiSales;
+	}
+
+	public void setBusiSales(BusiSales busiSales) {
+		this.busiSales = busiSales;
 	}
 
 	@Override

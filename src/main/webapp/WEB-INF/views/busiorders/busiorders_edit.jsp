@@ -2,74 +2,212 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<div class="row">
-    
-    <spring:url value="/busiOrders" var="baseUrl"/>    
-    
-    <c:set var="labelNew" value="新建" />
-    <c:set var="labelUpdate" value="更新" />
-    <spring:eval expression="busiOrders.ordersId == null ? labelNew:labelUpdate" var="formTitle"/>
-
-    <div class="span10">
-    <form:form modelAttribute="busiOrders" id="busiOrdersForm" method="post">
-		<fieldset>
-			<legend>${formTitle}</legend>
-	        <c:if test="${not empty message}">
-	            <div id="message" class="${message.type}">${message.message}</div>
-	        </c:if>
-	        <form:hidden path="ordersId" />
-	        
-	        <form:label path="busiClient">客户ID</form:label>
-	        <form:input path="busiClient" />
-	        <form:errors path="busiClient" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="ordersTypeKeys">定金类型</form:label>
-	        <form:input path="ordersTypeKeys" />
-	        <form:errors path="ordersTypeKeys" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="ordersRemarks">备注</form:label>
-	        <form:input path="ordersRemarks" />
-	        <form:errors path="ordersRemarks" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="ordersUseKey">定金用途</form:label>
-	        <form:input path="ordersUseKey" />
-	        <form:errors path="ordersUseKey" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="ordersReturnKey">定金返还</form:label>
-	        <form:input path="ordersReturnKey" />
-	        <form:errors path="ordersReturnKey" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="ordersSum">总金额</form:label>
-	        <form:input path="ordersSum" />
-	        <form:errors path="ordersSum" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="ordersCash">现金</form:label>
-	        <form:input path="ordersCash" />
-	        <form:errors path="ordersCash" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="ordersCard">刷卡</form:label>
-	        <form:input path="ordersCard" />
-	        <form:errors path="ordersCard" cssClass="error" element="div" />
-	        <p/>
-	        
-	        <form:label path="otherRemarks">其他信息部分</form:label>
-	        <form:input path="otherRemarks" />
-	        <form:errors path="otherRemarks" cssClass="error" element="div" />
-	        <p/>
-	        
-	        
-	        <button type="submit" class="btn btn-primary">提交</button>
-	        <button type="reset" class="btn">重置</button>
-	        <a href="${baseUrl}" class="btn">返回列表</a>
-        </fieldset>              
-    </form:form>   
-    </div>
-
+<%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
+<%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
+<dict:loadDictList type="orders_type" var="orders_type" />
+<dict:loadDictList type="orders_use" var="orders_use" />
+<dict:loadDictList type="orders_return" var="orders_return" />
+<security:securityUser var="user" />
+<div class="title_box">
+	<h2>开据定金单</h2>
+	<div class="sys_btnBox">
+		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<script>
+			$('#submitBtn').click(function() { $('#busiOrdersForm').submit(); });
+		</script>
+	</div>
 </div>
+<div class="customer">
+	<p>快速查找客户：<input type="text" name="clientPhone" class="input_text w_172" id="clientPhoneTerm" placeholder="请输入电话号码" /> <input type="button" value="确定" /></p>
+	<script>
+	$('#clientPhoneTerm').autocomplete(
+			{
+				source : function(request, response) {
+					
+					$.getJSON('${pageContext.request.contextPath}/busiClient/ajaxFindClient', request, function(data) {
+						response(data); 
+					});
+				}
+				,autoFocus: true
+				,select: function(event, ui) {
+					$('#clientId').val(ui.item.clientId);
+					$('#clientName').val(ui.item.clientName);
+					$('#address').val(ui.item.address);
+					$('#areacode').val(ui.item.areacode);
+					$('#phone').val(ui.item.phone);
+					$('#cellPhone').val(ui.item.cellPhone);
+				}
+				,open: function() { $('.ui-menu').width(300); } 
+			});
+	</script>
+</div>
+<form:form modelAttribute="busiOrders" id="busiOrdersForm">
+<form:hidden path="busiClient.clientId" id="clientId" />
+<form:hidden path="ordersCode" value="${ordersCode}" />
+<form:hidden path="ordersTypeKeys" id="ordersTypeKeys" />
+<div class="order_box">
+<!--box-->
+	<div class="com_box">
+		<h3 class="title_line">客户信息<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
+				<col width="15%" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>客户名称</th>
+					<td><form:input path="busiClient.clientName" cssClass="wb90 input_text" id="clientName"/></td>
+					<th>物业地址</th>
+					<td colspan="5"><form:input path="busiClient.address" cssClass="wb95 input_text" id="address"/></td>
+				</tr> 
+				<tr>
+					<th>联系电话</th>
+					<td><form:input path="busiClient.areacode" cssClass="w_40 input_text" id="areacode" /> - <form:input path="busiClient.phone" cssClass="w_70 input_text" id="phone" /></td>
+					<th>联系手机</th>
+					<td><form:input path="busiClient.cellPhone" cssClass="wb90 input_text" id="cellPhone"/></td>
+					<th>出单部门</th>
+					<td>${user.dept.deptName }</td>
+					<th>单据经手</th>
+					<td>${user.realName }</td>
+				</tr>
+				<tr>
+					<th>单据编号</th>
+					<td>${ordersCode }</td>
+					<th>相关备注</th>
+					<td colspan="5"><form:input path="ordersRemarks" cssClass="wb95 input_text" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+	<!--box-->
+	<div class="com_box">
+		<h3>预定/定金信息部分<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="10%" />
+				<col width="50%" />
+				<col width="10%" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>定金类型</th>
+					<td colspan="3">
+						<c:forEach items="${orders_type}" var="entry" varStatus="status">
+							<input type="checkbox" class="orders_type input" value="${entry.dictKey}" />${entry.dictValue0}
+						</c:forEach>
+					</td>
+					<script>
+						var keys = $('#ordersTypeKeys').val();
+						var keyArray = keys.split(',');
+						$.each(keyArray, function(index, value) {
+							$('.orders_type').each(function() {
+								if ($(this).val() == value) {
+									$(this).attr('checked', true);
+								}
+							});
+						});
+						
+						$('.orders_type').change(function() {
+							var keyArray = [];
+							$('.orders_type:checked').each(function() {
+								keyArray.push($(this).val());
+							});
+							$('#ordersTypeKeys').val(keyArray.join(','));
+						});
+					</script>
+				</tr>
+				<tr>
+					<th>信息填写</th>
+					<td colspan="3"><textarea name="textarea" style="height:200px" class="textarea" cols="" rows=""></textarea></td>
+							</tr>
+							<tr>
+								<th>定金用途</th>
+								<td>
+									<c:forEach items="${orders_use}" var="entry" varStatus="status">
+										<input type="radio" class="radio orders_use" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
+									</c:forEach>
+								</td>
+								<th>定金返还</th>
+								<td>
+									<c:forEach items="${orders_return}" var="entry" varStatus="status">
+										<input type="radio" class="radio orders_return" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
+									</c:forEach>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<!--//box-->
+	<!--box--><!--//box-->
+	
+	<!--box-->
+	<div class="com_box">
+		<h3>财务结算部分<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="10%" />
+				<col width="40%" />
+				<col width="40%" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>总金额</th>
+					<td><span class="money" id="ordersSumDisplay">￥ 0.00</span></td>
+					<input type="hidden" name="ordersSum" />
+					<td><input type="checkbox" id="checkCash" /> 现金 ￥ <input type="text" class="input_money" name="ordersCash" id="ordersCash" />  <input type="checkbox" id="checkCard" /> 刷卡 ￥ <input type="text" class="input_money" name="ordersCard" id="" /></td>
+					<script>
+						$('#checkCash').click(function() {
+							if ($(this).is(':checked')) { 
+								$('#feePrepayCash').attr('disabled', false);
+							} else {
+								$('#feePrepayCash').attr('disabled', true); 
+								$('#feePrepayCash').val('0.00');
+							}
+						});
+						$('#checkCard').click(function() {
+							if ($(this).is(':checked')) {
+								$('#feePrepayCard').attr('disabled', false);
+							} else {
+								$('#feePrepayCard').attr('disabled', true);
+								$('#feePrepayCard').val('0.00');
+							}
+						});
+						
+						$('#feePrepayCash, #feePrepayCard').keyup(feeRemain);
+					</script>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+	<!--box-->
+	<div class="com_box">
+		<h3>其他信息备注部分<a href="#this" class="toggle_table">折叠</a></h3>
+		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
+			<colgroup>
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<td><textarea name="otherRemarks" class="textarea" cols="" rows=""></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!--//box-->
+	<!--box--><!--//box-->
+</div>
+</form:form>

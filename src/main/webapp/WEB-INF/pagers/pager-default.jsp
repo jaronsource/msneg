@@ -18,7 +18,7 @@
     //isLastAvailable		末页是否可用
     //sp					参数的分隔符 & 或 ?
  -->
-<div class="pagination">
+
 	<ul>
 		<c:choose>
 			<c:when test="${isFirstAvailable eq true}">
@@ -53,4 +53,3 @@
 			</c:otherwise>
 		</c:choose>
 	</ul>
-</div>

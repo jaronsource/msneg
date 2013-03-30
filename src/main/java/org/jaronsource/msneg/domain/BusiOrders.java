@@ -82,14 +82,18 @@ public class BusiOrders implements IEntity<Integer> {
 	@Column(name="orders_state_key")
 	private String ordersStateKey;
 	
-	@DocDescription("定金单状态")
-	@JoinColumn(name="orders_state_key")
+	@DocDescription("部门")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="dept_id")
 	private SysDept sysDept;
 	
-	@DocDescription("定金单状态")
-	@JoinColumn(name="orders_state_key")
+	@DocDescription("经手人")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
 	private SysUser sysUser;
 	
+	@DocDescription("创建时间")
+	@Column(name="create_time")
 	private String createTime;
 	
 	public void setOrdersId(Integer ordersId) {

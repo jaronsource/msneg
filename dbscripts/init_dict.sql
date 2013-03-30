@@ -1,3 +1,17 @@
+set foreign_key_checks = 0;
+
+truncate table sys_dict;
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'sales_type', '商品类别');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_type', 'A', '外销');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_type', 'B', '内销');
+
+
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'item_type', '商品类别');
 
@@ -108,7 +122,68 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('dept_type', 'C', '仓库');
 
  	
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'orders_type', '定金类型');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_type', 'A', '量尺定金');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_type', 'B', '服务定金');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_type', 'C', '特价商品');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_type', 'D', '优惠折扣');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_type', 'E', '活动预定');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'orders_type', '定金类型');
 
 
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'orders_use', '定金用途');
 
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_use', 'A', '定金作为选购商品时的预付款');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_use', 'B', '定金作为选购商品时的尾款');
+
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'orders_return', '定金返还');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_return', 'A', '定金劵');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_return', 'B', '定金可退 ');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('orders_return', 'C', '定金不可退');
+
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'sales_state', '销售单状态');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_state', 'A', '已定');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_state', 'B', '已结算 ');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_state', 'C', '已备货');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_state', 'D', '已到货');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_state', 'E', '已安装');
+
+set foreign_key_checks = 1;
 

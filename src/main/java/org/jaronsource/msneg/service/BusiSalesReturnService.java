@@ -10,5 +10,7 @@ import com.ccesun.framework.core.service.ISearchFormSupportService;
 public interface BusiSalesReturnService extends ISearchFormSupportService<BusiSalesReturn, Integer> {
 
 	void save(BusiSalesReturn busiSalesReturn, List<BusiSalesReturnItem> busiSalesReturnItems);
+	
+	long countBySalesId(Integer salesId);
 
 }

@@ -135,6 +135,7 @@ function feeRemain() {
 <form:form modelAttribute="form" id="busiSalesForm">
 <form:hidden path="busiSales.busiClient.clientId" id="clientId"/>
 <form:hidden path="busiSales.salesCode" value="${salesCode}"/>
+<form:hidden path="busiSales.salesTypeKey" value="${param.salesType}"/>
 <div class="order_box">
 <!--box-->
 	<div class="com_box">

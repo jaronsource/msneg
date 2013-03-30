@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccesun.framework.core.dao.support.IDao;
+import com.ccesun.framework.core.dao.support.QCriteria;
+import com.ccesun.framework.core.dao.support.QCriteria.Op;
 import com.ccesun.framework.core.service.SearchFormSupportService;
 import com.ccesun.framework.plugins.security.SecurityTokenHolder;
 import com.ccesun.framework.util.DateUtils;
@@ -53,6 +55,13 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 			busiSalesReturnItemDao.save(busiSalesReturnItem);
 		}
 		
+	}
+	
+	@Override
+	public long countBySalesId(Integer salesId) {
+		QCriteria c = new QCriteria();
+		c.addEntry("busiSales.salesId", Op.EQ, salesId);
+		return count(c);
 	}
 
 }
