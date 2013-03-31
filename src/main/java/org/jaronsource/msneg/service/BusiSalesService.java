@@ -1,6 +1,7 @@
 package org.jaronsource.msneg.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesItem;
@@ -16,6 +17,8 @@ public interface BusiSalesService extends ISearchFormSupportService<BusiSales, I
 	List<BusiSales> findSalesByClientCellPhone(String term);
 	
 	void save(BusiSales busiSales, List<BusiSalesItem> busiSalesItems);
+
+	Map<String, Long> statis(Integer deptId, String salesType, String startTime, String endTime);
 
 
 

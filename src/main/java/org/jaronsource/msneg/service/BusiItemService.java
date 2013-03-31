@@ -9,4 +9,6 @@ public interface BusiItemService extends ISearchFormSupportService<BusiItem, Int
 
 	List<BusiItem> findItemByTypeAndTerm(String itemType, String term);
 
+	void changeStock(Integer itemId, Integer stock);
+
 }

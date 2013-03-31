@@ -19,8 +19,8 @@ public class SysDict implements IEntity<Integer> {
 	/** 主键 */
 	@Id
 	@GeneratedValue
-	@Column(name="dict_id")
-	private Integer dictId;
+	@Column(name="record_id")
+	private Integer recordId;
 	
 	/** 类型 */
 	@Column(name="dict_type")
@@ -50,14 +50,14 @@ public class SysDict implements IEntity<Integer> {
 	@Column(name="dict_value3")
 	private String dictValue3;
 	
-	public void setDictId(Integer dictId) {
-		this.dictId = dictId;
+	public Integer getRecordId() {
+		return recordId;
 	}
-	
-	public Integer getDictId() {
-		return dictId;
+
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
 	}
-	
+
 	public void setDictType(String dictType) {
 		this.dictType = dictType;
 	}
@@ -117,6 +117,6 @@ public class SysDict implements IEntity<Integer> {
 	@Override
 	@Transient
 	public boolean isNew() {
-		return EntityUtils.isNew(this.dictId);
+		return EntityUtils.isNew(this.recordId);
 	}
 }

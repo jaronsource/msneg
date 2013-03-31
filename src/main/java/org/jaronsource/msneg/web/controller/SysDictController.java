@@ -1,7 +1,12 @@
 package org.jaronsource.msneg.web.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import javax.validation.Valid;
 
+import org.jaronsource.msneg.domain.SysDict;
+import org.jaronsource.msneg.service.SysDictService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +16,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import org.jaronsource.msneg.domain.SysDict;
-import org.jaronsource.msneg.service.SysDictService;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
 
-@RequestMapping("/sysDict")
+@RequestMapping("/sysConfig/dict")
 @Controller
 public class SysDictController extends BaseController {
 
@@ -35,16 +36,16 @@ public class SysDictController extends BaseController {
 		Page<SysDict> sysDictPage = sysDictService.findPage(searchForm);
 		model.addAttribute("sysDictPage", sysDictPage);
 		
-		return "sysDict/list";
+		return "sysConfig/dict/list";
 	}
 	
-	@RequestMapping(value = "/{dictId}/update", method = GET)
+	@RequestMapping(value = "/{recordId}/update", method = GET)
     public String update(@PathVariable("dictId") Integer dictId, Model model) {
         model.addAttribute("sysDict", sysDictService.findByPk(dictId));
         return "sysDict/update";
 	}	
 	
-	@RequestMapping(value = "/{dictId}/update", method = POST)
+	@RequestMapping(value = "/{recordId}/update", method = POST)
     public String update(@Valid @ModelAttribute SysDict sysDict, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysDict", sysDict);
@@ -52,7 +53,7 @@ public class SysDictController extends BaseController {
         }
 
         sysDictService.save(sysDict);
-        return "redirect:/sysDict/" + sysDict.getDictId() + "/show";
+        return "redirect:/sysDict/" + sysDict.getRecordId() + "/show";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
@@ -70,7 +71,7 @@ public class SysDictController extends BaseController {
         }
 
         sysDictService.save(sysDict);
-        return "redirect:/sysDict/" + sysDict.getDictId() + "/show";
+        return "redirect:/sysDict/" + sysDict.getRecordId() + "/show";
     }	
 	
 	@RequestMapping(value = "/{dictId}/show", method = GET)

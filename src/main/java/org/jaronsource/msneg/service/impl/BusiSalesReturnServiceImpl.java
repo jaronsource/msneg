@@ -1,6 +1,8 @@
 package org.jaronsource.msneg.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jaronsource.msneg.dao.BusiSalesItemDao;
 import org.jaronsource.msneg.dao.BusiSalesReturnDao;
@@ -62,6 +64,21 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 		QCriteria c = new QCriteria();
 		c.addEntry("busiSales.salesId", Op.EQ, salesId);
 		return count(c);
+	}
+
+	@Override
+	public Map<String, Long> statis(Integer deptId, String startTime, String endTime) {
+		
+		Map<String, Long> statisMap = new HashMap<String, Long>();
+		
+		{
+			String jpql = "select sum(o.returnSum) from BusiSalesReturn o where o.createTime >= ? and o.createTime <= ?";
+			Long zongji = getDao().executeQueryOne(jpql, startTime, endTime);
+			zongji = zongji == null ? 0 : zongji;
+			statisMap.put("zongji", zongji);
+		}
+		
+		return statisMap;
 	}
 
 }

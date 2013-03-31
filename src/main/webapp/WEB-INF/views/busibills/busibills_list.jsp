@@ -16,7 +16,7 @@
 				<p>销售单号
 					<form:input path="form['salesCode_blk']" id="search_salesCode" cssClass="input_text w_172" placeholder="销售单号"/>
 					客户电话号码
-					<form:input path="form['cellPhone_blk']" id="search_cellPhone" cssClass="input_text w_172" placeholder="客户电话号码"/>
+					<form:input path="form['busiClient.cellPhone_blk']" id="search_cellPhone" cssClass="input_text w_172" placeholder="客户电话号码"/>
 					<form:hidden path="form['salesTypeKey_eq']" id="search_salesTypeKey" />
 					<form:hidden path="form['salesStateKey_eq']" id="search_salesStateKey" />
 					<form:hidden path="form['sysDept.deptId_eq_int']" id="search_deptId" />
@@ -128,7 +128,7 @@
 							<c:forEach items="${busiSalesPage.content}" var="entry">
 							<tr>
 								<td>${entry.createTime }</td>
-								<td>${entry.salesCode }</td>
+								<td><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">${entry.salesCode }</a></td>
 								<td class="tl">${entry.salesRemarks }</td>
 								<td><dict:lookupDictValue key="${entry.salesStateKey }" type="sales_state" /> </td>
 								<td class="tl">
@@ -141,9 +141,9 @@
 									<utils:methodInvokor methodName="countBySalesId" var="countSalesMakeup" className="org.jaronsource.msneg.service.BusiSalesMakeupService" >
 										<utils:miParam type="java.lang.Integer" value="${entry.salesId }"></utils:miParam>
 									</utils:methodInvokor>
-									<c:if test="${countSalesClear > 0 }"><a href="${pageContext.request.contextPath }/viewBill?salesId=${entry.salesId}">结算单(${countSalesClear })</a></c:if> 
-									<c:if test="${countSalesReturn > 0 }"><a href="${pageContext.request.contextPath }/viewBill?salesId=${entry.salesId}">返销单(${countSalesReturn })</a></c:if>
-									<c:if test="${countSalesMakeup > 0 }"><a href="${pageContext.request.contextPath }/viewBill?salesId=${entry.salesId}">补价单(${countSalesMakeup })</a></c:if>
+									<c:if test="${countSalesClear > 0 }"><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">结算单(${countSalesClear })</a></c:if> 
+									<c:if test="${countSalesMakeup > 0 }"><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">补价单(${countSalesMakeup })</a></c:if>
+									<c:if test="${countSalesReturn > 0 }"><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">返销单(${countSalesReturn })</a></c:if>
 								</td>
 							</tr>
 							</c:forEach>

@@ -51,9 +51,9 @@ public class BusiSalesReturnItem implements IEntity<Integer> {
 	@Column(name="return_reason_key")
 	private String returnReasonKey;
 	
-	/** 备注 */
-	@Column(name="return_remarks")
-	private String returnRemarks;
+	///** 备注 */
+	//@Column(name="return_remarks")
+	//private String returnRemarks;
 	
 	public void setReturnItemId(Integer returnItemId) {
 		this.returnItemId = returnItemId;
@@ -111,13 +111,13 @@ public class BusiSalesReturnItem implements IEntity<Integer> {
 		return returnReasonKey;
 	}
 	
-	public void setReturnRemarks(String returnRemarks) {
-		this.returnRemarks = returnRemarks;
-	}
+	//public void setReturnRemarks(String returnRemarks) {
+	//	this.returnRemarks = returnRemarks;
+	//}
 	
-	public String getReturnRemarks() {
-		return returnRemarks;
-	}
+	//public String getReturnRemarks() {
+	//	return returnRemarks;
+	//}
 	
 	@Override
 	@Transient

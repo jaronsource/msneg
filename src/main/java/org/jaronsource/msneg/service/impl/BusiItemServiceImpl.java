@@ -9,6 +9,7 @@ import com.ccesun.framework.core.service.SearchFormSupportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.ccesun.framework.core.dao.support.IDao;
 import com.ccesun.framework.core.dao.support.PageRequest;
+import com.ccesun.framework.util.CnSpellUtils;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -34,6 +35,20 @@ public class BusiItemServiceImpl extends SearchFormSupportService<BusiItem, Inte
 		PageRequest pageRequest = new PageRequest(1, 20);
 		
 		return getDao().find(pageRequest, jpql, itemType, '%' + termForQuery + '%', '%' + termForQuery + '%', '%' + termForQuery + '%');
+	}
+
+	@Override
+	public BusiItem save(BusiItem target) {
+		String itemCnspell = CnSpellUtils.getFirstCnSpell(target.getItemName());
+		target.setItemCnspell(itemCnspell);
+		return super.save(target);
+	}
+
+	@Override
+	public void changeStock(Integer itemId, Integer stock) {
+		String jpql = "update BusiItem o set o.itemStockAmount = ? where o.itemId = ?";
+		getDao().execute(jpql, stock, itemId);
+		
 	}
 
 

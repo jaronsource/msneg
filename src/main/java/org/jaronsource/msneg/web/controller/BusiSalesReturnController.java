@@ -81,7 +81,7 @@ public class BusiSalesReturnController extends BaseController {
 		String[] returnReasonKeys = requst.getParameterValues("returnReasonKey");
 		String[] returnSum = requst.getParameterValues("returnSum");
 		String[] returnPrices = requst.getParameterValues("returnPrice");
-		String[] returnMarkers0 = requst.getParameterValues("returnMarkers");
+		//String[] returnMarkers0 = requst.getParameterValues("returnMarkers");
 		
 		List<BusiSalesReturnItem> busiSalesReturnItems = new ArrayList<BusiSalesReturnItem>();
 		for (int i = 0; i < salesItemIds.length; i++) {
@@ -91,7 +91,7 @@ public class BusiSalesReturnController extends BaseController {
 				busiSalesReturnItem.setReturnSum(MoneyUtils.decode(returnSum[i]));
 				busiSalesReturnItem.setReturnAmount(NumberUtils.toInt(returnAmounts[i]));
 				busiSalesReturnItem.setReturnReasonKey(returnReasonKeys[i]);
-				busiSalesReturnItem.setReturnRemarks(returnMarkers0[i]);
+				//busiSalesReturnItem.setReturnRemarks(returnMarkers0[i]);
 				busiSalesReturnItem.setBusiSalesItem(new BusiSalesItem(NumberUtils.toInt(salesItemIds[i])));
 				busiSalesReturnItems.add(busiSalesReturnItem);
 			}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="sysConfig/main">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_main.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/changePassword">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_changepasswd.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/dict/list">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_dictlist.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/dict/edit">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_dictedit.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/dept/list">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_deptlist.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/dept/edit">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_deptedit.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/user/list">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_userlist.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/user/edit">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_useredit.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/func/list">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_funclist.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/func/edit">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_funcedit.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/role/list">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_rolelist.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/role/edit">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_roleedit.jsp" />
+    </definition>
+   
+</tiles-definitions>
+

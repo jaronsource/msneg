@@ -1,6 +1,8 @@
 package org.jaronsource.msneg.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jaronsource.msneg.dao.BusiClientDao;
 import org.jaronsource.msneg.dao.BusiItemDao;
@@ -87,6 +89,53 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		String jpql = "select o from BusiSales o inner join o.busiClient o2 where o2.cellPhone like ?";
 		PageRequest pageRequest = new PageRequest(1, 20);
 		return getDao().find(pageRequest, jpql, '%' + term + '%');
+	}
+
+	@Override
+	public Map<String, Long> statis(Integer deptId, String salesType, String startTime, String endTime) {
+		
+		Map<String, Long> statisMap = new HashMap<String, Long>();
+		
+		{
+			String jpql = "select sum(o.feeSum) from BusiSales o where o.salesTypeKey = ? and o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long zongji = getDao().executeQueryOne(jpql, salesType, startTime, endTime);
+			zongji = zongji == null ? 0 : zongji;
+			statisMap.put("zongji", zongji);
+		}
+		
+		{
+			String jpql = "select sum(o.feeSum) from BusiSales o where o.salesTypeKey = ? and o.salesStateKey >= ? and o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long jiesuan = getDao().executeQueryOne(jpql, salesType, "B", startTime, endTime);
+			jiesuan = jiesuan == null ? 0 : jiesuan;
+			statisMap.put("jiesuan", jiesuan);
+		}
+		
+		{
+			String jpql = "select sum(o.makeupSum) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long bujia = getDao().executeQueryOne(jpql, startTime, endTime);
+			bujia = bujia == null ? 0 : bujia;
+			statisMap.put("bujia", bujia);
+		}
+		
+		{
+			String jpql = "select sum(o.returnSum) from BusiSalesReturn o where o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long fanxiao = getDao().executeQueryOne(jpql, startTime, endTime);
+			fanxiao = fanxiao == null ? 0 : fanxiao;
+			statisMap.put("fanxiao", fanxiao);
+		}
+		
+		Long weikuan = statisMap.get("zongji") - statisMap.get("jiesuan");
+		statisMap.put("weikuan", weikuan);
+		
+		return statisMap;
 	}
 
 

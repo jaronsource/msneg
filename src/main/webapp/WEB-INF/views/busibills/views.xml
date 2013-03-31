@@ -4,4 +4,7 @@
     <definition extends="default" name="busiBills/list">
         <put-attribute name="body" value="/WEB-INF/views/busibills/busibills_list.jsp" />
     </definition>
+    <definition extends="default" name="busiBills/viewBill">
+        <put-attribute name="body" value="/WEB-INF/views/busibills/busibills_view.jsp" />
+    </definition>
 </tiles-definitions>

@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="pg" uri="http://www.ccesun.com/tags/pager" %>
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
+<%@ taglib prefix="utils" uri="http://www.ccesun.com/tags/utils" %>
 <dict:loadDictList type="sales_type" var="sales_type" />
 <dict:loadDictList type="sales_state" var="sales_state" />
 			<%
@@ -27,7 +28,7 @@
 				<p>销售单号
 					<form:input path="form['salesCode_blk']" id="search_salesCode" cssClass="input_text w_172" placeholder="销售单号"/>
 					客户电话号码
-					<form:input path="form['cellPhone_blk']" id="search_cellPhone" cssClass="input_text w_172" placeholder="客户电话号码"/>
+					<form:input path="form['busiClient.cellPhone_blk']" id="search_cellPhone" cssClass="input_text w_172" placeholder="客户电话号码"/>
 					<form:hidden path="form['salesTypeKey_eq']" id="search_salesTypeKey" />
 					<form:hidden path="form['salesStateKey_eq']" id="search_salesStateKey" />
 					<form:hidden path="form['sysDept.deptId_eq_int']" id="search_deptId" />
@@ -102,6 +103,7 @@
 				<h3 class="title_line">订单信息列表<a href="#this" class="toggle_table">折叠</a></h3>
 				<table class="tbl_l" border="1" cellpadding="0" cellspacing="0" width="100%">
 						<colgroup>
+							<col width="40">
 							<col width="140">
 							<col width="100">
 							<col width="25%">
@@ -110,6 +112,7 @@
 						</colgroup>
 						<thead>
 							<tr>
+								<th></th>
 								<th>日期/时间</th>
 								<th>订单号</th>
 								<th>单据简明</th>
@@ -120,6 +123,7 @@
 						<tbody>
 							<c:forEach items="${busiSalesPage.content}" var="entry">
 							<tr>
+								<td><a href="javascript: void(0)" class="detailLink" style="text-decoration: none" title="查看商品">+</a></td>
 								<td>${entry.createTime }</td>
 								<td>${entry.salesCode }</td>
 								<td class="tl">${entry.salesRemarks }</td>
@@ -138,7 +142,56 @@
 									</c:choose>
 								</td>
 							</tr>
+							<utils:methodInvokor methodName="findSalesItemBySalesId" var="items" className="org.jaronsource.msneg.service.BusiSalesItemService">
+								<utils:miParam type="java.lang.Integer" value="${entry.salesId }"></utils:miParam>
+							</utils:methodInvokor>
+							<tr style="display: none">
+								<td colspan="6" style="padding: 10px;">
+										<table class="tbl_l" border="1" cellpadding="0" cellspacing="0" width="100%">
+										<colgroup>
+											<col width="50">
+											<col width="*">
+											<col width="50">
+											<col width="50">
+											<col width="80">
+											<col width="80">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<th>类别</th>
+											<th>名称/货号/型号</th>
+											<th>单位</th>
+											<th>数量</th>
+											<th>单价</th>
+											<th>合计</th>
+											<th>信息备注</th>
+										</thead>
+										<tbody>
+											<c:forEach items="${items}" var="item">
+											<tr>
+												<td><dict:lookupDictValue key="${item.busiItem.itemTypeKey }" type="item_type" /></td>
+												<td>${item.busiItem.itemCode }</td>
+												<td>${item.busiItem.itemUnit }</td>
+												<td>${item.itemAmount }</td>
+												<td><span class="money">${item.busiItem.itemPrice }</span></td>
+												<td><span class="money">${item.itemSum }</span></td>
+												<td>${item.itemRemarks }</td>
+											</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</td>
+							</tr>
 							</c:forEach>
+							<script>
+								$('.detailLink').toggle(function() {
+									$(this).parents('tr').next().show();
+									$(this).text('-');
+								}, function() {
+									$(this).parents('tr').next().hide();
+									$(this).text('+');
+								});
+							</script>
 						</tbody>
 					</table>
 					<div class="paging"> 

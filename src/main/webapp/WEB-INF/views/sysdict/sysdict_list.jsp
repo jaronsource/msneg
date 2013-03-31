@@ -34,7 +34,7 @@
 	    	</tr>
 	    	<c:forEach items="${sysDictPage.content}" var="entry">
 	    	<tr>
-		    	<td>${entry.dictId}</td>
+		    	<td>${entry.recordId}</td>
 		    	<td>${entry.dictType}</td>
 		    	<td>${entry.dictKey}</td>
 		    	<td>${entry.parentKey}</td>
@@ -43,9 +43,8 @@
 		    	<td>${entry.dictValue2}</td>
 		    	<td>${entry.dictValue3}</td>
 		    	<td>
-		    		<a href="${baseUrl}/${entry.dictId}/show" class="btn btn-small"><i class="icon-eye-open"></i></a> 
-		    		<a href="${baseUrl}/${entry.dictId}/update" class="btn btn-small"><i class="icon-edit"></i></a> 
-		    		<a href="${baseUrl}/${entry.dictId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')"><i class="icon-remove-sign"></i></a> 
+		    		<a href="${baseUrl}/${entry.recordId}/update" class="btn btn-small">修改</a> 
+		    		<a href="${baseUrl}/${entry.recordId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')">删除</a> 
 		    	</td>
 	    	</tr>	
 	    	</c:forEach>

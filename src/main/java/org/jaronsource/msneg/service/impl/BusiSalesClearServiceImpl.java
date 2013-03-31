@@ -45,4 +45,5 @@ public class BusiSalesClearServiceImpl extends SearchFormSupportService<BusiSale
 		return count(c);
 	}
 
+
 }

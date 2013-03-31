@@ -74,6 +74,7 @@ public class BusiSalesMakeupController extends BaseController {
 
 		SysUser currentUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
 		busiSalesMakeup.setSysUser(currentUser);
+		busiSalesMakeup.setSysDept(currentUser.getDept());
 		String currentTime = DateUtils.currentDateTime();
 		busiSalesMakeup.setCreateTime(currentTime);
 		busiSalesMakeupService.save(busiSalesMakeup);

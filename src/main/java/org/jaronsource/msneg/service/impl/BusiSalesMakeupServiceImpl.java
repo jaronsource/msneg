@@ -1,5 +1,8 @@
 package org.jaronsource.msneg.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jaronsource.msneg.dao.BusiSalesMakeupDao;
 import org.jaronsource.msneg.domain.BusiSalesMakeup;
 import org.jaronsource.msneg.service.BusiSalesMakeupService;
@@ -27,5 +30,40 @@ public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSal
 		QCriteria c = new QCriteria();
 		c.addEntry("busiSales.salesId", Op.EQ, salesId);
 		return count(c);
+	}
+
+	@Override
+	public Map<String, Long> statis(Integer deptId, String startTime, String endTime) {
+		
+		Map<String, Long> statisMap = new HashMap<String, Long>();
+		
+		{
+			String jpql = "select sum(o.makeupSum) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long zongji = getDao().executeQueryOne(jpql, startTime, endTime);
+			zongji = zongji == null ? 0 : zongji;
+			statisMap.put("zongji", zongji);
+		}
+		
+		{
+			String jpql = "select sum(o.addItem1 + o.addItem2 + o.addItem3 + o.addItem4 + o.addItem5 + o.addItem6 ) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long zengjia = getDao().executeQueryOne(jpql, startTime, endTime);
+			zengjia = zengjia == null ? 0 : zengjia;
+			statisMap.put("zengjia", zengjia);
+		}
+		
+		{
+			String jpql = "select sum(o.minusItem1 + o.minusItem2 + o.minusItem3 + o.minusItem4 + o.minusItem5 + o.minusItem6 ) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long jiashao = getDao().executeQueryOne(jpql, startTime, endTime);
+			jiashao = jiashao == null ? 0 : jiashao;
+			statisMap.put("jiashao", jiashao);
+		}
+		
+		return statisMap;
 	}
 }

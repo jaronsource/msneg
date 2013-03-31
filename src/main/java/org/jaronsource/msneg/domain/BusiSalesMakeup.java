@@ -103,6 +103,11 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 	@JoinColumn(name="sales_id")
 	private BusiSales busiSales;
 	
+	/** 部门 */
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="dept_id")
+	private SysDept sysDept;
+	
 	public void setMakeupId(Integer makeupId) {
 		this.makeupId = makeupId;
 	}
@@ -261,6 +266,14 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 
 	public void setBusiSales(BusiSales busiSales) {
 		this.busiSales = busiSales;
+	}
+	
+	public SysDept getSysDept() {
+		return sysDept;
+	}
+
+	public void setSysDept(SysDept sysDept) {
+		this.sysDept = sysDept;
 	}
 
 	@Override

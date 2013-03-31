@@ -8,10 +8,12 @@ import java.util.List;
 
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesClear;
+import org.jaronsource.msneg.domain.BusiSalesItem;
 import org.jaronsource.msneg.domain.BusiSalesMakeup;
 import org.jaronsource.msneg.domain.BusiSalesReturn;
 import org.jaronsource.msneg.domain.SysDept;
 import org.jaronsource.msneg.service.BusiSalesClearService;
+import org.jaronsource.msneg.service.BusiSalesItemService;
 import org.jaronsource.msneg.service.BusiSalesMakeupService;
 import org.jaronsource.msneg.service.BusiSalesReturnService;
 import org.jaronsource.msneg.service.BusiSalesService;
@@ -52,6 +54,9 @@ public class BusiBillsController extends BaseController {
 	private BusiSalesClearService busiSalesClearService;
 	
 	@Autowired
+	private BusiSalesItemService busiSalesItemService;
+	
+	@Autowired
 	private SysDeptService sysDeptService;
 	
 	@RequestMapping(method = {GET, POST})
@@ -75,22 +80,25 @@ public class BusiBillsController extends BaseController {
 		return "busiBills/list";
 	}
 	
-	@RequestMapping(method = {GET, POST})
+	@RequestMapping(value="viewBills", method = {GET, POST})
 	public String viewBill(@RequestParam Integer salesId, Model model) {
 		
 		BusiSales busiSales = busiSalesService.findByPk(salesId);
 		
 		QCriteria criteria = new QCriteria();
-		criteria.addEntry("salesId", Op.EQ, salesId);
+		criteria.addEntry("busiSales.salesId", Op.EQ, salesId);
 		
 		List<BusiSalesMakeup> busiSalesMakeupList = busiSalesMakeupService.find(criteria);
 		List<BusiSalesClear> busiSalesClearList = busiSalesClearService.find(criteria);
 		List<BusiSalesReturn> busiSalesReturnList = busiSalesReturnService.find(criteria);
 		
+		List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(salesId);
+		
 		model.addAttribute("busiSales", busiSales);
 		model.addAttribute("busiSalesMakeupList", busiSalesMakeupList);
 		model.addAttribute("busiSalesClearList", busiSalesClearList);
 		model.addAttribute("busiSalesReturnList", busiSalesReturnList);
+		model.addAttribute("busiSalesItemList", busiSalesItemList);
 		
 		return "busiBills/viewBill";
 	}
