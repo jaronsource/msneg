@@ -75,23 +75,23 @@ public class BusiSales implements IEntity<Integer> {
 	
 	/** 总金额 */
 	@Column(name="fee_sum")
-	private Integer feeSum;
+	private Float feeSum;
 	
 	/** 预付金额 */
 	@Column(name="fee_prepay")
-	private Integer feePrepay;
+	private Float feePrepay;
 	
 	/** 预付金现金 */
 	@Column(name="fee_prepay_cash")
-	private Integer feePrepayCash;
+	private Float feePrepayCash;
 	
 	/** 预付金刷卡 */
 	@Column(name="fee_prepay_card")
-	private Integer feePrepayCard;
+	private Float feePrepayCard;
 	
 	/** 剩余尾款 */
 	@Column(name="fee_remain")
-	private Integer feeRemain;
+	private Float feeRemain;
 	
 	/** 其他备注 */
 	@Column(name="other_remarks")
@@ -100,6 +100,10 @@ public class BusiSales implements IEntity<Integer> {
 	/** 合同条款 */
 	@Column(name="sales_contract")
 	private String salesContract;
+	
+	/** 单据状态 */
+	@Column(name="bill_state_key")
+	private String billStateKey;
 	
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
@@ -197,46 +201,6 @@ public class BusiSales implements IEntity<Integer> {
 		return servInstallmethodKey;
 	}
 	
-	public void setFeeSum(Integer feeSum) {
-		this.feeSum = feeSum;
-	}
-	
-	public Integer getFeeSum() {
-		return feeSum;
-	}
-	
-	public void setFeePrepay(Integer feePrepay) {
-		this.feePrepay = feePrepay;
-	}
-	
-	public Integer getFeePrepay() {
-		return feePrepay;
-	}
-	
-	public void setFeePrepayCash(Integer feePrepayCash) {
-		this.feePrepayCash = feePrepayCash;
-	}
-	
-	public Integer getFeePrepayCash() {
-		return feePrepayCash;
-	}
-	
-	public void setFeePrepayCard(Integer feePrepayCard) {
-		this.feePrepayCard = feePrepayCard;
-	}
-	
-	public Integer getFeePrepayCard() {
-		return feePrepayCard;
-	}
-	
-	public void setFeeRemain(Integer feeRemain) {
-		this.feeRemain = feeRemain;
-	}
-	
-	public Integer getFeeRemain() {
-		return feeRemain;
-	}
-	
 	public void setOtherRemarks(String otherRemarks) {
 		this.otherRemarks = otherRemarks;
 	}
@@ -253,6 +217,54 @@ public class BusiSales implements IEntity<Integer> {
 		return salesContract;
 	}
 	
+	public Float getFeeSum() {
+		return feeSum;
+	}
+
+	public void setFeeSum(Float feeSum) {
+		this.feeSum = feeSum;
+	}
+
+	public Float getFeePrepay() {
+		return feePrepay;
+	}
+
+	public void setFeePrepay(Float feePrepay) {
+		this.feePrepay = feePrepay;
+	}
+
+	public Float getFeePrepayCash() {
+		return feePrepayCash;
+	}
+
+	public void setFeePrepayCash(Float feePrepayCash) {
+		this.feePrepayCash = feePrepayCash;
+	}
+
+	public Float getFeePrepayCard() {
+		return feePrepayCard;
+	}
+
+	public void setFeePrepayCard(Float feePrepayCard) {
+		this.feePrepayCard = feePrepayCard;
+	}
+
+	public Float getFeeRemain() {
+		return feeRemain;
+	}
+
+	public void setFeeRemain(Float feeRemain) {
+		this.feeRemain = feeRemain;
+	}
+
+	public String getBillStateKey() {
+		return billStateKey;
+	}
+
+	public void setBillStateKey(String billStateKey) {
+		this.billStateKey = billStateKey;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

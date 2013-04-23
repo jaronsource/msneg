@@ -32,9 +32,9 @@ public class BusiSalesClearServiceImpl extends SearchFormSupportService<BusiSale
 	@Transactional
 	public BusiSalesClear save(BusiSalesClear target) {
 		BusiSales busiSales = busiSalesDao.findReferenceByPk(target.getBusiSales().getSalesId());
-		busiSales.setSalesStateKey("B");
-		busiSalesDao.save(busiSales);
-		
+		//busiSales.setSalesStateKey("B");
+		//busiSalesDao.save(busiSales);
+		target.setClearSum(busiSales.getFeeRemain());
 		return super.save(target);
 	}
 

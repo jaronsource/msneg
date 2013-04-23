@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
+import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
 
 @RequestMapping("/busiClient")
@@ -39,6 +40,7 @@ public class BusiClientController extends BaseController {
 	private BusiClientService busiClientService;
 	
 	@RequestMapping(method = {GET, POST})
+	@RequestHistory
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
 		Page<BusiClient> busiClientPage = busiClientService.findPage(searchForm);
@@ -61,7 +63,7 @@ public class BusiClientController extends BaseController {
         }
 
         busiClientService.save(busiClient);
-        return "redirect:/busiClient/" + busiClient.getClientId() + "/show";
+        return "history:/busiClient";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
@@ -79,7 +81,7 @@ public class BusiClientController extends BaseController {
         }
 
         busiClientService.save(busiClient);
-        return "redirect:/busiClient/" + busiClient.getClientId() + "/show";
+        return "history:/busiClient";
     }	
 	
 	@RequestMapping(value = "/{clientId}/show", method = GET)
@@ -92,7 +94,7 @@ public class BusiClientController extends BaseController {
     @RequestMapping(value = "/{clientId}/remove", method = GET)
     public String remove(@PathVariable("clientId") Integer clientId, Model model) {
         busiClientService.remove(clientId);
-        return "redirect:/busiClient";
+        return "history:/busiClient";
     }
     
     @RequestMapping(value = "/ajaxFindClient", method = GET)

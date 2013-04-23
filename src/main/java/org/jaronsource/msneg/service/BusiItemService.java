@@ -7,8 +7,8 @@ import com.ccesun.framework.core.service.ISearchFormSupportService;
 
 public interface BusiItemService extends ISearchFormSupportService<BusiItem, Integer> {
 
-	List<BusiItem> findItemByTypeAndTerm(String itemType, String term);
-
 	void changeStock(Integer itemId, Integer stock);
+
+	List<BusiItem> findItemByCateIdAndTerm(Integer cateId, String term);
 
 }

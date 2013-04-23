@@ -5,9 +5,14 @@
 <%@ taglib prefix="pg" uri="http://www.ccesun.com/tags/pager" %>
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
 
-			
+	<div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
+		<li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="-1" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="false"><a href="${pageContext.request.contextPath}/busiStatis/statis01" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">财务数据分析</a></li>
+		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-4" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/busiStatis/statis02" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-4">商品销量分析</a></li>
+	</ul>
+	<div id="tabs-1">		
 			<div class="title_box">
-				<h2>综合数据分析 </h2>
+				<h2>财务数据分析 </h2>
 			</div>
 			
 
@@ -18,13 +23,15 @@
 						<form:option value="">全部</form:option>
 						<form:options items="${depts }" itemLabel="deptName" itemValue="deptId" />
 					</form:select>
-					<form:input path="form['startTime']" id="search_startTime" cssClass="input_text w_172" placeholder="开始日期"/>
-					<form:input path="form['endTime']" id="search_endTime" cssClass="input_text w_172" placeholder="结束日期"/>
+					<form:input path="form['startTime']" id="search_startTime" cssClass="input_text w_172 input_date" placeholder="开始日期"/>
+					<form:input path="form['endTime']" id="search_endTime" cssClass="input_text w_172 input_date" placeholder="结束日期"/>
 					<button type="submit" class="btn"><i class="icon-search"></i> 搜索</button>
 				</p>
 			</div>
 			</form:form>
-			
+			<script>
+				$('.input_date').datepicker({ dateFormat: "yymmdd" });
+			</script>
 		<div class="order_box"> 
 			<!--box-->
 			<div class="com_box">
@@ -120,5 +127,5 @@
 			<!--//box--> 
 		</div>
 			
-			
+	</div>		
 	

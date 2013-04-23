@@ -15,9 +15,10 @@
 <div class="title_box">
 	<h2>开据补价单</h2>
 	<div class="sys_btnBox">
-		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="退出" id="returnBtn" />
 		<script>
 			$('#submitBtn').click(function() { $('#busiSalesMakeupForm').submit(); });
+			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/sales'; });
 		</script>
 	</div>
 </div>
@@ -46,7 +47,7 @@
 				}
 				,autoFocus: true
 				,select: select
-				,open: function() { $('.ui-menu').width(300); } 
+				,open: function() { $('.ui-menu').width(400); } 
 			});
 		
 		$('#clientPhoneTerm').autocomplete(
@@ -58,7 +59,7 @@
 				}
 				,autoFocus: true
 				,select: select
-				,open: function() { $('.ui-menu').width(300); } 
+				,open: function() { $('.ui-menu').width(400); } 
 			});
 	</script>
 </div>
@@ -177,10 +178,10 @@
 				<col width="10%" />
 				<col width="*" />
 			</colgroup>
-						<tbody>
+						<tbody> 
 							<tr>
 								<th>补价总额</th>
-								<td>¥ <input type="text" name="makeupSum" class="w_50 input_text" id="makeupSum" /></td>
+								<td>¥ <input type="text" name="makeupSum" class="w_50 input_text input_money" id="makeupSum" value="0.00" /></td> 
 								<th>结算形式</th>
 								<td><c:forEach items="${clear_method}" var="entry" varStatus="status">
 										<input type="radio" class="clearMethodKey radio" name="clearMethodKey" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}

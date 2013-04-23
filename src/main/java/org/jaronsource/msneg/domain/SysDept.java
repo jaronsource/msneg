@@ -26,6 +26,10 @@ public class SysDept implements IEntity<Integer> {
 	@Column(name="dept_id")
 	private Integer deptId;
 	
+	/** 编码 */
+	@Column(name="dept_code")
+	private String deptCode;
+	
 	/** 名称 */
 	@Column(name="dept_name")
 	private String deptName;
@@ -46,6 +50,14 @@ public class SysDept implements IEntity<Integer> {
 		return deptId;
 	}
 	
+	public String getDeptCode() {
+		return deptCode;
+	}
+
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
+
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}

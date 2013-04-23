@@ -30,22 +30,33 @@ public class BusiSalesItem implements IEntity<Integer> {
 	@JoinColumn(name="sales_id")
 	private BusiSales busiSales;
 	
-	/** 商品ID */
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="item_id")
-	private BusiItem busiItem;
-	
 	/** 商品数量 */
 	@Column(name="item_amount")
 	private Integer itemAmount;
 	
 	/** 合计 */
 	@Column(name="item_sum")
-	private Integer itemSum;
+	private Float itemSum;
 	
 	/** 信息备注 */
 	@Column(name="item_remarks")
 	private String itemRemarks;
+	
+	/** 名称 */
+	@Column(name="item_name")
+	private String itemName;
+	
+	/** 单位 */
+	@Column(name="item_unit_key")
+	private String itemUnitKey;
+	
+	/** 单价 */
+	@Column(name="item_price")
+	private Float itemPrice;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="cate_id")
+	private BusiCategory busiCategory;
 	
 	public BusiSalesItem() {}
 	
@@ -70,14 +81,6 @@ public class BusiSalesItem implements IEntity<Integer> {
 		return busiSales;
 	}
 	
-	public void setBusiItem(BusiItem busiItem) {
-		this.busiItem = busiItem;
-	}
-	
-	public BusiItem getBusiItem() {
-		return busiItem;
-	}
-	
 	public Integer getItemAmount() {
 		return itemAmount;
 	}
@@ -86,14 +89,14 @@ public class BusiSalesItem implements IEntity<Integer> {
 		this.itemAmount = itemAmount;
 	}
 
-	public void setItemSum(Integer itemSum) {
-		this.itemSum = itemSum;
-	}
-	
-	public Integer getItemSum() {
+	public Float getItemSum() {
 		return itemSum;
 	}
-	
+
+	public void setItemSum(Float itemSum) {
+		this.itemSum = itemSum;
+	}
+
 	public void setItemRemarks(String itemRemarks) {
 		this.itemRemarks = itemRemarks;
 	}
@@ -102,6 +105,38 @@ public class BusiSalesItem implements IEntity<Integer> {
 		return itemRemarks;
 	}
 	
+	public String getItemUnitKey() {
+		return itemUnitKey;
+	}
+
+	public void setItemUnitKey(String itemUnitKey) {
+		this.itemUnitKey = itemUnitKey;
+	}
+
+	public Float getItemPrice() {
+		return itemPrice;
+	}
+
+	public void setItemPrice(Float itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	
+	public BusiCategory getBusiCategory() {
+		return busiCategory;
+	}
+
+	public void setBusiCategory(BusiCategory busiCategory) {
+		this.busiCategory = busiCategory;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

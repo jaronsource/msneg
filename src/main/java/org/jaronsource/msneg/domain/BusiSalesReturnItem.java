@@ -37,7 +37,7 @@ public class BusiSalesReturnItem implements IEntity<Integer> {
 	
 	/** 返销单价 */
 	@Column(name="return_price")
-	private Integer returnPrice;
+	private Float returnPrice;
 	
 	/** 返销数量 */
 	@Column(name="return_amount")
@@ -45,7 +45,7 @@ public class BusiSalesReturnItem implements IEntity<Integer> {
 	
 	/** 返销合计 */
 	@Column(name="return_sum")
-	private Integer returnSum;
+	private Float returnSum;
 	
 	/** 返销事由 */
 	@Column(name="return_reason_key")
@@ -79,28 +79,12 @@ public class BusiSalesReturnItem implements IEntity<Integer> {
 		this.busiSalesItem = busiSalesItem;
 	}
 
-	public void setReturnPrice(Integer returnPrice) {
-		this.returnPrice = returnPrice;
-	}
-	
-	public Integer getReturnPrice() {
-		return returnPrice;
-	}
-	
 	public void setReturnAmount(Integer returnAmount) {
 		this.returnAmount = returnAmount;
 	}
 	
 	public Integer getReturnAmount() {
 		return returnAmount;
-	}
-	
-	public void setReturnSum(Integer returnSum) {
-		this.returnSum = returnSum;
-	}
-	
-	public Integer getReturnSum() {
-		return returnSum;
 	}
 	
 	public void setReturnReasonKey(String returnReasonKey) {
@@ -123,5 +107,21 @@ public class BusiSalesReturnItem implements IEntity<Integer> {
 	@Transient
 	public boolean isNew() {
 		return EntityUtils.isNew(this.returnItemId);
+	}
+
+	public Float getReturnPrice() {
+		return returnPrice;
+	}
+
+	public void setReturnPrice(Float returnPrice) {
+		this.returnPrice = returnPrice;
+	}
+
+	public Float getReturnSum() {
+		return returnSum;
+	}
+
+	public void setReturnSum(Float returnSum) {
+		this.returnSum = returnSum;
 	}
 }

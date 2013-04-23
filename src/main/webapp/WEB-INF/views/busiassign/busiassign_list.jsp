@@ -13,7 +13,7 @@
 			%>
 			
 			<div class="title_box">
-				<h2>销售单据管理 </h2>
+				<h2>货物发配管理 </h2>
 			</div>
 			
 			<div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -131,10 +131,10 @@
 								<td>
 									<c:choose>
 										<c:when test="${salesState == 'B' }">
-											<input type="button" value="备货" onclick="window.location='busiAssign/changeState?salesId=${entry.salesId }&state=C';" />
+											<input type="button" value="备货" onclick="if (confirm('确定进行此操作吗？')) {window.location='busiAssign/changeState?salesId=${entry.salesId }&state=C';}" />
 										</c:when>
 										<c:when test="${salesState == 'C' }">
-											<input type="button" value="到货" onclick="window.location='busiAssign/changeState?salesId=${entry.salesId }&state=D';" />
+											<input type="button" value="到货" onclick="if (confirm('确定进行此操作吗？')) {window.location='busiAssign/changeState?salesId=${entry.salesId }&state=D';}" />
 										</c:when>
 										<c:otherwise>
 											-
@@ -149,7 +149,7 @@
 								<td colspan="6" style="padding: 10px;">
 										<table class="tbl_l" border="1" cellpadding="0" cellspacing="0" width="100%">
 										<colgroup>
-											<col width="50">
+											<col width="140">
 											<col width="*">
 											<col width="50">
 											<col width="50">
@@ -158,7 +158,7 @@
 											<col width="*">
 										</colgroup>
 										<thead>
-											<th>类别</th>
+											<th>系列</th>
 											<th>名称/货号/型号</th>
 											<th>单位</th>
 											<th>数量</th>
@@ -169,11 +169,11 @@
 										<tbody>
 											<c:forEach items="${items}" var="item">
 											<tr>
-												<td><dict:lookupDictValue key="${item.busiItem.itemTypeKey }" type="item_type" /></td>
-												<td>${item.busiItem.itemCode }</td>
-												<td>${item.busiItem.itemUnit }</td>
+												<td>${item.busiCategory.cateName }</td>
+												<td>${item.itemName }</td>
+												<td><dict:lookupDictValue key="${item.itemUnitKey }" type="item_unit" /> </td>
 												<td>${item.itemAmount }</td>
-												<td><span class="money">${item.busiItem.itemPrice }</span></td>
+												<td><span class="money">${item.itemPrice }</span></td>
 												<td><span class="money">${item.itemSum }</span></td>
 												<td>${item.itemRemarks }</td>
 											</tr>

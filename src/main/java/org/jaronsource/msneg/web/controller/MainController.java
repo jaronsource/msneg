@@ -33,6 +33,7 @@ public class MainController extends BaseController {
 	@RequestMapping(value="/main", method = {GET})
 	public String main() {
 		return "main/index";
+		//return "main/sales";
 	}
 	
 	@RequestMapping(value="/login", method = {GET})

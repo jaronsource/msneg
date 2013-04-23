@@ -4,22 +4,30 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
-<dict:loadDictList type="item_type" var="item_type" />
+<dict:loadDictList type="item_unit" var="item_unit" />
 <dict:loadDictList type="serv_logis" var="serv_logis" />
 <dict:loadDictList type="serv_getmethod" var="serv_getmethod" />
 <dict:loadDictList type="serv_installmethod" var="serv_installmethod" />
-
+<style type="text/css">
+#busiCategorySelector li {float: left; margin-right: 5px; padding: 5px;}
+</style>
 <script>
+var $selectCateId; 
+var $selectCateIdDisplay; 
 function addSaleItems(element) {
 	var $tr = $('<tr></tr>');
-	var $td1 = $('<td><select name="itemTypeKey" class="itemTypeKey"></select></td>');
-	<c:forEach items="${item_type}" var="entry">
-		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td1.find('select'));
-	</c:forEach>
+	var $td1 = $('<td><input type="hidden" name="cateId" class="cateId"/><input class="cateIdBtn" type="button" value="选择系列" /></td>');
+	//var $td1 = $('<td><select name="cateId" class="cateId"></select></td>');
+	//<c:forEach items="${busiCategories}" var="entry">
+	//	$('<option value="${entry.cateId}">${entry.cateName}</option>').appendTo($td1.find('select'));
+	//</c:forEach>
 	var $td2 = $('<td><input type="hidden" name="itemId" /><input type="text" name="itemName" class="wb95 input_text itemName" /></td>');
-	var $td3 = $('<td><span class="green itemUnit"></span> </td>');
-	var $td4 = $('<td><input type="text" name="itemAmount" class="wb50 input_text itemAmount" value="0" /></td>');
-	var $td5 = $('<td>¥ <input type="text" class="w_50 input_text itemPrice" readonly="readonly" value="0.00" /></td>');
+	var $td3 = $('<td><select name="itemUnit" class="itemUnit"></select></td>');
+	<c:forEach items="${item_unit}" var="entry">
+		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td3.find('select'));
+	</c:forEach>
+	var $td4 = $('<td><input type="text" name="itemAmount" class="w_50 input_text itemAmount" value="0" /></td>');
+	var $td5 = $('<td>¥ <input type="text" class="w_50 input_money itemPrice" name="itemPrice" value="0.00" /></td>');
 	var $td6 = $('<td><input type="hidden" name="itemSum" />¥ <span class="money itemSum">0.00</span></td>');
 	var $td7 = $('<td><input type="text" name="itemRemarks" class="wb95 input_text itemRemarks" /></td>');
 	var $td8 = $('<td><span class="green stockAmount"></span></td>');
@@ -27,13 +35,20 @@ function addSaleItems(element) {
 	$tr.append($td1).append($td2).append($td3).append($td4).append($td5).append($td6).append($td7).append($td8);
 	$tr.appendTo(element);
 	
-	$td2.find('.itemName').autocomplete(
+	$tr.find('.cateIdBtn').click(function() {
+		var $parent = $(this).parents('tr');
+		$selectCateId = $parent.find('.cateId');
+		$selectCateIdDisplay = $parent.find('.cateIdBtn');
+		$('#busiCategorySelector').dialog('open');
+	});
+	
+	$tr.find('.itemName').autocomplete(
 			{
 				source : function(request, response) {
 					
 					var $parent = $($(this)[0].element).parents('tr');
-					var itemTypeValue = $parent.find('.itemTypeKey').val();
-					request['itemType'] = itemTypeValue;
+					var cateIdValue = $parent.find('.cateId').val();
+					request['cateId'] = cateIdValue;
 					
 					$.getJSON('${pageContext.request.contextPath}/busiItem/ajaxFindItem', request, function(data) {
 						response(data); 
@@ -43,14 +58,14 @@ function addSaleItems(element) {
 				,select: function(event, ui) {
 					var $parent = $(this).parents('tr');
 					$parent.find('input[name=itemId]').val(ui.item.itemId);
-					$parent.find('.itemPrice').val(ui.item.price);
-					$parent.find('.itemUnit').text(ui.item.unit);
+					$parent.find('.itemPrice').val(new Number(ui.item.price).toFixed(2));
+					$parent.find('.itemUnit').children('[value="' + ui.item.unit + '"]').attr('selected', true);
 					var stock = parseInt(ui.item.stockAmount) == 0 ? '没货' : '有货(' + ui.item.stockAmount + ')';
 					$parent.find('.stockAmount').text(stock);
 				}
 			});
 	
-	$td4.find(".itemAmount, .itemPrice").keyup(function() {
+	$tr.find(".itemAmount, .itemPrice").keyup(function() {
 		var $parent = $(this).parents('tr');
 		var itemPriceValue = parseFloat($parent.find('.itemPrice').val());
 		itemPriceValue = isNaN(itemPriceValue) ? 0 : itemPriceValue;
@@ -58,11 +73,13 @@ function addSaleItems(element) {
 		itemAmountValue = isNaN(itemAmountValue) ? 0 : itemAmountValue;
 		
 		var itemSumValue = itemPriceValue * itemAmountValue;
-		$parent.find('.itemSum').text(itemSumValue);
+		$parent.find('.itemSum').text(itemSumValue.toFixed(2));
 		$parent.find('input[name=itemSum]').val(itemSumValue.toFixed(2));
 		
 		sumTotal();
 	});
+	
+	$tr.find('.input_money').change(formatMoney);
 	
 }
 
@@ -102,9 +119,32 @@ function feeRemain() {
 <div class="title_box">
 	<h2>开据销售单</h2>
 	<div class="sys_btnBox">
-		<input type="button" id="submitBtn" value="保存" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<input type="button" id="submitBtn" value="保存" /> <input id="returnBtn" type="button" value="退出" />
 		<script>
-			$('#submitBtn').click(function() { $('#busiSalesForm').submit(); });
+			$('#submitBtn').click(function() { 
+				var hasError = false;
+				$('.itemName').each(function() {
+					var $parent = $(this).parents('tr');
+					var cateIdValue = $parent.find('.cateId').val();
+					var itemAmountValue = $parent.find('.itemAmount').val();
+					var itemPriceValue = $parent.find('.itemPrice').val();
+					var itemNameValue = $parent.find('.itemName').val();
+					if (itemNameValue != '') {
+						if (cateIdValue == '' || isNaN(itemAmountValue) || parseInt(itemAmountValue) == 0 || isNaN(itemPriceValue) || parseFloat(itemPriceValue) == 0) {
+							$parent.find('td').css('background-color', '#FF6600');
+							hasError = true;
+						}
+						else {
+							$parent.find('td').css('background-color', '#FFFFFF');
+						}
+					}
+				});
+				console.debug(hasError);
+				if (!hasError) {
+					$('#busiSalesForm').submit();
+				}				 
+			});
+			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/sales'; });
 		</script>
 	</div>
 </div>
@@ -194,20 +234,20 @@ function feeRemain() {
 				<col width="50" />
 				<col width="80" />
 				<col width="120" />
-				<col width="90" />
+				<col width="120" />
 				<col width="200" />
-				<col width="200" />
+				<col width="100" />
 			</colgroup>
 			<thead>
 				<tr>
-					<th>类别</th>
+					<th>系列</th>
 					<th>名称/货号/型号</th>
 					<th>单位</th>
 					<th>数量</th>
 					<th>单价</th>
 					<th>合计</th>
 					<th>信息备注</th>
-					<th>系统关联提示</th>
+					<th>库存</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -286,6 +326,7 @@ function feeRemain() {
 								$('#feePrepayCash').attr('disabled', true); 
 								$('#feePrepayCash').val('0.00');
 							}
+							feeRemain();
 						});
 						$('#checkCard').click(function() {
 							if ($(this).is(':checked')) {
@@ -294,6 +335,7 @@ function feeRemain() {
 								$('#feePrepayCard').attr('disabled', true);
 								$('#feePrepayCard').val('0.00');
 							}
+							feeRemain();
 						});
 						
 						$('#feePrepayCash, #feePrepayCard').keyup(feeRemain);
@@ -341,3 +383,31 @@ function feeRemain() {
 	<!--//box-->
 </div>
 </form:form>
+
+<div id="busiCategorySelector">
+
+	<c:forEach items="${busiCategoryListMap}" var="entry">
+		<h3 style="border-bottom: 1px solid #f0f0f0; color: #FF6600;"><dict:lookupDictValue key="${entry.key }" type="item_type" /> </h3>
+		<ul style="margin-bottom: 10px;">
+			<c:forEach items="${entry.value}" var="busiCategory">
+			<li><a href="javascript: void(0)" onclick="selectCategory('${busiCategory.cateId }', '${busiCategory.cateName }')">${busiCategory.cateName }</a></li>
+			</c:forEach>
+		</ul>
+		<br clear="all" />	
+	</c:forEach>
+	
+</div>
+
+<script>
+	$('#busiCategorySelector').dialog({'autoOpen': false, 'modal': true, 'width': 600, 
+		buttons: {"关闭": function() {$('#busiCategorySelector').dialog('close');  }},
+		title: '选择商品系列'
+	});
+	
+	function selectCategory(cateId, cateName) {
+		$selectCateId.val(cateId); 
+		$selectCateIdDisplay.val(cateName);
+		$('#busiCategorySelector').dialog('close');
+	}
+	
+</script>

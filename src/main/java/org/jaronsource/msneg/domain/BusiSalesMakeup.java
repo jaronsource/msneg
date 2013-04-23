@@ -27,7 +27,7 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 	
 	/** 补价总额 */
 	@Column(name="makeup_sum")
-	private Integer makeupSum;
+	private Float makeupSum;
 	
 	/** 经手人 */
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -108,6 +108,10 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 	@JoinColumn(name="dept_id")
 	private SysDept sysDept;
 	
+	/** 单据状态 */
+	@Column(name="bill_state_key")
+	private String billStateKey;
+	
 	public void setMakeupId(Integer makeupId) {
 		this.makeupId = makeupId;
 	}
@@ -116,14 +120,14 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 		return makeupId;
 	}
 	
-	public void setMakeupSum(Integer makeupSum) {
-		this.makeupSum = makeupSum;
-	}
-	
-	public Integer getMakeupSum() {
+	public Float getMakeupSum() {
 		return makeupSum;
 	}
-	
+
+	public void setMakeupSum(Float makeupSum) {
+		this.makeupSum = makeupSum;
+	}
+
 	public void setSysUser(SysUser sysUser) {
 		this.sysUser = sysUser;
 	}
@@ -274,6 +278,14 @@ public class BusiSalesMakeup implements IEntity<Integer> {
 
 	public void setSysDept(SysDept sysDept) {
 		this.sysDept = sysDept;
+	}
+
+	public String getBillStateKey() {
+		return billStateKey;
+	}
+
+	public void setBillStateKey(String billStateKey) {
+		this.billStateKey = billStateKey;
 	}
 
 	@Override

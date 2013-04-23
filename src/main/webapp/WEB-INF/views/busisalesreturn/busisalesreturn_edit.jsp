@@ -11,14 +11,14 @@
 function addSaleItems(element, value) {
 	var $tr = $('<tr></tr>');
 	var $td1 = $('<td><input type="checkbox" name="salesItemId" class="salesItemId" value="' + value.salesItemId + '"/></td>');
-	var $td2 = $('<td><span class="itemType">' + value.itemType + '</span></td>');
+	var $td2 = $('<td><span class="category">' + value.category + '</span></td>');
 	var $td3 = $('<td><span class="itemName">' + value.itemName + '</span></td>');
 	var $td4 = $('<td><span class="itemUnit">' + value.itemUnit + '</span></td>');
 	var $td5 = $('<td><span class="itemAmount">' + value.itemAmount + '</span></td>');
 	var $td6 = $('<td><input type="text" name="returnAmount" class="w_50 input_text returnAmount" /></td>');
-	var $td7 = $('<td><span class="money itemPrice">' + value.itemPrice + '</span></td>');
-	var $td8 = $('<td><input type="text" name="returnPrice" class="w_50 input_text returnPrice" value="' + value.itemPrice + '" /></td>');
-	var $td9 = $('<td><span class="money returnSum">' + value.itemSum + '</span></td>');
+	var $td7 = $('<td><span class="money itemPrice">' + new Number(value.itemPrice).toFixed(2) + '</span></td>');
+	var $td8 = $('<td><input type="text" name="returnPrice" class="w_50 input_text returnPrice" value="' + new Number(value.itemPrice).toFixed(2) + '" /></td>');
+	var $td9 = $('<td><span class="money returnSum">' + new Number(value.itemSum).toFixed(2) + '</span></td>');
 	var $td10 = $('<td><select name="returnReasonKey" class="returnReasonKey"></select></td>');
 	<c:forEach items="${return_reason}" var="entry">
 		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td10.find('select'));
@@ -28,24 +28,18 @@ function addSaleItems(element, value) {
 	$tr.append($td1).append($td2).append($td3).append($td4).append($td5).append($td6).append($td7).append($td8).append($td9).append($td10).append($td11);
 	$tr.appendTo(element);
 	
-	$(".returnAmount").keyup(function() {
-		sumTotal($(this));
+	$tr.find(".returnAmount, .returnPrice, .salesItemId").keyup(function() {
+		sumTotal();
 	});
 	
-	$(".returnPrice").keyup(function() {
-		sumTotal($(this));
-	});
-	
-	$(".salesItemId").click(function() {
-		sumTotal($(this));
-	});
+	$tr.find(".returnPrice").change(formatMoney);
 }
 
-function sumTotal ($element) {
+function sumTotal () {
 	
 	var total = 0;
 	$('.returnAmount').each(function () {
-		var $parent = $element.parents('tr');
+		var $parent = $(this).parents('tr');
 		
 		var checked = $parent.find('input[name="salesItemId"]:checked').length == 1;
 		if (checked) {
@@ -54,11 +48,12 @@ function sumTotal ($element) {
 			var returnAmountValue = parseFloat($parent.find('.returnAmount').val());
 			returnAmountValue = isNaN(returnAmountValue) ? 0 : returnAmountValue;
 			total += returnPriceValue * returnAmountValue;
+			console.debug(total);
 		}
 	});
 	
-	$('#returnSumDisplay').text(total);
-	$('#returnSum').val(total);
+	$('#returnSumDisplay').text(total.toFixed(2));
+	$('#returnSum').val(total.toFixed(2));
 	
 	actReturn();
 	
@@ -73,7 +68,7 @@ function actReturn() {
 	var total = $('#returnSum').val();
 	var actReturnSum = total - returnLoss - rerateLoss;
 	
-	$('#actReturnSumDisplay').text(actReturnSum);
+	$('#actReturnSumDisplay').text(actReturnSum.toFixed(2));
 	$('#actReturnSum').val(actReturnSum); 
 	
 }
@@ -85,9 +80,10 @@ function actReturn() {
 <div class="title_box">
 	<h2>开据返销单</h2>
 	<div class="sys_btnBox">
-		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="退出" id="returnBtn"/>
 		<script>
 			$('#submitBtn').click(function() { $('#busiSalesReturnForm').submit(); });
+			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/sales'; });
 		</script>
 	</div>
 </div>
@@ -125,7 +121,7 @@ function actReturn() {
 				}
 				,autoFocus: true
 				,select: select
-				,open: function() { $('.ui-menu').width(300); } 
+				,open: function() { $('.ui-menu').width(400); } 
 			});
 		
 		$('#clientPhoneTerm').autocomplete(
@@ -138,7 +134,7 @@ function actReturn() {
 				}
 				,autoFocus: true
 				,select: select
-				,open: function() { $('.ui-menu').width(300); } 
+				,open: function() { $('.ui-menu').width(400); } 
 			});
 	</script>
 </div>
@@ -191,7 +187,7 @@ function actReturn() {
 		<table width="100%" id="salesItemList" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
 			<colgroup>
 				<col width="40" />
-				<col width="50" />
+				<col width="100" />
 				<col width="*" />
 				<col width="50" />
 				<col width="50" />
@@ -205,7 +201,7 @@ function actReturn() {
 			<thead>
 				<tr>
 					<th>选择</th>
-					<th>类别</th>
+					<th>系列</th>
 					<th>名称/货号/型号</th>
 					<th>单位</th>
 					<th>数量</th>
@@ -242,12 +238,12 @@ function actReturn() {
 						<tbody>
 							<tr>
 								<th>应返金额</th>
-								<td><span class="money" id="returnSumDisplay" >￥ 0.00</span></td>
+								<td>¥ <span class="money" id="returnSumDisplay" >0.00</span></td>
 								<input type="hidden" name="returnSum" id="returnSum" />
 								<th>返销报损</th>
-								<td><input type="text" class="input_money returnLoss" name="returnLoss" id="returnLoss"/></td>
+								<td>¥ <input type="text" class="input_money returnLoss" name="returnLoss" id="returnLoss" value="0.00"/></td>
 								<th>折扣报损</th>
-								<td><input type="text" class="input_money rerateLoss" name="rerateLoss" id="rerateLoss"/></td>
+								<td>¥ <input type="text" class="input_money rerateLoss" name="rerateLoss" id="rerateLoss" value="0.00"/></td>
 								<script>
 									$('#returnLoss, #rerateLoss').keyup(function() {
 										actReturn();
@@ -258,7 +254,7 @@ function actReturn() {
 							</tr>
 							<tr>
 								<th>实返金额</th>
-								<td><span class="money" id="actReturnSumDisplay">￥ 0.00</span></td>
+								<td>¥ <span class="money" id="actReturnSumDisplay">0.00</span></td>
 								<input type="hidden" name="actReturnSum" id="actReturnSum"/>
 								<th>结算形式</th>
 								<td colspan="3">

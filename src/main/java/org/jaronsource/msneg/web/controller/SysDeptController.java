@@ -20,7 +20,7 @@ import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
 
-@RequestMapping("/sysDept")
+@RequestMapping("/sysConfig/dept")
 @Controller
 public class SysDeptController extends BaseController {
 
@@ -35,55 +35,48 @@ public class SysDeptController extends BaseController {
 		Page<SysDept> sysDeptPage = sysDeptService.findPage(searchForm);
 		model.addAttribute("sysDeptPage", sysDeptPage);
 		
-		return "sysDept/list";
+		return "sysConfig/dept/list";
 	}
 	
 	@RequestMapping(value = "/{deptId}/update", method = GET)
     public String update(@PathVariable("deptId") Integer deptId, Model model) {
         model.addAttribute("sysDept", sysDeptService.findByPk(deptId));
-        return "sysDept/update";
+        return "sysConfig/dept/edit";
 	}	
 	
 	@RequestMapping(value = "/{deptId}/update", method = POST)
     public String update(@Valid @ModelAttribute SysDept sysDept, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysDept", sysDept);
-            return "sysDept/update";
+            return "sysConfig/dept/edit";
         }
 
         sysDeptService.save(sysDept);
-        return "redirect:/sysDept/" + sysDept.getDeptId() + "/show";
+        return "history:/sysConfig/dept";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
     public String create(Model model) {
 		SysDept sysDept = new SysDept();
         model.addAttribute("sysDept", sysDept);
-        return "sysDept/create";
+        return "sysConfig/dept/edit";
     }
     
 	@RequestMapping(value = "/create", method = POST)
     public String create(@Valid SysDept sysDept, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysDept", sysDept);
-            return "sysDept/create";
+            return "sysConfig/dept/edit";
         }
 
         sysDeptService.save(sysDept);
-        return "redirect:/sysDept/" + sysDept.getDeptId() + "/show";
+        return "history:/sysConfig/dept";
     }	
-	
-	@RequestMapping(value = "/{deptId}/show", method = GET)
-    public String show(@PathVariable("deptId") Integer deptId, Model model) {
-        SysDept sysDept = sysDeptService.findByPk(deptId);
-		model.addAttribute("sysDept", sysDept);
-        return "sysDept/show";
-    }
     
     @RequestMapping(value = "/{deptId}/remove", method = GET)
     public String remove(@PathVariable("deptId") Integer deptId, Model model) {
         sysDeptService.remove(deptId);
-        return "redirect:/sysDept";
+        return "history:/sysConfig/dept";
     }
 }
 

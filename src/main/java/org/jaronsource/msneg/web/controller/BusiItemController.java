@@ -12,7 +12,6 @@ import net.sf.json.JSONObject;
 
 import org.jaronsource.msneg.domain.BusiItem;
 import org.jaronsource.msneg.service.BusiItemService;
-import org.jaronsource.msneg.utils.MoneyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,18 +96,18 @@ public class BusiItemController extends BaseController {
     
     @RequestMapping(value = "/ajaxFindItem", method = GET)
     @ResponseBody
-    public JSONArray ajaxFindItem(@RequestParam("itemType") String itemType, @RequestParam("term") String term) {
+    public JSONArray ajaxFindItem(@RequestParam("cateId") Integer cateId, @RequestParam("term") String term) {
         
-    	List<BusiItem> busiItemList = busiItemService.findItemByTypeAndTerm(itemType, term);
+    	List<BusiItem> busiItemList = busiItemService.findItemByCateIdAndTerm(cateId, term);
     	
     	JSONArray result = new JSONArray();
     	for (BusiItem busiItem : busiItemList) {
     		JSONObject jsonObject = new JSONObject();
-    		jsonObject.element("label", String.format("%s %s %s", busiItem.getItemCode(), busiItem.getItemName(), busiItem.getItemFormat()));
-    		jsonObject.element("value", busiItem.getItemCode());
+    		jsonObject.element("label", String.format(busiItem.getItemName()));
+    		jsonObject.element("value", busiItem.getItemName());
     		jsonObject.element("itemId", busiItem.getItemId());
-    		jsonObject.element("unit", busiItem.getItemUnit());
-    		jsonObject.element("price", MoneyUtils.encode(busiItem.getItemPrice()));
+    		jsonObject.element("unit", busiItem.getItemUnitKey());
+    		jsonObject.element("price", busiItem.getItemPrice());
     		jsonObject.element("stockAmount", busiItem.getItemStockAmount());
     		result.add(jsonObject);
 		}

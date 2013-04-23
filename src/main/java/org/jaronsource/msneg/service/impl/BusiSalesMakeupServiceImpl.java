@@ -33,15 +33,15 @@ public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSal
 	}
 
 	@Override
-	public Map<String, Long> statis(Integer deptId, String startTime, String endTime) {
+	public Map<String, Double> statis(Integer deptId, String startTime, String endTime) {
 		
-		Map<String, Long> statisMap = new HashMap<String, Long>();
+		Map<String, Double> statisMap = new HashMap<String, Double>();
 		
 		{
 			String jpql = "select sum(o.makeupSum) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
 			if (deptId != 0)
 				jpql += " and o.sysDept.deptId = " + deptId;
-			Long zongji = getDao().executeQueryOne(jpql, startTime, endTime);
+			Double zongji = getDao().executeQueryOne(jpql, startTime, endTime);
 			zongji = zongji == null ? 0 : zongji;
 			statisMap.put("zongji", zongji);
 		}
@@ -50,7 +50,7 @@ public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSal
 			String jpql = "select sum(o.addItem1 + o.addItem2 + o.addItem3 + o.addItem4 + o.addItem5 + o.addItem6 ) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
 			if (deptId != 0)
 				jpql += " and o.sysDept.deptId = " + deptId;
-			Long zengjia = getDao().executeQueryOne(jpql, startTime, endTime);
+			Double zengjia = getDao().executeQueryOne(jpql, startTime, endTime);
 			zengjia = zengjia == null ? 0 : zengjia;
 			statisMap.put("zengjia", zengjia);
 		}
@@ -59,7 +59,7 @@ public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSal
 			String jpql = "select sum(o.minusItem1 + o.minusItem2 + o.minusItem3 + o.minusItem4 + o.minusItem5 + o.minusItem6 ) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
 			if (deptId != 0)
 				jpql += " and o.sysDept.deptId = " + deptId;
-			Long jiashao = getDao().executeQueryOne(jpql, startTime, endTime);
+			Double jiashao = getDao().executeQueryOne(jpql, startTime, endTime);
 			jiashao = jiashao == null ? 0 : jiashao;
 			statisMap.put("jiashao", jiashao);
 		}

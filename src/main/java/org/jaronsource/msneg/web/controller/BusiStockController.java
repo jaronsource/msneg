@@ -3,14 +3,22 @@ package org.jaronsource.msneg.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.jaronsource.msneg.domain.BusiCategory;
 import org.jaronsource.msneg.domain.BusiItem;
+import org.jaronsource.msneg.service.BusiCategoryService;
 import org.jaronsource.msneg.service.BusiItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,12 +37,18 @@ public class BusiStockController extends BaseController {
 	@Autowired
 	private BusiItemService busiItemService;
 	
+	@Autowired
+	private BusiCategoryService busiCategoryService;
+	
 	@RequestMapping(method = {GET, POST})
 	@RequestHistory
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
+		List<BusiCategory> categories = busiCategoryService.findAll();
+		
 		Page<BusiItem> busiItemPage = busiItemService.findPage(searchForm);
 		model.addAttribute("busiItemPage", busiItemPage);
+		model.addAttribute("categories", categories);
 		
 		return "busiStock/list";
 	}
@@ -45,6 +59,55 @@ public class BusiStockController extends BaseController {
 
 		busiItemService.changeStock(itemId, stock);
 	}
+	
+	@RequestMapping(value = "/{itemId}/update", method = GET)
+    public String update(@PathVariable("itemId") Integer itemId, Model model) {
+		List<BusiCategory> categories = busiCategoryService.findAll();
+		model.addAttribute("categories", categories);
+        model.addAttribute("busiItem", busiItemService.findByPk(itemId));
+        return "busiStock/edit";
+	}	
+	
+	@RequestMapping(value = "/{itemId}/update", method = POST)
+    public String update(@Valid @ModelAttribute BusiItem busiItem, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	List<BusiCategory> categories = busiCategoryService.findAll();
+    		model.addAttribute("categories", categories);
+            model.addAttribute("busiItem", busiItem);
+            return "busiStock/edit";
+        }
+
+        busiItemService.save(busiItem);
+        return "history:/busiStock";
+    }	
+	
+	@RequestMapping(value = "/create", method = GET)
+    public String create(Model model) {
+		List<BusiCategory> categories = busiCategoryService.findAll();
+		model.addAttribute("categories", categories);
+		BusiItem busiItem = new BusiItem();
+        model.addAttribute("busiItem", busiItem);
+        return "busiStock/edit";
+    }
+    
+	@RequestMapping(value = "/create", method = POST)
+    public String create(@Valid BusiItem busiItem, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+        	List<BusiCategory> categories = busiCategoryService.findAll();
+    		model.addAttribute("categories", categories);
+            model.addAttribute("busiItem", busiItem);
+            return "busiStock/edit";
+        }
+        busiItem.setItemStockAmount(0);
+        busiItemService.save(busiItem);
+        return "history:/busiStock";
+    }	
+    
+    @RequestMapping(value = "/{itemId}/remove", method = GET)
+    public String remove(@PathVariable("itemId") Integer itemId, Model model) {
+        busiItemService.remove(itemId);
+        return "history:/busiStock";
+    }
 	
 }
 

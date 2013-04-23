@@ -16,16 +16,16 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'item_type', '商品类别');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('item_type', 'A', 'A');
+values ('item_type', 'A', 'A类');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('item_type', 'B', 'B');
+values ('item_type', 'B', 'B类');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('item_type', 'C', 'C');
+values ('item_type', 'C', 'C类');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('item_type', 'D', 'D');
+values ('item_type', 'D', 'D类');
 
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
@@ -121,6 +121,9 @@ values ('dept_type', 'B', '财务');
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('dept_type', 'C', '仓库');
 
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('dept_type', 'A', '业务部');
+
  	
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'orders_type', '定金类型');
@@ -174,7 +177,7 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'A', '已定');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('sales_state', 'B', '已结算 ');
+values ('sales_state', 'B', '已确认 ');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'C', '已备货');
@@ -184,6 +187,34 @@ values ('sales_state', 'D', '已到货');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'E', '已安装');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('sales_state', 'O', '已完结');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'bill_state', '单据状态');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('bill_state', 'A', '正常');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('bill_state', 'B', '作废 ');
+
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'item_unit', '商品单位');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('item_unit', 'A', '卷');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('item_unit', 'B', '平米 ');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('item_unit', 'C', '米');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('item_unit', 'D', '套');
 
 set foreign_key_checks = 1;
 

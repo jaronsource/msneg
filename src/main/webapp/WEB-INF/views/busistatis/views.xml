@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-    <definition extends="default" name="busiStatis/view">
-        <put-attribute name="body" value="/WEB-INF/views/busistatis/busistatis_view.jsp" />
+    <definition extends="default" name="busiStatis/statis01">
+        <put-attribute name="body" value="/WEB-INF/views/busistatis/busistatis_statis01.jsp" />
+    </definition>
+    
+    <definition extends="default" name="busiStatis/statis02">
+        <put-attribute name="body" value="/WEB-INF/views/busistatis/busistatis_statis02.jsp" />
     </definition>
 </tiles-definitions>

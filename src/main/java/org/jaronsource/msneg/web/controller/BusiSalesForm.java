@@ -5,8 +5,12 @@ import org.jaronsource.msneg.domain.BusiSales;
 public class BusiSalesForm {
 	
 	private BusiSales busiSales;
+	private String[] cateId;
 	private String[] itemId;
 	private String[] itemAmount;
+	private String[] itemName;
+	private String[] itemUnit;
+	private String[] itemPrice;
 	private String[] itemSum;
 	private String[] itemRemarks;
 	
@@ -40,4 +44,29 @@ public class BusiSalesForm {
 	public void setItemRemarks(String[] itemRemarks) {
 		this.itemRemarks = itemRemarks;
 	}
+	public String[] getCateId() {
+		return cateId;
+	}
+	public void setCateId(String[] cateId) {
+		this.cateId = cateId;
+	}
+	public String[] getItemName() {
+		return itemName;
+	}
+	public void setItemName(String[] itemName) {
+		this.itemName = itemName;
+	}
+	public String[] getItemUnit() {
+		return itemUnit;
+	}
+	public void setItemUnit(String[] itemUnit) {
+		this.itemUnit = itemUnit;
+	}
+	public String[] getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(String[] itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+	
 }

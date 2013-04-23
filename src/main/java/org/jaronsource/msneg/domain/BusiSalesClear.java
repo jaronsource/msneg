@@ -39,6 +39,16 @@ public class BusiSalesClear implements IEntity<Integer> {
 	@Column(name="create_time")
 	private String createTime;
 	
+	@Column(name="clear_method_key")
+	private String clearMethodKey;
+	
+	@Column(name="clear_sum")
+	private Float clearSum;
+	
+	/** 单据状态 */
+	@Column(name="bill_state_key")
+	private String billStateKey;
+	
 	public void setClearId(Integer clearId) {
 		this.clearId = clearId;
 	}
@@ -71,6 +81,30 @@ public class BusiSalesClear implements IEntity<Integer> {
 		return createTime;
 	}
 	
+	public String getClearMethodKey() {
+		return clearMethodKey;
+	}
+
+	public void setClearMethodKey(String clearMethodKey) {
+		this.clearMethodKey = clearMethodKey;
+	}
+
+	public Float getClearSum() {
+		return clearSum;
+	}
+
+	public void setClearSum(Float clearSum) {
+		this.clearSum = clearSum;
+	}
+
+	public String getBillStateKey() {
+		return billStateKey;
+	}
+
+	public void setBillStateKey(String billStateKey) {
+		this.billStateKey = billStateKey;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

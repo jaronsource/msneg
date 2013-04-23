@@ -96,6 +96,10 @@ public class BusiOrders implements IEntity<Integer> {
 	@Column(name="create_time")
 	private String createTime;
 	
+	/** 单据状态 */
+	@Column(name="bill_state_key")
+	private String billStateKey;
+	
 	public void setOrdersId(Integer ordersId) {
 		this.ordersId = ordersId;
 	}
@@ -214,6 +218,14 @@ public class BusiOrders implements IEntity<Integer> {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getBillStateKey() {
+		return billStateKey;
+	}
+
+	public void setBillStateKey(String billStateKey) {
+		this.billStateKey = billStateKey;
 	}
 
 	@Override

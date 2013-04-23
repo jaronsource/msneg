@@ -4,11 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
 <%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
+<dict:loadDictList type="clear_method" var="clear_method" />
 <security:securityUser var="user" />
 <script>
 function addSaleItems(element, value) {
 	var $tr = $('<tr></tr>');
-	var $td1 = $('<td><span class="itemType">' + value.itemType + '</span></td>');
+	var $td1 = $('<td><span class="category">' + value.category + '</span></td>');
 	var $td2 = $('<td><span class="itemName">' + value.itemName + '</span></td>');
 	var $td3 = $('<td><span class="itemUnit">' + value.itemUnit + '</span></td>');
 	var $td4 = $('<td><span class="itemAmount">' + value.itemAmount + '</span></td>');
@@ -75,9 +76,10 @@ function actReturn() {
 <div class="title_box">
 	<h2>开据结算单</h2>
 	<div class="sys_btnBox">
-		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="退出" id="returnBtn" />
 		<script>
 			$('#submitBtn').click(function() { $('#busiSalesClearForm').submit(); });
+			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/sales'; });
 		</script>
 	</div>
 </div>
@@ -85,6 +87,7 @@ function actReturn() {
 	<p>手工输入母单号 <input type="text" name="salesCodeTerm" class="input_text w_172" placeholder="请输入母单号" id="salesCodeTerm" /> 快速查找客户：<input type="text" name="clientPhoneTerm" class="input_text w_172" placeholder="请输入电话号码" id="clientPhoneTerm" /></p>
 	<script>
 		function select(event, ui) {
+			console.debug(ui.item);
 			$('#clientName').text(ui.item.clientName);
 			$('#address').text(ui.item.address);
 			$('#areacode').text(ui.item.areacode);
@@ -101,7 +104,7 @@ function actReturn() {
 			$('#feeSum').text(ui.item.feeSum ? ui.item.feeSum.toFixed(2) : '0.00');
 			$('#feePrepayCash').text(ui.item.feePrepayCash ? ui.item.feePrepayCash.toFixed(2) : '0.00'); 
 			$('#feePrepayCard').text(ui.item.feePrepayCard ? ui.item.feePrepayCard.toFixed(2) : '0.00');
-			$('#feeRemain').text(ui.item.feeRemain ? ui.item.feeRemain.toFixed(2) : '0.00');
+			$('#feeRemain').text(ui.item.feePrepayRemain ? ui.item.feePrepayRemain.toFixed(2) : '0.00');
 			$('#otherRemarks').text(ui.item.otherRemarks);
 			
 			var salesId = ui.item.salesId;
@@ -123,7 +126,7 @@ function actReturn() {
 				}
 				,autoFocus: true
 				,select: select
-				,open: function() { $('.ui-menu').width(300); } 
+				,open: function() { $('.ui-menu').width(400); } 
 			});
 		
 		$('#clientPhoneTerm').autocomplete(
@@ -136,7 +139,7 @@ function actReturn() {
 				}
 				,autoFocus: true
 				,select: select
-				,open: function() { $('.ui-menu').width(300); } 
+				,open: function() { $('.ui-menu').width(400); } 
 			});
 	</script>
 </div>
@@ -188,7 +191,7 @@ function actReturn() {
 		<h3>商品信息<a href="#this" class="toggle_table">折叠</a></h3>
 		<table id="salesItemList" width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
 			<colgroup>
-				<col width="50" />
+				<col width="140" />
 				<col width="*" />
 				<col width="50" />
 				<col width="50" />
@@ -198,7 +201,7 @@ function actReturn() {
 			</colgroup>
 			<thead>
 				<tr>
-					<th>类别</th>
+					<th>系列</th>
 					<th>名称/货号/型号</th>
 					<th>单位</th>
 					<th>数量</th>
@@ -260,6 +263,16 @@ function actReturn() {
 					<td>现金 ¥ <span id="feePrepayCash" class="money">0.00</span> 刷卡 ¥ <span id="feePrepayMoney" class="money" >0.00</span></td>
 					<th>剩余尾款</th>
 					<td>¥ <span id="feeRemain" class="money">0.00</span></td>
+				</tr>
+				<tr>
+					<th>结算金额</th>
+					<td>¥ <input type="text" class="input_money clearSum" name="clearSum" id="clearSum" value="0.00"/></td>
+					<th>结算形式</th>
+					<td colspan="3">
+						<c:forEach items="${clear_method}" var="entry" varStatus="status">
+							<input type="radio" class="clearMethodKey radio" name="clearMethodKey" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
+						</c:forEach>
+					</td>
 				</tr>
 			</tbody>
 		</table>

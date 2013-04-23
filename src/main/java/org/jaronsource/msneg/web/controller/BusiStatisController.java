@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ccesun.framework.core.dao.support.SearchForm;
-import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.util.DateUtils;
 import com.ccesun.framework.util.MapUtils;
@@ -48,9 +47,8 @@ public class BusiStatisController extends BaseController {
 	@Autowired
 	private SysDeptService sysDeptService;
 	
-	@RequestMapping(method = {GET, POST})
-	@RequestHistory
-	public String list(@ModelAttribute SearchForm searchForm, Model model) {
+	@RequestMapping(value = "/statis01", method = {GET, POST})
+	public String statis01(@ModelAttribute SearchForm searchForm, Model model) {
 		
 		List<SysDept> depts = sysDeptService.findAll();
 		
@@ -64,19 +62,19 @@ public class BusiStatisController extends BaseController {
 		//String threeMonthTime = DateUtils.format(DateUtils.addDays(now, 90), DateUtils.PATTERN_DATE);
 		
 		deptId = deptId == null ? 0 : deptId;
-		startTime = startTime == null ? weekTime : startTime;
-		endTime = endTime == null ? DateUtils.currentDate() : endTime;
+		startTime = startTime == null ? DateUtils.currentDate() : startTime;
+		endTime = endTime == null ? weekTime : endTime;
 		
 		searchForm.getForm().put("deptId", deptId.toString());
 		searchForm.getForm().put("startTime", startTime);
 		searchForm.getForm().put("endTime", endTime);
 		
 		
-		Map<String, Long> busiSalesStatisA = busiSalesService.statis(deptId, "A", startTime, endTime);
-		Map<String, Long> busiSalesStatisB = busiSalesService.statis(deptId, "B", startTime, endTime);
-		Map<String, Long> busiSalesMakeupStatis = busiSalesMakeupService.statis(deptId, startTime, endTime);
-		Map<String, Long> busiSalesReturnStatis = busiSalesReturnService.statis(deptId, startTime, endTime);
-		Map<String, Long> busiSalesOrdersStatis = busiOrdersService.statis(deptId, startTime, endTime);
+		Map<String, Double> busiSalesStatisA = busiSalesService.statis(deptId, "A", startTime, endTime);
+		Map<String, Double> busiSalesStatisB = busiSalesService.statis(deptId, "B", startTime, endTime);
+		Map<String, Double> busiSalesMakeupStatis = busiSalesMakeupService.statis(deptId, startTime, endTime);
+		Map<String, Double> busiSalesReturnStatis = busiSalesReturnService.statis(deptId, startTime, endTime);
+		Map<String, Double> busiSalesOrdersStatis = busiOrdersService.statis(deptId, startTime, endTime);
 		
 		model.addAttribute("busiSalesStatisA", busiSalesStatisA);
 		model.addAttribute("busiSalesStatisB", busiSalesStatisB);
@@ -90,7 +88,42 @@ public class BusiStatisController extends BaseController {
 
 		model.addAttribute("depts", depts);
 		
-		return "busiStatis/view";
+		return "busiStatis/statis01";
+	}
+	
+	@RequestMapping(value = "/statis02", method = {GET, POST})
+	public String statis02(@ModelAttribute SearchForm searchForm, Model model) {
+		
+		List<SysDept> depts = sysDeptService.findAll();
+		
+		Integer deptId = MapUtils.getInteger(searchForm.getForm(), "deptId");
+		String startTime = MapUtils.getString(searchForm.getForm(), "startTime");
+		String endTime = MapUtils.getString(searchForm.getForm(), "endTime");
+		
+		Date now = new Date();
+		String weekTime = DateUtils.format(DateUtils.addDays(now, 7), DateUtils.PATTERN_DATE);
+		//String monthTime = DateUtils.format(DateUtils.addDays(now, 30), DateUtils.PATTERN_DATE);
+		//String threeMonthTime = DateUtils.format(DateUtils.addDays(now, 90), DateUtils.PATTERN_DATE);
+		
+		deptId = deptId == null ? 0 : deptId;
+		startTime = startTime == null ? DateUtils.currentDate() : startTime;
+		endTime = endTime == null ? weekTime : endTime;
+		
+		searchForm.getForm().put("deptId", deptId.toString());
+		searchForm.getForm().put("startTime", startTime);
+		searchForm.getForm().put("endTime", endTime);
+		
+		List<Object[]> busiSalesStatis = busiSalesService.statis02(deptId, startTime, endTime);
+		
+		model.addAttribute("busiSalesStatis", busiSalesStatis);
+
+		//model.addAttribute("weekTime", weekTime);
+		//model.addAttribute("monthTime", monthTime);
+		//model.addAttribute("threeMonthTime", threeMonthTime);
+
+		model.addAttribute("depts", depts);
+		
+		return "busiStatis/statis02";
 	}
 	
 }

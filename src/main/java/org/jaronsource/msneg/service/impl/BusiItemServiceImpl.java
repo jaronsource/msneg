@@ -26,15 +26,15 @@ public class BusiItemServiceImpl extends SearchFormSupportService<BusiItem, Inte
 	}
 
 	@Override
-	public List<BusiItem> findItemByTypeAndTerm(String itemType, String term) {
+	public List<BusiItem> findItemByCateIdAndTerm(Integer cateId, String term) {
 		
 		Assert.notNull(term);
 		
-		String jpql = "select o from BusiItem o where o.itemTypeKey = ? and ( o.itemCode like ? or o.itemName like ? or o.itemFormat like ? )";
+		String jpql = "select o from BusiItem o where o.busiCategory.cateId = ? and o.itemName like ? )";
 		String termForQuery = term.toUpperCase();
 		PageRequest pageRequest = new PageRequest(1, 20);
 		
-		return getDao().find(pageRequest, jpql, itemType, '%' + termForQuery + '%', '%' + termForQuery + '%', '%' + termForQuery + '%');
+		return getDao().find(pageRequest, jpql, cateId, '%' + termForQuery + '%');
 	}
 
 	@Override
@@ -50,6 +50,5 @@ public class BusiItemServiceImpl extends SearchFormSupportService<BusiItem, Inte
 		getDao().execute(jpql, stock, itemId);
 		
 	}
-
 
 }

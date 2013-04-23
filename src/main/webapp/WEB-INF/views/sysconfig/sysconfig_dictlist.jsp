@@ -14,13 +14,14 @@
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-5" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/user" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-5">用户</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-6" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/func" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-6">功能</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-7" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/role" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-7">角色</a></li>
+		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-8" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/category" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-7">商品系列</a></li>
 	</ul>
 	
 	<div class="customer">
 		<form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
-	    	<form:input path="form['dictType_eq']" id="search_dictType" placeholder="类型"/>
-	    	<form:input path="form['dictKey_eq']" id="search_dictKey" placeholder="键"/>
-	    	<form:input path="form['parentKey_eq']" id="search_parentKey" placeholder="父级键"/>
+	    	<form:input path="form['dictType_eq']" id="search_dictType" placeholder="类型" cssClass="input_text" />
+	    	<form:input path="form['dictKey_eq']" id="search_dictKey" placeholder="键" cssClass="input_text" />
+	    	<form:input path="form['parentKey_eq']" id="search_parentKey" placeholder="父级键" cssClass="input_text" />
 	    	<button type="submit" class="btn"><i class="icon-search"></i> 搜索</button>
 	    </form:form>
     
@@ -47,8 +48,8 @@
 		    	<td>${entry.dictValue2}</td>
 		    	<td>${entry.dictValue3}</td>
 		    	<td>
-		    		<a href="${baseUrl}/${entry.recordId}/update" class="btn btn-small">修改</a> 
-		    		<a href="${baseUrl}/${entry.recordId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')">删除</a> 
+		    		<a href="${pageContext.request.contextPath}/sysConfig/dict/${entry.recordId}/update" class="btn btn-small">修改</a> 
+		    		<a href="${pageContext.request.contextPath}/sysConfig/dict/${entry.recordId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')">删除</a> 
 		    	</td>
 	    	</tr>	
 	    	</c:forEach>
@@ -58,7 +59,7 @@
 			<pg:pager url="${baseUrl}" page="${sysDictPage}" />
 		    <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>	
 		    <div class="sys_btnBox">
-				<input type="button" onclick="window.location='sysConfig/dict/create'" value="创建新字典">
+				<input type="button" onclick="window.location='${pageContext.request.contextPath}/sysConfig/dict/create'" value="创建新字典">
 			</div>
 		</div>	
 	</div>

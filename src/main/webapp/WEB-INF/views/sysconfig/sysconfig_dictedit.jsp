@@ -14,7 +14,49 @@
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-5" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/user" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-5">用户</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-6" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/func" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-6">功能</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-7" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/role" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-7">角色</a></li>
+		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-8" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/category" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-7">商品系列</a></li>
 	</ul>
-	
-	
+	<div class="customer">
+	<form:form modelAttribute="sysDict">
+	<table width="100%" cellspacing="0" cellpadding="0" border="1" class="tbl_w">
+		<colgroup>
+			<col width="140">
+			<col width="*">
+		</colgroup>
+		<tbody>
+			<tr>
+				<th>类型</th>
+				<td><form:input path="dictType" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>键</th>
+				<td><form:input path="dictKey" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>父级键</th>
+				<td><form:input path="parentKey" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>值0</th>
+				<td><form:input path="dictValue0" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>值1</th>
+				<td><form:input path="dictValue1" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>值2</th>
+				<td><form:input path="dictValue2" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>值3</th>
+				<td><form:input path="dictValue3" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="保存" /> <input type="button" value="返回" onclick="window.location='${pageContext.request.contextPath}/sysConfig/dict';" /> </td>
+			</tr>
+		</tbody>
+	</table>
+	</form:form>
+	</div>
 </div>

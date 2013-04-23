@@ -20,7 +20,7 @@ import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
 
-@RequestMapping("/sysFunc")
+@RequestMapping("/sysConfig/func")
 @Controller
 public class SysFuncController extends BaseController {
 
@@ -35,55 +35,48 @@ public class SysFuncController extends BaseController {
 		Page<SysFunc> sysFuncPage = sysFuncService.findPage(searchForm);
 		model.addAttribute("sysFuncPage", sysFuncPage);
 		
-		return "sysFunc/list";
+		return "sysConfig/func/list";
 	}
 	
 	@RequestMapping(value = "/{funcId}/update", method = GET)
     public String update(@PathVariable("funcId") Integer funcId, Model model) {
         model.addAttribute("sysFunc", sysFuncService.findByPk(funcId));
-        return "sysFunc/update";
+        return "sysConfig/func/edit";
 	}	
 	
 	@RequestMapping(value = "/{funcId}/update", method = POST)
     public String update(@Valid @ModelAttribute SysFunc sysFunc, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysFunc", sysFunc);
-            return "sysFunc/update";
+            return "sysConfig/func/edit";
         }
 
         sysFuncService.save(sysFunc);
-        return "redirect:/sysFunc/" + sysFunc.getFuncId() + "/show";
+        return "history:/sysConfig/func";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
     public String create(Model model) {
 		SysFunc sysFunc = new SysFunc();
         model.addAttribute("sysFunc", sysFunc);
-        return "sysFunc/create";
+        return "sysConfig/func/edit";
     }
     
 	@RequestMapping(value = "/create", method = POST)
     public String create(@Valid SysFunc sysFunc, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysFunc", sysFunc);
-            return "sysFunc/create";
+            return "sysConfig/func/edit";
         }
 
         sysFuncService.save(sysFunc);
-        return "redirect:/sysFunc/" + sysFunc.getFuncId() + "/show";
+        return "history:/sysConfig/func";
     }	
 	
-	@RequestMapping(value = "/{funcId}/show", method = GET)
-    public String show(@PathVariable("funcId") Integer funcId, Model model) {
-        SysFunc sysFunc = sysFuncService.findByPk(funcId);
-		model.addAttribute("sysFunc", sysFunc);
-        return "sysFunc/show";
-    }
-    
     @RequestMapping(value = "/{funcId}/remove", method = GET)
     public String remove(@PathVariable("funcId") Integer funcId, Model model) {
         sysFuncService.remove(funcId);
-        return "redirect:/sysFunc";
+        return "history:/sysConfig/func";
     }
 }
 

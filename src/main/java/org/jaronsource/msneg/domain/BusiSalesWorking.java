@@ -75,6 +75,10 @@ public class BusiSalesWorking implements IEntity<Integer> {
 	@NotFound(action=NotFoundAction.IGNORE)
 	private SysUser sysUser;
 	
+	/** 单据状态 */
+	@Column(name="bill_state_key")
+	private String billStateKey;
+	
 	public void setWorkingId(Integer workingId) {
 		this.workingId = workingId;
 	}
@@ -171,6 +175,14 @@ public class BusiSalesWorking implements IEntity<Integer> {
 		return sysUser;
 	}
 	
+	public String getBillStateKey() {
+		return billStateKey;
+	}
+
+	public void setBillStateKey(String billStateKey) {
+		this.billStateKey = billStateKey;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

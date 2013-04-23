@@ -1,10 +1,15 @@
 package org.jaronsource.msneg.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -49,6 +54,12 @@ public class SysUser implements IEntity<Integer>, ISecurityUser {
 	/** 是否可用 */
 	@Column(name="is_available")
 	private Integer isAvailable;
+	
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "sys_userrole",
+	    joinColumns = @JoinColumn(name = "user_id"),
+	    inverseJoinColumns =  @JoinColumn(name = "role_id"))
+	private List<SysRole> roles;
 	
 	public void setUserId(Integer userId) {
 		this.userId = userId;
@@ -98,6 +109,14 @@ public class SysUser implements IEntity<Integer>, ISecurityUser {
 		return isAvailable;
 	}
 	
+	public List<SysRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<SysRole> roles) {
+		this.roles = roles;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

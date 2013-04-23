@@ -4,19 +4,24 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.jaronsource.msneg.domain.BusiItem;
+import org.jaronsource.msneg.domain.BusiCategory;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesItem;
+import org.jaronsource.msneg.service.BusiCategoryService;
+import org.jaronsource.msneg.service.BusiSalesItemService;
 import org.jaronsource.msneg.service.BusiSalesService;
-import org.jaronsource.msneg.utils.MoneyUtils;
+import org.jaronsource.msneg.utils.PhoneUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +34,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ccesun.framework.core.AppContext;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.plugins.dictionary.DictionaryHelper;
+import com.ccesun.framework.plugins.report.JasperReportUtils;
 import com.ccesun.framework.util.NumberUtils;
 import com.ccesun.framework.util.StringUtils;
 
@@ -44,6 +51,12 @@ public class BusiSalesController extends BaseController {
 	
 	@Autowired
 	private BusiSalesService busiSalesService;
+	
+	@Autowired
+	private BusiCategoryService busiCategoryService;
+	
+	@Autowired
+	private BusiSalesItemService busiSalesItemService;
 	
 	@Autowired
 	private DictionaryHelper dictionaryHelper;
@@ -76,13 +89,19 @@ public class BusiSalesController extends BaseController {
 	
 	@RequestMapping(value = "/create", method = GET)
     public String create(Model model) {
+		
 		BusiSales busiSales = new BusiSales();
 		BusiSalesForm form = new BusiSalesForm();
 		form.setBusiSales(busiSales);
 		
+		//List<BusiCategory> busiCategories = busiCategoryService.findAll();
+		
+		Map<String, List<BusiCategory>> busiCategoryListMap = busiCategoryService.findBusiCategoryListMap();
+		
 		String salesCode = busiSalesService.generateSalesCode();
 		
         model.addAttribute("form", form);
+        model.addAttribute("busiCategoryListMap", busiCategoryListMap);
         getHttpSession().setAttribute("salesCode", salesCode);
         
         return "busiSales/create";
@@ -96,33 +115,93 @@ public class BusiSalesController extends BaseController {
         //}
         
 		HttpServletRequest requst = getHttpServletRequest();
-		String[] itemIds = requst.getParameterValues("itemId");
+		String[] cateIds = requst.getParameterValues("cateId");
+		String[] itemNames = requst.getParameterValues("itemName");
 		String[] itemAmounts = requst.getParameterValues("itemAmount");
 		String[] itemSums = requst.getParameterValues("itemSum");
 		String[] itemRemarks = requst.getParameterValues("itemRemarks");
+		String[] itemUnits = requst.getParameterValues("itemUnit");
+		String[] itemPrices = requst.getParameterValues("itemPrice");
 		
 		List<BusiSalesItem> busiSalesItems = new ArrayList<BusiSalesItem>();
-		for (int i = 0; i < itemIds.length; i++) {
-			if (StringUtils.isNotBlank(itemIds[i])) {
+		for (int i = 0; i < cateIds.length; i++) {
+			if (StringUtils.isNotBlank(itemNames[i])) {
 				BusiSalesItem busiSalesItem = new BusiSalesItem();
 				busiSalesItem.setItemAmount(NumberUtils.toInt(itemAmounts[i]));
+				busiSalesItem.setItemName(itemNames[i]);
 				busiSalesItem.setItemRemarks(itemRemarks[i]);
-				busiSalesItem.setItemSum(MoneyUtils.decode(itemSums[i]));
-				busiSalesItem.setBusiItem(new BusiItem(NumberUtils.toInt(itemIds[i])));
+				busiSalesItem.setItemSum(NumberUtils.toFloat(itemSums[i]));
+				busiSalesItem.setItemUnitKey(itemUnits[i]);
+				busiSalesItem.setItemPrice(NumberUtils.toFloat(itemPrices[i]));
+				busiSalesItem.setBusiCategory(new BusiCategory(NumberUtils.toInt(cateIds[i])));
 				busiSalesItems.add(busiSalesItem);
 			}
 		}
 		
 		busiSalesService.save(busiSalesForm.getBusiSales(), busiSalesItems);
 		
-        return "redirect:/busiSales/create";
+        return "redirect:/busiSales/" + busiSalesForm.getBusiSales().getSalesId() + "/show";
     }	
 	
 	@RequestMapping(value = "/{salesId}/show", method = GET)
     public String show(@PathVariable("salesId") Integer salesId, Model model) {
-        BusiSales busiSales = busiSalesService.findByPk(salesId);
+		BusiSales busiSales = busiSalesService.findByPk(salesId);
+		List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(salesId);
 		model.addAttribute("busiSales", busiSales);
+		model.addAttribute("busiSalesItemList", busiSalesItemList);
+		
         return "busiSales/show";
+    }
+	
+	@RequestMapping(value = "/{salesId}/print", method = GET)
+	@ResponseBody
+    public void print(@PathVariable("salesId") Integer salesId, HttpServletResponse response) {
+		BusiSales busiSales = busiSalesService.findByPk(salesId);
+		List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(salesId);
+		
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("salesCode", busiSales.getSalesCode());
+		paramMap.put("clientName", busiSales.getBusiClient().getClientName());
+		paramMap.put("clientPhone", PhoneUtils.decode(busiSales.getBusiClient().getAreacode(), busiSales.getBusiClient().getPhone()));
+		paramMap.put("clientCellPhone", busiSales.getBusiClient().getCellPhone());
+		paramMap.put("sysUser", busiSales.getSysUser().getRealName());
+		paramMap.put("clientAddress", busiSales.getBusiClient().getAddress());
+		paramMap.put("salesRemarks", busiSales.getSalesRemarks());
+		paramMap.put("servLogis", dictionaryHelper.lookupDictValue0("serv_logis", busiSales.getServLogisKey()));
+		paramMap.put("servGetmethod", dictionaryHelper.lookupDictValue0("serv_getmethod", busiSales.getServGetmethodKey()));
+		paramMap.put("servInstallmethod", dictionaryHelper.lookupDictValue0("serv_installmethod", busiSales.getServInstallmethodKey()));
+		paramMap.put("feeSum", busiSales.getFeeSum() == null ? "0.00" : busiSales.getFeeSum().toString());
+		paramMap.put("feePrepay", busiSales.getFeePrepay() == null ? "0.00" : busiSales.getFeePrepay().toString());
+		paramMap.put("feeRemain", busiSales.getFeeRemain() == null ? "0.00" : busiSales.getFeeRemain().toString());
+		paramMap.put("createTime", busiSales.getCreateTime());
+		paramMap.put("otherRemarks", busiSales.getOtherRemarks());
+		paramMap.put("deptAddress", AppContext.getInstance().getString("deptAddress"));
+		paramMap.put("deptPhone", AppContext.getInstance().getString("deptPhone"));
+		paramMap.put("deptFax", AppContext.getInstance().getString("deptFax"));
+		paramMap.put("deptServicePhone", AppContext.getInstance().getString("deptServicePhone"));
+		paramMap.put("salesContract", busiSales.getSalesContract());
+		
+		List<Map<String, String>> entries = new ArrayList<Map<String, String>>();
+		for (BusiSalesItem busiSalesItem : busiSalesItemList) {
+			Map<String, String> entry = new HashMap<String, String>();
+			entry.put("cateName", busiSalesItem.getBusiCategory().getCateName());
+			entry.put("itemName", busiSalesItem.getItemName());
+			entry.put("itemUnit", dictionaryHelper.lookupDictValue0("item_unit", busiSalesItem.getItemUnitKey()) );
+			entry.put("itemAmount", busiSalesItem.getItemAmount() == null ? "0" : busiSalesItem.getItemAmount().toString());
+			entry.put("itemPrice", busiSalesItem.getItemPrice() == null ? "0.00" : busiSalesItem.getItemPrice().toString());
+			entry.put("itemSum", busiSalesItem.getItemSum() == null ? "0.00" : busiSalesItem.getItemSum().toString());
+			entry.put("itemRemarks", busiSalesItem.getItemRemarks());
+			entries.add(entry);
+		}
+		
+		String filePath = getRealPath("/WEB-INF/print/sales.jasper");
+		
+		try {
+			JasperReportUtils.exportPdf(response, filePath, paramMap, entries, "sales");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
     }
     
     @RequestMapping(value = "/{salesId}/remove", method = GET)
@@ -144,7 +223,6 @@ public class BusiSalesController extends BaseController {
 		}
     	
     	return result;
-
     }
 
 	private JSONObject getJsonObject(BusiSales busiSales) {

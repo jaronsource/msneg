@@ -80,7 +80,7 @@ public class BusiBillsController extends BaseController {
 		return "busiBills/list";
 	}
 	
-	@RequestMapping(value="viewBills", method = {GET, POST})
+	@RequestMapping(value="/viewBills", method = {GET, POST})
 	public String viewBill(@RequestParam Integer salesId, Model model) {
 		
 		BusiSales busiSales = busiSalesService.findByPk(salesId);

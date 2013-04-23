@@ -103,6 +103,7 @@ public class BusiOrdersController extends BaseController {
 		busiOrders.setSysUser(currentUser);
 		busiOrders.setCreateTime(DateUtils.currentDateTime());
 		busiOrders.setOrdersStateKey("A");
+		busiOrders.setBillStateKey("A");
 		
         busiOrdersService.save(busiOrders);
         return "history:/busiOrders";
@@ -136,5 +137,6 @@ public class BusiOrdersController extends BaseController {
         busiOrdersService.save(busiOrders);
         return "redirect:/busiOrders";
     }
+    
 }
 

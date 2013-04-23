@@ -4,7 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="pg" uri="http://www.ccesun.com/tags/pager" %>
 <%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
-<security:securityUser var="user"/>
+<%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
+<dict:loadDictList type="dept_type" var="dept_type" />
 <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="0" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="true"><a href="${pageContext.request.contextPath}/sysConfig" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">用户信息</a></li>
@@ -14,7 +15,48 @@
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-5" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/user" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-5">用户</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-6" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/func" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-6">功能</a></li>
 		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-7" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/role" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-7">角色</a></li>
+		<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-8" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/sysConfig/category" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-7">商品系列</a></li>
 	</ul>
-	
-	
+	<div class="customer">
+	<form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
+    	部门类型 
+    	<form:select path="form['deptTypeKey_eq']" id="search_deptTypeKey">
+    		<form:options items="${dept_type}" itemLabel="dictValue0" itemValue="dictKey"/>
+    	</form:select>
+    	<form:input path="form['deptName_blk']" id="search_dictType" placeholder="名称" cssClass="input_text" />
+    	<button type="submit" class="btn"><i class="icon-search"></i> 搜索</button>
+    </form:form>
+	    
+	<table class="tbl_l"> 
+	    	<tr>
+		    	<th>主键</th>
+		    	<th>编码</th>
+		    	<th>名称</th>
+		    	<th>描述</th>
+		    	<th>部门类型</th>
+		    	<th>操作</th>
+	    	</tr>
+	    	<c:forEach items="${sysDeptPage.content}" var="entry">
+	    	<tr>
+		    	<td>${entry.deptId}</td>
+		    	<td>${entry.deptCode}</td>
+		    	<td>${entry.deptName}</td>
+		    	<td>${entry.deptRemarks}</td>
+		    	<td><dict:lookupDictValue key="${entry.deptTypeKey}" type="dept_type" /> </td>
+		    	<td>
+		    		<a href="${pageContext.request.contextPath}/sysConfig/dept/${entry.deptId}/update" class="btn btn-small">修改</a> 
+		    		<a href="${pageContext.request.contextPath}/sysConfig/dept/${entry.deptId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')">删除</a> 
+		    	</td>
+	    	</tr>	
+	    	</c:forEach>
+	    </table> 
+    	
+		<div class="paging"> 
+			<pg:pager url="${baseUrl}" page="${sysDeptPage}" />
+		    <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>	
+		    <div class="sys_btnBox">
+				<input type="button" onclick="window.location='${pageContext.request.contextPath}/sysConfig/dept/create'" value="创建新部门">
+			</div>
+		</div>	
+	</div>
 </div>

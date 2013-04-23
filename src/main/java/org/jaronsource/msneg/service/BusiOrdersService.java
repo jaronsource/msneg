@@ -9,6 +9,6 @@ public interface BusiOrdersService extends ISearchFormSupportService<BusiOrders,
 
 	String generateOrdersCode();
 
-	Map<String, Long> statis(Integer deptId, String startTime, String endTime);
+	Map<String, Double> statis(Integer deptId, String startTime, String endTime);
 
 }

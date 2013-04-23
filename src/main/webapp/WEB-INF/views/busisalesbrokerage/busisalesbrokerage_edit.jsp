@@ -11,7 +11,7 @@
 function addSaleItems(element, value) {
 	var $tr = $('<tr></tr>');
 	var $td1 = $('<td><input type="checkbox" name="salesItemId" class="salesItemId" value="' + value.salesItemId + '"/></td>');
-	var $td2 = $('<td><span class="itemType">' + value.itemType + '</span></td>');
+	var $td2 = $('<td><span class="category">' + value.category + '</span></td>');
 	var $td3 = $('<td><span class="itemName">' + value.itemName + '</span></td>');
 	var $td4 = $('<td><span class="itemUnit">' + value.itemUnit + '</span></td>');
 	var $td5 = $('<td><span class="itemAmount">' + value.itemAmount + '</span></td>');

@@ -22,8 +22,19 @@
 <body class="bg_none">
 <div id="login_outer">
 	<div class="login">
-		<h2>日</h2>
-		<p class="news">公告信息：本系统12.20日晚升级维护，21日正常使用...</p>
+		<h2>
+		<script>
+		var todayDate = new Date();
+		if (todayDate.getDay() == 0) document.write("日");
+		if (todayDate.getDay() == 1) document.write("一");
+		if (todayDate.getDay() == 2) document.write("二");
+		if (todayDate.getDay() == 3) document.write("三");
+		if (todayDate.getDay() == 4) document.write("四");
+		if (todayDate.getDay() == 5) document.write("五");
+		if (todayDate.getDay() == 6) document.write("六");
+		</script>
+		</h2>
+		<!-- <p class="news">公告信息：本系统12.20日晚升级维护，21日正常使用...</p> -->
 		<div class="login_form">
 			<form:form modelAttribute="loginForm" id="loginForm">
 			<h3>欢迎您使用MSNEG OA在线办公系统</h3>
@@ -45,6 +56,13 @@
 			<script>
 				$("#submit").click(function() {
 					$('#loginForm').submit();
+				});
+				
+				$(document).keyup(function(e) {
+					var key = e.which;
+					if (key == 13) {
+						$('#loginForm').submit();
+					}					
 				});
 			</script>
 			</form:form>

@@ -29,7 +29,7 @@ public class BusiSalesBrokerage implements IEntity<Integer> {
 	
 	/** 提成总额 */
 	@Column(name="brok_sum")
-	private Integer brokSum;
+	private Float brokSum;
 	
 	/** 结算方式 */
 	@Column(name="clear_method_key")
@@ -49,6 +49,10 @@ public class BusiSalesBrokerage implements IEntity<Integer> {
 	@Column(name="create_time")
 	private String createTime;
 	
+	/** 单据状态 */
+	@Column(name="bill_state_key")
+	private String billStateKey;
+	
 	public void setBrokId(Integer brokId) {
 		this.brokId = brokId;
 	}
@@ -57,14 +61,14 @@ public class BusiSalesBrokerage implements IEntity<Integer> {
 		return brokId;
 	}
 	
-	public void setBrokSum(Integer brokSum) {
-		this.brokSum = brokSum;
-	}
-	
-	public Integer getBrokSum() {
+	public Float getBrokSum() {
 		return brokSum;
 	}
-	
+
+	public void setBrokSum(Float brokSum) {
+		this.brokSum = brokSum;
+	}
+
 	public void setClearMethodKey(String clearMethodKey) {
 		this.clearMethodKey = clearMethodKey;
 	}
@@ -97,6 +101,14 @@ public class BusiSalesBrokerage implements IEntity<Integer> {
 		return createTime;
 	}
 	
+	public String getBillStateKey() {
+		return billStateKey;
+	}
+
+	public void setBillStateKey(String billStateKey) {
+		this.billStateKey = billStateKey;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

@@ -47,6 +47,7 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 		busiSalesReturn.setSysDept(currentUser.getDept());
 		busiSalesReturn.setSysUser(currentUser);
 		busiSalesReturn.setCreateTime(DateUtils.currentDateTime());
+		busiSalesReturn.setBillStateKey("A");
 		save(busiSalesReturn);
 		
 		for (BusiSalesReturnItem busiSalesReturnItem : busiSalesReturnItems) {
@@ -67,13 +68,13 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 	}
 
 	@Override
-	public Map<String, Long> statis(Integer deptId, String startTime, String endTime) {
+	public Map<String, Double> statis(Integer deptId, String startTime, String endTime) {
 		
-		Map<String, Long> statisMap = new HashMap<String, Long>();
+		Map<String, Double> statisMap = new HashMap<String, Double>();
 		
 		{
 			String jpql = "select sum(o.returnSum) from BusiSalesReturn o where o.createTime >= ? and o.createTime <= ?";
-			Long zongji = getDao().executeQueryOne(jpql, startTime, endTime);
+			Double zongji = getDao().executeQueryOne(jpql, startTime, endTime);
 			zongji = zongji == null ? 0 : zongji;
 			statisMap.put("zongji", zongji);
 		}

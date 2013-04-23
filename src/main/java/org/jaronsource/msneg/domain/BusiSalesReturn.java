@@ -42,19 +42,19 @@ public class BusiSalesReturn implements IEntity<Integer> {
 	
 	/** 应返金额 */
 	@Column(name="return_sum")
-	private Integer returnSum;
+	private Float returnSum;
 	
 	/** 返销破损 */
 	@Column(name="return_loss")
-	private Integer returnLoss;
+	private Float returnLoss;
 	
 	/** 折扣破损 */
 	@Column(name="rerate_loss")
-	private Integer rerateLoss;
+	private Float rerateLoss;
 	
 	/** 实返金额 */
 	@Column(name="act_return_sum")
-	private Integer actReturnSum;
+	private Float actReturnSum;
 	
 	/** 备注 */
 	@Column(name="return_remarks")
@@ -76,6 +76,10 @@ public class BusiSalesReturn implements IEntity<Integer> {
 	/** 创建日期 */
 	@Column(name="create_time")
 	private String createTime;
+	
+	/** 单据状态 */
+	@Column(name="bill_state_key")
+	private String billStateKey;
 	
 	public void setReturnId(Integer returnId) {
 		this.returnId = returnId;
@@ -99,22 +103,6 @@ public class BusiSalesReturn implements IEntity<Integer> {
 	
 	public SysUser getSysUser() {
 		return sysUser;
-	}
-	
-	public void setReturnLoss(Integer returnLoss) {
-		this.returnLoss = returnLoss;
-	}
-	
-	public Integer getReturnLoss() {
-		return returnLoss;
-	}
-	
-	public void setRerateLoss(Integer rerateLoss) {
-		this.rerateLoss = rerateLoss;
-	}
-	
-	public Integer getRerateLoss() {
-		return rerateLoss;
 	}
 	
 	public void setReturnRemarks(String returnRemarks) {
@@ -141,22 +129,6 @@ public class BusiSalesReturn implements IEntity<Integer> {
 		return otherRemarks;
 	}
 	
-	public Integer getReturnSum() {
-		return returnSum;
-	}
-
-	public void setReturnSum(Integer returnSum) {
-		this.returnSum = returnSum;
-	}
-
-	public Integer getActReturnSum() {
-		return actReturnSum;
-	}
-
-	public void setActReturnSum(Integer actReturnSum) {
-		this.actReturnSum = actReturnSum;
-	}
-
 	public SysDept getSysDept() {
 		return sysDept;
 	}
@@ -171,6 +143,46 @@ public class BusiSalesReturn implements IEntity<Integer> {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+
+	public Float getReturnSum() {
+		return returnSum;
+	}
+
+	public void setReturnSum(Float returnSum) {
+		this.returnSum = returnSum;
+	}
+
+	public Float getReturnLoss() {
+		return returnLoss;
+	}
+
+	public void setReturnLoss(Float returnLoss) {
+		this.returnLoss = returnLoss;
+	}
+
+	public Float getRerateLoss() {
+		return rerateLoss;
+	}
+
+	public void setRerateLoss(Float rerateLoss) {
+		this.rerateLoss = rerateLoss;
+	}
+
+	public Float getActReturnSum() {
+		return actReturnSum;
+	}
+
+	public void setActReturnSum(Float actReturnSum) {
+		this.actReturnSum = actReturnSum;
+	}
+
+	public String getBillStateKey() {
+		return billStateKey;
+	}
+
+	public void setBillStateKey(String billStateKey) {
+		this.billStateKey = billStateKey;
 	}
 
 	@Override

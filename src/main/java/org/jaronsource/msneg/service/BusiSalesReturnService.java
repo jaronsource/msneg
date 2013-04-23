@@ -14,6 +14,6 @@ public interface BusiSalesReturnService extends ISearchFormSupportService<BusiSa
 	
 	long countBySalesId(Integer salesId);
 
-	Map<String, Long> statis(Integer deptId, String startTime, String endTime);
+	Map<String, Double> statis(Integer deptId, String startTime, String endTime);
 
 }

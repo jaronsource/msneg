@@ -2,14 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
 
 <ul class="lnb">
-	<li><a href="${pageContext.request.contextPath}/sales" class="lnb01 <c:if test="${RELATIVE_REQUESTURI == '/sales' || fn:startsWith(RELATIVE_REQUESTURI, '/busiSales')}" >hover</c:if>">销售开单打印</a></li>
-    <li><a href="${pageContext.request.contextPath}/busiBills" class="lnb03 <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, '/busiBills')}" >hover</c:if>">单据查看管理</a></li>
-    <li><a href="${pageContext.request.contextPath}/busiOrders" class="lnb02 <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, '/busiOrders')}" >hover</c:if>">定金预定管理</a></li>
-    <li><a href="${pageContext.request.contextPath}/busiAssign?form['salesStateKey_eq']=B" class="lnb05 <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, '/busiAssign')}" >hover</c:if>">货物发配管理</a></li>
-    <li><a href="${pageContext.request.contextPath}/busiStock" class="lnb06 <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, '/busiStock')}" >hover</c:if>">库存管理查询</a></li>
-    <li><a href="${pageContext.request.contextPath}/busiStatis" class="lnb08 <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, '/busiStatis')}" >hover</c:if>">综合数据分析</a></li> 
-    <li><a href="${pageContext.request.contextPath}/busiClient" class="lnb11 <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, '/busiClient')}" >hover</c:if>">客户信息调整</a></li>
-    <li><a href="${pageContext.request.contextPath}/sysConfig" class="lnb12 <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, '/sysConfig')}" >hover</c:if>">综合管理系统</a></li>
+   	<security:permList var="permList"/>
+   	<c:forEach items="${permList }" var="perm">
+   	<li>
+		<a <security:hasPerm permCode="${perm.code }">
+			href="${pageContext.request.contextPath}${perm.url }"
+		</security:hasPerm>
+		<security:noPerm permCode="${perm.code }">
+			href="javascript: void(0)"
+			onclick="alert('对不起，您无权操作本功能'); return false;"
+		</security:noPerm> 
+		class="${perm.funcRemarks } <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, perm.url)}" >hover</c:if>">${perm.name }</a></li>
+   	</c:forEach>
 </ul>

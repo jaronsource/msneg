@@ -5,6 +5,12 @@
 <%@ taglib prefix="pg" uri="http://www.ccesun.com/tags/pager" %>
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
 <%@ taglib prefix="utils" uri="http://www.ccesun.com/tags/utils" %>
+<%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
+<style type="text/css">
+.invalid {
+text-decoration: line-through; color: red;
+}
+</style>
 <script type="text/javascript">
 $(function() {
     $( "#tabs" ).tabs();
@@ -13,8 +19,14 @@ $(function() {
 <div class="title_box">
 	<h2>销售单据查看</h2>
 	<div class="sys_btnBox">
-		<input type="button" value="打印" />
+		<input type="button" value="打印" id="printBtn"/>
 		<input type="button" value="退出" />
+		<script>
+			$('#printBtn').click(function () {
+				var url = $('.ui-tabs-active').attr('url');
+				window.location = url;
+			});
+		</script>
 	</div>
 </div>
 <div class="order_box"> 
@@ -24,7 +36,7 @@ $(function() {
 		<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
 			<colgroup>
 			<col width="10%">
-			<col width="15%">
+			<col width="15%"> 
 			<col width="10%">
 			<col width="15%">
 			<col width="10%">
@@ -61,24 +73,28 @@ $(function() {
 	<!--//box-->
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-1">销售单-母单</a></li>
-			<c:forEach items="${busiSalesClearList }" var="busiSalesClear" varStatus="status">
-				<li><a href="#clear-${status.index }">结算单</a></li>	
+			<li url="${pageContext.request.contextPath }/busiSales/${busiSales.salesId}/print"><a href="#tabs-1" <c:if test="${busiSales.billStateKey == 'B' }">class="invalid"</c:if>>销售单</a></li>
+			<c:forEach items="${busiSalesClearList }" var="entry" varStatus="status">
+				<li url="${pageContext.request.contextPath }/busiSalesClear/${entry.clearId}/print"><a href="#clear-${status.index }" <c:if test="${entry.billStateKey == 'B' }">class="invalid"</c:if>>结算单</a></li>	
 			</c:forEach>
-			<c:forEach items="${busiSalesMakeupList }" var="busiSalesMakeup" varStatus="status">
-				<li><a href="#makeup-${status.index }">补价单</a></li>	
+			<c:forEach items="${busiSalesMakeupList }" var="entry" varStatus="status">
+				<li url="${pageContext.request.contextPath }/busiSalesMakeup/${entry.makeupId}/print"><a href="#makeup-${status.index }" <c:if test="${entry.billStateKey == 'B' }">class="invalid"</c:if>>补价单</a></li>	
 			</c:forEach>
-			<c:forEach items="${busiSalesReturnList }" var="busiSalesReturn" varStatus="status">
-				<li><a href="#return-${status.index }">返销单</a></li>	
+			<c:forEach items="${busiSalesReturnList }" var="entry" varStatus="status">
+				<li url="${pageContext.request.contextPath }/busiSalesReturn/${entry.returnId}/print"><a href="#return-${status.index }" <c:if test="${entry.billStateKey == 'B' }">class="invalid"</c:if>>返销单</a></li>	
 			</c:forEach>
 		</ul>
-		<div id="tabs-1"> 
+		<div id="tabs-1" > 
 			<!--box-->
 			<div class="com_box">
-				<h3>商品信息<a class="toggle_table" href="#this">折叠</a></h3>
+				<h3>商品信息
+					<security:hasPerm permCode="10">
+						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSales&id=${busiSales.salesId}">[标记作废]</a>
+					</security:hasPerm>
+					<a class="toggle_table" href="#this">折叠</a></h3>
 				<table width="100%" cellspacing="0" cellpadding="0" border="1" class="tbl_w">
 					<colgroup>
-					<col width="50">
+					<col width="150">
 					<col width="*">
 					<col width="50">
 					<col width="50">
@@ -88,7 +104,7 @@ $(function() {
 					</colgroup>
 					<thead>
 						<tr>
-							<th>类别</th>
+							<th>系列</th>
 							<th>名称/货号/型号</th>
 							<th>单位</th>
 							<th>数量</th>
@@ -100,11 +116,11 @@ $(function() {
 					<tbody>
 						<c:forEach items="${busiSalesItemList }" var="entry">
 						<tr>
-							<td><dict:lookupDictValue key="${entry.busiItem.itemTypeKey }" type="item_type" /> </td>
-							<td>${entry.busiItem.itemCode }</td>
-							<td>${entry.busiItem.itemUnit }</td>
+							<td>${entry.busiCategory.cateName }</td>
+							<td>${entry.itemName }</td>
+							<td><dict:lookupDictValue key="${entry.itemUnitKey }" type="item_unit" /></td>
 							<td>${entry.itemAmount }</td>
-							<td><span class="money">${entry.busiItem.itemPrice }</span></td>
+							<td><span class="money">${entry.itemPrice }</span></td>
 							<td><span class="money">${entry.itemSum }</span></td>
 							<td>${entry.itemRemarks }</td>
 						</tr>
@@ -199,10 +215,14 @@ $(function() {
 		<div id="clear-${status.index }"> 
 			<!--box-->
 			<div class="com_box">
-				<h3>商品信息<a href="#this" class="toggle_table">折叠</a></h3>
+				<h3>商品信息
+				<security:hasPerm permCode="10">
+					<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesClear&id=${entry.clearId}">[标记作废]</a>
+				</security:hasPerm>
+				<a href="#this" class="toggle_table">折叠</a></h3>
 				<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
 					<colgroup>
-					<col width="50" />
+					<col width="150" />
 					<col width="*" />
 					<col width="50" />
 					<col width="50" />
@@ -212,7 +232,7 @@ $(function() {
 					</colgroup>
 					<thead>
 						<tr>
-							<th>类别</th>
+							<th>系列</th>
 							<th>名称/货号/型号</th>
 							<th>单位</th>
 							<th>数量</th>
@@ -224,11 +244,11 @@ $(function() {
 					<tbody>
 						<c:forEach items="${busiSalesItemList }" var="salesItem">
 						<tr>
-							<td><dict:lookupDictValue key="${salesItem.busiItem.itemTypeKey }" type="item_type" /></td>
-							<td>${salesItem.busiItem.itemCode }</td>
-							<td>${salesItem.busiItem.itemUnit }</td>
+							<td>${salesItem.busiCategory.cateName }</td>
+							<td>${salesItem.itemName }</td>
+							<td><dict:lookupDictValue key="${salesItem.itemUnitKey }" type="item_unit" /></td>
 							<td>${salesItem.itemAmount }</td>
-							<td><span class="money">${salesItem.busiItem.itemPrice }</span></td>
+							<td><span class="money">${salesItem.itemPrice }</span></td>
 							<td><span class="money">${salesItem.itemSum }</span></td>
 							<td>${salesItem.itemRemarks }</td>
 						</tr>
@@ -311,7 +331,12 @@ $(function() {
 		<div id="makeup-${status.index }"> 
 			<!--box-->
 			<div class="com_box">
-				<h3>商品信息<a class="toggle_table" href="#this">折叠</a></h3>
+				<h3>商品信息
+				<security:hasPerm permCode="10">
+					<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesMakeup&id=${entry.makeupId}">[标记作废]</a>
+				</security:hasPerm>
+				
+				<a class="toggle_table" href="#this">折叠</a></h3>
 				<table width="100%" cellspacing="0" cellpadding="0" border="1" class="tbl_w">
 					<colgroup>
 					<col width="40" />
@@ -415,15 +440,19 @@ $(function() {
 		<div id="return-${status.index }"> 
 			<!--box-->
 			
-			<utils:methodInvokor methodName="findBusiSalesReturnItemByReturnId" var="salesRenturnItemList" className="org.jaronsource.msneg.service.BusiSalesReturnItemService">
+			<utils:methodInvokor methodName="findBusiSalesReturnItemByReturnId" var="salesReturnItemList" className="org.jaronsource.msneg.service.BusiSalesReturnItemService">
 				<utils:miParam type="java.lang.Integer" value="${entry.returnId }" />
 			</utils:methodInvokor>
 			
 			<div class="com_box">
-				<h3>商品信息<a href="#this" class="toggle_table">折叠</a></h3>
+				<h3>商品信息
+				<security:hasPerm permCode="10">
+					<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesReturn&id=${entry.returnId}">[标记作废]</a>
+				</security:hasPerm>
+				<a href="#this" class="toggle_table">折叠</a></h3>
 				<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
 					<colgroup>
-					<col width="50" />
+					<col width="150" />
 					<col width="*" />
 					<col width="50" />
 					<col width="50" />
@@ -436,7 +465,7 @@ $(function() {
 					</colgroup>
 					<thead>
 						<tr>
-							<th>类别</th>
+							<th>系列</th>
 							<th>名称/货号/型号</th>
 							<th>单位</th>
 							<th>数量</th>
@@ -449,18 +478,18 @@ $(function() {
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${salesRenturnItemList}" var="salesRenturnItem">
+						<c:forEach items="${salesReturnItemList}" var="salesReturnItem">
 						<tr>
-							<td><dict:lookupDictValue key="${salesRenturnItem.busiSalesItem.busiItem.itemTypeKey }" type="item_type" /></td>
-							<td>${salesRenturnItem.busiSalesItem.busiItem.itemCode }</td>
-							<td>${salesRenturnItem.busiSalesItem.busiItem.itemUnit }</td>
-							<td>${salesRenturnItem.busiSalesItem.itemAmount }</td>
-							<td>${salesRenturnItem.returnAmount }</td>
-							<td><span class="money">${salesRenturnItem.busiSalesItem.busiItem.itemPrice }</span></td>
-							<td><span class="money">${salesRenturnItem.returnPrice }</span></td>
-							<td><span class="money">${salesRenturnItem.returnSum }</span></td>
+							<td>${salesReturnItem.busiSalesItem.busiCategory.cateName }</td>
+							<td>${salesReturnItem.busiSalesItem.itemName }</td>
+							<td><dict:lookupDictValue key="${salesReturnItem.busiSalesItem.itemUnitKey }" type="item_unit" /></td>
+							<td>${salesReturnItem.busiSalesItem.itemAmount }</td>
+							<td>${salesReturnItem.returnAmount }</td>
+							<td><span class="money">${salesReturnItem.busiSalesItem.itemPrice }</span></td>
+							<td><span class="money">${salesReturnItem.returnPrice }</span></td>
+							<td><span class="money">${salesReturnItem.returnSum }</span></td>
 							<td><dict:lookupDictValue key="${salesRenturnItem.returnReasonKey }" type="return_reason" /></td>
-							<td>${salesRenturnItem.busiSalesItem.itemRemarks}</td>
+							<td>${salesReturnItem.busiSalesItem.itemRemarks}</td>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -524,3 +553,11 @@ $(function() {
 		</c:forEach>
 	</div>
 </div>
+<script type="text/javascript">
+	$('.invalidBillLink').click(function(event) {
+		event.preventDefault();
+		$.post($(this).attr('href'), function() {
+			alert('成功废除此单据！');
+		});
+	});
+</script>

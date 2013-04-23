@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
+import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
 
 @RequestMapping("/sysConfig/dict")
@@ -31,6 +32,7 @@ public class SysDictController extends BaseController {
 	private SysDictService sysDictService;
 	
 	@RequestMapping(method = {GET, POST})
+	@RequestHistory
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
 		Page<SysDict> sysDictPage = sysDictService.findPage(searchForm);
@@ -40,51 +42,44 @@ public class SysDictController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/{recordId}/update", method = GET)
-    public String update(@PathVariable("dictId") Integer dictId, Model model) {
+    public String update(@PathVariable("recordId") Integer dictId, Model model) {
         model.addAttribute("sysDict", sysDictService.findByPk(dictId));
-        return "sysDict/update";
+        return "sysConfig/dict/edit";
 	}	
 	
 	@RequestMapping(value = "/{recordId}/update", method = POST)
     public String update(@Valid @ModelAttribute SysDict sysDict, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysDict", sysDict);
-            return "sysDict/update";
+            return "sysConfig/dict/edit";
         }
 
         sysDictService.save(sysDict);
-        return "redirect:/sysDict/" + sysDict.getRecordId() + "/show";
+        return "history:/sysConfig/dict";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
     public String create(Model model) {
 		SysDict sysDict = new SysDict();
         model.addAttribute("sysDict", sysDict);
-        return "sysDict/create";
+        return "sysConfig/dict/edit";
     }
     
 	@RequestMapping(value = "/create", method = POST)
     public String create(@Valid SysDict sysDict, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("sysDict", sysDict);
-            return "sysDict/create";
+            return "sysConfig/dict/edit";
         }
 
         sysDictService.save(sysDict);
-        return "redirect:/sysDict/" + sysDict.getRecordId() + "/show";
+        return "history:/sysConfig/dict";
     }	
 	
-	@RequestMapping(value = "/{dictId}/show", method = GET)
-    public String show(@PathVariable("dictId") Integer dictId, Model model) {
-        SysDict sysDict = sysDictService.findByPk(dictId);
-		model.addAttribute("sysDict", sysDict);
-        return "sysDict/show";
-    }
-    
     @RequestMapping(value = "/{dictId}/remove", method = GET)
     public String remove(@PathVariable("dictId") Integer dictId, Model model) {
         sysDictService.remove(dictId);
-        return "redirect:/sysDict";
+        return "history:/sysConfig/dict";
     }
 }
 

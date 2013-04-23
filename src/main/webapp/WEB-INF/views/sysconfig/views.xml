@@ -25,6 +25,9 @@
     <definition extends="default" name="sysConfig/user/edit">
         <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_useredit.jsp" />
     </definition>
+    <definition extends="default" name="sysConfig/user/assignRole">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_assignrole.jsp" />
+    </definition>
     <definition extends="default" name="sysConfig/func/list">
         <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_funclist.jsp" />
     </definition>
@@ -36,6 +39,15 @@
     </definition>
     <definition extends="default" name="sysConfig/role/edit">
         <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_roleedit.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/role/assignFunc">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_assignfunc.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/category/list">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_categorylist.jsp" />
+    </definition>
+    <definition extends="default" name="sysConfig/category/edit">
+        <put-attribute name="body" value="/WEB-INF/views/sysconfig/sysconfig_categoryedit.jsp" />
     </definition>
    
 </tiles-definitions>

@@ -12,7 +12,6 @@ import net.sf.json.JSONObject;
 
 import org.jaronsource.msneg.domain.BusiSalesItem;
 import org.jaronsource.msneg.service.BusiSalesItemService;
-import org.jaronsource.msneg.utils.MoneyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,17 +107,14 @@ public class BusiSalesItemController extends BaseController {
     	JSONArray result = new JSONArray();
     	for (BusiSalesItem busiSalesItem : busiSalesItemList) {
     		JSONObject jsonObject = new JSONObject();
-    		jsonObject.element("itemId", busiSalesItem.getBusiItem().getItemId());
     		jsonObject.element("salesItemId", busiSalesItem.getSalesItemId());
-    		jsonObject.element("itemCode", busiSalesItem.getBusiItem().getItemCode());
-    		jsonObject.element("itemName", busiSalesItem.getBusiItem().getItemName());
-    		jsonObject.element("itemFormat", busiSalesItem.getBusiItem().getItemFormat());
-    		jsonObject.element("itemUnit", busiSalesItem.getBusiItem().getItemUnit());
-    		jsonObject.element("itemPrice", MoneyUtils.encode(busiSalesItem.getBusiItem().getItemPrice()));
-    		jsonObject.element("itemSum", MoneyUtils.encode(busiSalesItem.getItemSum()));
+    		jsonObject.element("itemName", busiSalesItem.getItemName());
+    		jsonObject.element("itemUnit", dictionaryHelper.lookupDictValue0("item_unit", busiSalesItem.getItemUnitKey()));
+    		jsonObject.element("itemPrice", busiSalesItem.getItemPrice().toString());
+    		jsonObject.element("itemSum", busiSalesItem.getItemSum().toString());
     		jsonObject.element("itemAmount", busiSalesItem.getItemAmount());
     		jsonObject.element("itemRemarks", busiSalesItem.getItemRemarks());
-    		jsonObject.element("itemType", dictionaryHelper.lookupDictValue0("item_type", busiSalesItem.getBusiItem().getItemTypeKey()));
+    		jsonObject.element("category", busiSalesItem.getBusiCategory().getCateName());
     		result.add(jsonObject);
 		}
     	

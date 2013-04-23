@@ -35,7 +35,7 @@
 				<th>电话</th>
 				<th>手机</th>
 				<th>地址</th>
-				<!-- <th>快速操作</th> -->
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -46,7 +46,10 @@
 				<td>${entry.phone }</td>
 				<td>${entry.cellPhone }</td>
 				<td>${entry.address }</td>
-				<!-- <td></td> -->
+				<td>
+					<a href="${pageContext.request.contextPath }/busiClient/${entry.clientId}/update" class="btn btn-small">修改</a> 
+		    		<a href="${pageContext.request.contextPath }/busiClient/${entry.clientId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')">删除</a> 
+				</td>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -55,7 +58,8 @@
 		<pg:pager url="${baseUrl}" page="${busiClientPage}" />
 	    <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>	
 	    <div class="sys_btnBox">
-		</div>	
+			<input type="button" value="创建新客户" onclick="window.location='busiClient/create'">
+		</div>
 	</div>	
 </div>
 </div>

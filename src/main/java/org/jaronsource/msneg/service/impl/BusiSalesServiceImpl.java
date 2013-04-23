@@ -1,16 +1,20 @@
 package org.jaronsource.msneg.service.impl;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.jaronsource.msneg.dao.BusiCategoryDao;
 import org.jaronsource.msneg.dao.BusiClientDao;
-import org.jaronsource.msneg.dao.BusiItemDao;
 import org.jaronsource.msneg.dao.BusiSalesDao;
 import org.jaronsource.msneg.dao.BusiSalesItemDao;
 import org.jaronsource.msneg.domain.BusiClient;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesItem;
+import org.jaronsource.msneg.domain.SysDept;
 import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +38,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 	private BusiSalesItemDao busiSalesItemDao;
 
 	@Autowired
-	private BusiItemDao busiItemDao;
+	private BusiCategoryDao busiCategoryDao;
 	
 	@Autowired
 	private BusiClientDao busiClientDao;
@@ -46,7 +50,25 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 
 	@Override
 	public String generateSalesCode() {
-		return "12N1211B017";
+		
+		SysUser currentUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		SysDept sysDept = currentUser.getDept();
+		
+		String deptCode = sysDept.getDeptCode();
+		String currentDate = DateUtils.currentDate();
+		String prefix = "B";
+		
+		String fullPrefix = String.format("%s%s%s", deptCode, currentDate, prefix);
+		
+		String jpql = "select max(o.salesCode) from BusiSales o where o.salesCode like ?";
+		String tmpCode = getDao().executeQueryOne(jpql, fullPrefix + "%");
+		
+		String numStr = StringUtils.substringAfter(tmpCode, fullPrefix);
+		
+		DecimalFormat df = new DecimalFormat("000");
+		String result = fullPrefix + df.format(NumberUtils.toInt(numStr) + 1);
+		
+		return result;
 	}
 
 	@Override
@@ -65,11 +87,13 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		busiSales.setSysUser(currentUser);
 		busiSales.setCreateTime(DateUtils.currentDateTime());
 		busiSales.setSalesStateKey("A");
+		busiSales.setBillStateKey("A");
+		
 		save(busiSales);
 		
 		for (BusiSalesItem busiSalesItem : busiSalesItems) {
 			
-			busiSalesItem.setBusiItem(busiItemDao.findReferenceByPk(busiSalesItem.getBusiItem().getItemId()));
+			busiSalesItem.setBusiCategory(busiCategoryDao.findReferenceByPk(busiSalesItem.getBusiCategory().getCateId()));
 			busiSalesItem.setBusiSales(busiSales);
 			
 			busiSalesItemDao.save(busiSalesItem);
@@ -92,15 +116,15 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 	}
 
 	@Override
-	public Map<String, Long> statis(Integer deptId, String salesType, String startTime, String endTime) {
+	public Map<String, Double> statis(Integer deptId, String salesType, String startTime, String endTime) {
 		
-		Map<String, Long> statisMap = new HashMap<String, Long>();
+		Map<String, Double> statisMap = new HashMap<String, Double>();
 		
 		{
 			String jpql = "select sum(o.feeSum) from BusiSales o where o.salesTypeKey = ? and o.createTime >= ? and o.createTime <= ?";
 			if (deptId != 0)
 				jpql += " and o.sysDept.deptId = " + deptId;
-			Long zongji = getDao().executeQueryOne(jpql, salesType, startTime, endTime);
+			Double zongji = getDao().executeQueryOne(jpql, salesType, startTime, endTime);
 			zongji = zongji == null ? 0 : zongji;
 			statisMap.put("zongji", zongji);
 		}
@@ -109,7 +133,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 			String jpql = "select sum(o.feeSum) from BusiSales o where o.salesTypeKey = ? and o.salesStateKey >= ? and o.createTime >= ? and o.createTime <= ?";
 			if (deptId != 0)
 				jpql += " and o.sysDept.deptId = " + deptId;
-			Long jiesuan = getDao().executeQueryOne(jpql, salesType, "B", startTime, endTime);
+			Double jiesuan = getDao().executeQueryOne(jpql, salesType, "B", startTime, endTime);
 			jiesuan = jiesuan == null ? 0 : jiesuan;
 			statisMap.put("jiesuan", jiesuan);
 		}
@@ -118,7 +142,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 			String jpql = "select sum(o.makeupSum) from BusiSalesMakeup o where o.createTime >= ? and o.createTime <= ?";
 			if (deptId != 0)
 				jpql += " and o.sysDept.deptId = " + deptId;
-			Long bujia = getDao().executeQueryOne(jpql, startTime, endTime);
+			Double bujia = getDao().executeQueryOne(jpql, startTime, endTime);
 			bujia = bujia == null ? 0 : bujia;
 			statisMap.put("bujia", bujia);
 		}
@@ -127,15 +151,24 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 			String jpql = "select sum(o.returnSum) from BusiSalesReturn o where o.createTime >= ? and o.createTime <= ?";
 			if (deptId != 0)
 				jpql += " and o.sysDept.deptId = " + deptId;
-			Long fanxiao = getDao().executeQueryOne(jpql, startTime, endTime);
+			Double fanxiao = getDao().executeQueryOne(jpql, startTime, endTime);
 			fanxiao = fanxiao == null ? 0 : fanxiao;
 			statisMap.put("fanxiao", fanxiao);
 		}
 		
-		Long weikuan = statisMap.get("zongji") - statisMap.get("jiesuan");
+		Double weikuan = statisMap.get("zongji") - statisMap.get("jiesuan");
 		statisMap.put("weikuan", weikuan);
 		
 		return statisMap;
+	}
+
+	@Override
+	public List<Object[]> statis02(Integer deptId, String startTime, String endTime) {
+		String jpql = "select o.busiCategory, count(o) from BusiSalesItem o inner join o.busiSales o2 where o2.createTime >= ? and o2.createTime <= ?";
+		if (deptId != 0)
+			jpql += " and o.busiSales.sysDept.deptId = " + deptId;
+		jpql += " group by o.busiCategory ";
+		return getDao().executeQuery(jpql, startTime, endTime);
 	}
 
 

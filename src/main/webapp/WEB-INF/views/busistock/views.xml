@@ -4,4 +4,7 @@
     <definition extends="default" name="busiStock/list">
         <put-attribute name="body" value="/WEB-INF/views/busistock/busistock_list.jsp" />
     </definition>
+    <definition extends="default" name="busiStock/edit">
+        <put-attribute name="body" value="/WEB-INF/views/busistock/busistock_edit.jsp" />
+    </definition>
 </tiles-definitions>
