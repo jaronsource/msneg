@@ -61,17 +61,17 @@ public class BusiOrders implements IEntity<Integer> {
 	/***/
 	@DocDescription("总金额")
 	@Column(name="orders_sum")
-	private Integer ordersSum;
+	private Float ordersSum;
 	
 	/***/
 	@DocDescription("现金")
 	@Column(name="orders_cash")
-	private Integer ordersCash;
+	private Float ordersCash;
 	
 	/***/
 	@DocDescription("刷卡")
 	@Column(name="orders_card")
-	private Integer ordersCard;
+	private Float ordersCard;
 	
 	/***/
 	@DocDescription("其他信息部分")
@@ -156,30 +156,30 @@ public class BusiOrders implements IEntity<Integer> {
 		return ordersReturnKey;
 	}
 	
-	public void setOrdersSum(Integer ordersSum) {
-		this.ordersSum = ordersSum;
-	}
-	
-	public Integer getOrdersSum() {
+	public Float getOrdersSum() {
 		return ordersSum;
 	}
-	
-	public void setOrdersCash(Integer ordersCash) {
-		this.ordersCash = ordersCash;
+
+	public void setOrdersSum(Float ordersSum) {
+		this.ordersSum = ordersSum;
 	}
-	
-	public Integer getOrdersCash() {
+
+	public Float getOrdersCash() {
 		return ordersCash;
 	}
-	
-	public void setOrdersCard(Integer ordersCard) {
-		this.ordersCard = ordersCard;
+
+	public void setOrdersCash(Float ordersCash) {
+		this.ordersCash = ordersCash;
 	}
-	
-	public Integer getOrdersCard() {
+
+	public Float getOrdersCard() {
 		return ordersCard;
 	}
-	
+
+	public void setOrdersCard(Float ordersCard) {
+		this.ordersCard = ordersCard;
+	}
+
 	public void setOtherRemarks(String otherRemarks) {
 		this.otherRemarks = otherRemarks;
 	}

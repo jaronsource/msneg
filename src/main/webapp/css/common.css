@@ -51,10 +51,12 @@
 .tbl_l td{ background:#ededed; text-align:center; padding:2px; border:1px solid #afafaf;}
 .tbl_l td{ background:#fff;padding:1px 2px 1px 2px;}
 .tbl_l td a{ text-decoration:underline;}
+.tbl_l td.nowrap{white-space: nowrap; overflow: hidden;}
 
 .com_box h3{ position:relative; line-height:1.8; font-size:14px;  background:#dadada; border:1px solid #afafaf; border-bottom:0; text-align:center; }
 .com_box h3.title_line{ margin-top:5px;}
-.com_box h3 a{ position:absolute;  top:2px; right:5px; font-weight:normal; text-decoration: underline; border-left:1px solid #CCC; padding-left:5px;}
+.com_box h3 a.invalidBillLink{ position:absolute;  top:2px; right:40px; font-weight:normal; text-decoration: underline; border-left:1px solid #CCC; padding-left:5px;}
+.com_box h3 a.toggle_table{ position:absolute;  top:2px; right:5px; font-weight:normal; text-decoration: underline; border-left:1px solid #CCC; padding-left:5px;}
 .com_box h3 a.add_tr{ right:40px;}
 
 
@@ -106,3 +108,4 @@
 .text_path{ position:relative; margin-bottom:18px; text-align:right;}
 .text_path span{ position:absolute; top:5px; right:5px;}
 
+.invalid { text-decoration: line-through !important; color: maroon !important;}

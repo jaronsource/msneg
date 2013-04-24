@@ -13,6 +13,7 @@ import com.ccesun.framework.core.dao.support.QCriteria;
 import com.ccesun.framework.core.dao.support.QCriteria.Op;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSalesMakeup, Integer> implements BusiSalesMakeupService {
@@ -65,5 +66,13 @@ public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSal
 		}
 		
 		return statisMap;
+	}
+
+	@Override
+	@Transactional
+	public void invalid(Integer id) {
+		BusiSalesMakeup busiSalesMakeup = findByPk(id);
+		busiSalesMakeup.setBillStateKey("B");
+		save(busiSalesMakeup);
 	}
 }

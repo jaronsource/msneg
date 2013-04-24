@@ -265,10 +265,10 @@ function actReturn() {
 					<td>¥ <span id="feeRemain" class="money">0.00</span></td>
 				</tr>
 				<tr>
-					<th>结算金额</th>
-					<td>¥ <input type="text" class="input_money clearSum" name="clearSum" id="clearSum" value="0.00"/></td>
+					<%--<th>结算金额</th>
+					<td>¥ <input type="text" class="input_money clearSum" name="clearSum" id="clearSum" value="0.00"/></td> --%>
 					<th>结算形式</th>
-					<td colspan="3">
+					<td colspan="5">
 						<c:forEach items="${clear_method}" var="entry" varStatus="status">
 							<input type="radio" class="clearMethodKey radio" name="clearMethodKey" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
 						</c:forEach>

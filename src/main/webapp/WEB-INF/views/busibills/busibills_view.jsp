@@ -6,11 +6,6 @@
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
 <%@ taglib prefix="utils" uri="http://www.ccesun.com/tags/utils" %>
 <%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
-<style type="text/css">
-.invalid {
-text-decoration: line-through; color: red;
-}
-</style>
 <script type="text/javascript">
 $(function() {
     $( "#tabs" ).tabs();
@@ -89,7 +84,9 @@ $(function() {
 			<div class="com_box">
 				<h3>商品信息
 					<security:hasPerm permCode="10">
-						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSales&id=${busiSales.salesId}">[标记作废]</a>
+						<c:if test="${busiSales.billStateKey == 'A' }">
+							<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSales&id=${busiSales.salesId}">标记作废</a>
+						</c:if>
 					</security:hasPerm>
 					<a class="toggle_table" href="#this">折叠</a></h3>
 				<table width="100%" cellspacing="0" cellpadding="0" border="1" class="tbl_w">
@@ -217,7 +214,9 @@ $(function() {
 			<div class="com_box">
 				<h3>商品信息
 				<security:hasPerm permCode="10">
-					<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesClear&id=${entry.clearId}">[标记作废]</a>
+					<c:if test="${entry.billStateKey == 'A' }">
+						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesClear&id=${entry.clearId}">标记作废</a>
+					</c:if>
 				</security:hasPerm>
 				<a href="#this" class="toggle_table">折叠</a></h3>
 				<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
@@ -333,7 +332,9 @@ $(function() {
 			<div class="com_box">
 				<h3>商品信息
 				<security:hasPerm permCode="10">
-					<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesMakeup&id=${entry.makeupId}">[标记作废]</a>
+					<c:if test="${entry.billStateKey == 'A' }">
+						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesMakeup&id=${entry.makeupId}">标记作废</a>
+					</c:if>
 				</security:hasPerm>
 				
 				<a class="toggle_table" href="#this">折叠</a></h3>
@@ -447,7 +448,9 @@ $(function() {
 			<div class="com_box">
 				<h3>商品信息
 				<security:hasPerm permCode="10">
-					<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesReturn&id=${entry.returnId}">[标记作废]</a>
+					<c:if test="${entry.billStateKey == 'A' }">
+						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesReturn&id=${entry.returnId}">标记作废</a>
+					</c:if>
 				</security:hasPerm>
 				<a href="#this" class="toggle_table">折叠</a></h3>
 				<table width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
@@ -556,8 +559,11 @@ $(function() {
 <script type="text/javascript">
 	$('.invalidBillLink').click(function(event) {
 		event.preventDefault();
-		$.post($(this).attr('href'), function() {
-			alert('成功废除此单据！');
-		});
+		if (confirm('确定要作废此单据吗？')) {
+			$.post($(this).attr('href'), function() {
+				alert('成功废除此单据！');
+				window.location.reload();
+			});
+		}
 	});
 </script>

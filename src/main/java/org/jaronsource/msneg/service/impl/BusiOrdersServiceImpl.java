@@ -41,7 +41,7 @@ public class BusiOrdersServiceImpl extends SearchFormSupportService<BusiOrders, 
 		
 		String fullPrefix = String.format("%s%s%s", deptCode, currentDate, prefix);
 		
-		String jpql = "select max(o.ordersCode) from BusiOrders o where o.salesCode like ?";
+		String jpql = "select max(o.ordersCode) from BusiOrders o where o.ordersCode like ?";
 		String tmpCode = getDao().executeQueryOne(jpql, fullPrefix + "%");
 		
 		String numStr = StringUtils.substringAfter(tmpCode, fullPrefix);

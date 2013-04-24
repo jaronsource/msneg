@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.QCriteria;
@@ -101,6 +102,30 @@ public class BusiBillsController extends BaseController {
 		model.addAttribute("busiSalesItemList", busiSalesItemList);
 		
 		return "busiBills/viewBill";
+	}
+	
+	@RequestMapping(value="/invalidBill", method = {GET, POST})
+	@ResponseBody
+	public void invalidBill(
+			@RequestParam(value="type", required=false) String type, 
+			@RequestParam(value="id", required=false) Integer id, 
+			Model model) {
+		
+		if ("busiSales".equals(type)) {
+			busiSalesService.invalid(id);
+		}
+		
+		else if ("busiSalesClear".equals(type)) {
+			busiSalesClearService.invalid(id);
+		}
+		
+		else if ("busiSalesMakeup".equals(type)) {
+			busiSalesMakeupService.invalid(id);
+		}
+		
+		else if ("busiSalesReturn".equals(type)) {
+			busiSalesReturnService.invalid(id);
+		}
 	}
 	
 }

@@ -171,5 +171,13 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		return getDao().executeQuery(jpql, startTime, endTime);
 	}
 
+	@Override
+	@Transactional
+	public void invalid(Integer id) {
+		BusiSales busiSales = findByPk(id);
+		busiSales.setBillStateKey("B");
+		save(busiSales);
+	}
+
 
 }

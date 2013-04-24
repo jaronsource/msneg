@@ -143,10 +143,10 @@
 							<td>¥ <span class="money">${busiSalesClear.busiSales.feeRemain}</span></td>
 						</tr>
 						<tr>
-							<th>结算金额</th>
-							<td><span class="money">${busiSalesClear.clearSum}</span></td>
+							<%--<th>结算金额</th>
+							<td><span class="money">${busiSalesClear.clearSum}</span></td> --%>
 							<th>结算形式</th>
-							<td colspan="3">
+							<td colspan="5">
 								<dict:lookupDictValue key="${busiSalesClear.clearMethodKey }" type="clear_method" />
 							</td>
 						</tr>

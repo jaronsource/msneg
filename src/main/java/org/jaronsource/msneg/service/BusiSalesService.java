@@ -22,6 +22,8 @@ public interface BusiSalesService extends ISearchFormSupportService<BusiSales, I
 
 	List<Object[]> statis02(Integer deptId, String startTime, String endTime);
 
+	void invalid(Integer id);
+
 
 
 }

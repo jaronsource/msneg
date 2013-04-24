@@ -82,4 +82,12 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 		return statisMap;
 	}
 
+	@Override
+	@Transactional
+	public void invalid(Integer id) {
+		BusiSalesReturn busiSalesReturn = findByPk(id);
+		busiSalesReturn.setBillStateKey("B");
+		save(busiSalesReturn);
+	}
+
 }

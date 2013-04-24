@@ -45,5 +45,13 @@ public class BusiSalesClearServiceImpl extends SearchFormSupportService<BusiSale
 		return count(c);
 	}
 
+	@Override
+	@Transactional
+	public void invalid(Integer id) {
+		BusiSalesClear busiSalesClear = findByPk(id);
+		busiSalesClear.setBillStateKey("B");
+		save(busiSalesClear);
+	}
+
 
 }

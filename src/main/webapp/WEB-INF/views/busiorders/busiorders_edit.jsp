@@ -11,9 +11,10 @@
 <div class="title_box">
 	<h2>开据定金单</h2>
 	<div class="sys_btnBox">
-		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="打印" /> <input type="button" value="退出" />
+		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="退出" id="returnBtn" />
 		<script>
 			$('#submitBtn').click(function() { $('#busiOrdersForm').submit(); });
+			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/busiOrders'; });
 		</script>
 	</div>
 </div>
@@ -163,28 +164,42 @@
 			<tbody>
 				<tr>
 					<th>总金额</th>
-					<td><span class="money" id="ordersSumDisplay">￥ 0.00</span></td>
-					<input type="hidden" name="ordersSum" />
-					<td><input type="checkbox" id="checkCash" /> 现金 ￥ <input type="text" class="input_money" name="ordersCash" id="ordersCash" />  <input type="checkbox" id="checkCard" /> 刷卡 ￥ <input type="text" class="input_money" name="ordersCard" id="" /></td>
+					<td>¥ <span class="money" id="ordersSumDisplay">0.00</span></td>
+					<input type="hidden" name="ordersSum" id="ordersSum"/>
+					<td><input type="checkbox" id="checkCash" /> 现金 ¥ <input type="text" class="input_money" name="ordersCash" id="ordersCash" disabled="disabled" />  <input type="checkbox" id="checkCard" /> 刷卡 ¥ <input type="text" class="input_money" name="ordersCard" id="ordersCard" disabled="disabled" /></td>
 					<script>
 						$('#checkCash').click(function() {
 							if ($(this).is(':checked')) { 
-								$('#feePrepayCash').attr('disabled', false);
+								$('#ordersCash').attr('disabled', false);
 							} else {
-								$('#feePrepayCash').attr('disabled', true); 
-								$('#feePrepayCash').val('0.00');
+								$('#ordersCash').attr('disabled', true); 
+								$('#ordersCash').val('0.00');
 							}
+							feeTotal();
 						});
 						$('#checkCard').click(function() {
 							if ($(this).is(':checked')) {
-								$('#feePrepayCard').attr('disabled', false);
+								$('#ordersCard').attr('disabled', false);
 							} else {
-								$('#feePrepayCard').attr('disabled', true);
-								$('#feePrepayCard').val('0.00');
+								$('#ordersCard').attr('disabled', true);
+								$('#ordersCard').val('0.00');
 							}
+							feeTotal();
 						});
 						
-						$('#feePrepayCash, #feePrepayCard').keyup(feeRemain);
+						$('#ordersCash, #ordersCard').keyup(feeTotal);
+
+						function feeTotal() {
+
+							var ordersCashValue = parseFloat($('#ordersCash').val());
+							ordersCashValue = isNaN(ordersCashValue) ? 0 : ordersCashValue;
+							var ordersCardValue = parseFloat($('#ordersCard').val());
+							ordersCardValue = isNaN(ordersCardValue) ? 0 : ordersCardValue;
+							
+							var ordersSumValue = ordersCashValue + ordersCardValue;
+							$('#ordersSum').val(ordersSumValue.toFixed(2));
+							$('#ordersSumDisplay').text(ordersSumValue.toFixed(2));
+						}
 					</script>
 				</tr>
 			</tbody>

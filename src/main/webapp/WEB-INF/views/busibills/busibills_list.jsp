@@ -109,11 +109,11 @@
 				<h3 class="title_line">订单信息列表<a href="#this" class="toggle_table">折叠</a></h3>
 				<table class="tbl_l" border="1" cellpadding="0" cellspacing="0" width="100%">
 						<colgroup>
-							<col width="140">
+							<col width="150">
+							<col width="150">
+							<col width="*">
 							<col width="100">
-							<col width="25%">
-							<col width="100">
-							<col width="25%">
+							<col width="220">
 						</colgroup>
 						<thead>
 							<tr>
@@ -129,7 +129,7 @@
 							<tr>
 								<td>${entry.createTime }</td>
 								<td><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">${entry.salesCode }</a></td>
-								<td class="tl">${entry.salesRemarks }</td>
+								<td class="tl nowrap">${entry.busiClient.clientName } | ${entry.busiClient.cellPhone } | ${entry.busiClient.address }</td>
 								<td><dict:lookupDictValue key="${entry.salesStateKey }" type="sales_state" /> </td>
 								<td class="tl">
 									<utils:methodInvokor methodName="countBySalesId" var="countSalesClear" className="org.jaronsource.msneg.service.BusiSalesClearService" >

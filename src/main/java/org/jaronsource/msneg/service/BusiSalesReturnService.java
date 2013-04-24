@@ -16,4 +16,6 @@ public interface BusiSalesReturnService extends ISearchFormSupportService<BusiSa
 
 	Map<String, Double> statis(Integer deptId, String startTime, String endTime);
 
+	void invalid(Integer id);
+
 }

@@ -111,15 +111,38 @@
 			<tr>
 				<td>${entry.createTime }</td>
 				<td><a href="#this">${entry.ordersCode }</a></td>
-				<td class="tl">${entry.ordersRemarks }</td>
+				<td class="tl nowrap">${entry.busiClient.clientName } | ${entry.busiClient.cellPhone } | ${entry.busiClient.address }</td>
 				<td><dict:lookupDictValue key="${entry.ordersStateKey }" type="orders_state" /></td>
 				<td class="tl">${entry.sysDept.deptName }</td>
 				<td class="tl">${entry.sysUser.realName }</td>
-				<td><input type="button" value="使用" onclick="window.location='busiOrders/useOrders?ordersId=${entry.ordersId }';" /><input type="button" value="退回" onclick="window.location='busiOrders/returnOrders?ordersId=${entry.ordersId }'" /></td>
+				<td> 
+					<c:choose>
+						<c:when test="${entry.ordersStateKey == 'A'}">
+							<input type="button" value="使用" onclick="useOrders('${entry.ordersId }')" />
+							<input type="button" value="退回" onclick="returnOrders('${entry.ordersId }')" />
+						</c:when>
+						<c:otherwise>
+							-
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	<script>
+		function useOrders(ordersId) {
+			if (confirm('确定使用此定单吗？')) {
+				window.location='busiOrders/useOrders?ordersId=' + ordersId;
+			} 
+		}
+
+		function returnOrders(ordersId) {
+			if (confirm('确定退回此定单吗？')) {
+				window.location='busiOrders/returnOrders?ordersId=' + ordersId;
+			} 
+		}
+	</script>
 	<div class="paging"> 
 		<pg:pager url="${baseUrl}" page="${busiOrdersPage}" />
 	    <%@ include file="/WEB-INF/pagers/pager-default.jsp" %>	

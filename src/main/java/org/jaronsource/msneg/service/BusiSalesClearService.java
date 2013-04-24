@@ -8,4 +8,6 @@ public interface BusiSalesClearService extends ISearchFormSupportService<BusiSal
 
 	long countBySalesId(Integer salesId);
 
+	void invalid(Integer id);
+
 }
