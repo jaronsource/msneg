@@ -51,4 +51,10 @@ public class BusiCategoryServiceImpl extends SearchFormSupportService<BusiCatego
 		return getDao().find(jpql, key);
 	}
 
+	@Override
+	public void changeStock(Integer itemId, Integer stock) {
+		String jpql = "update BusiCategory o set o.itemStockAmount = ? where o.itemId = ?";
+		getDao().execute(jpql, stock, itemId);
+	}
+
 }

@@ -34,8 +34,8 @@ public class BusiStockController extends BaseController {
 
 	final Logger logger = LoggerFactory.getLogger(BusiStockController.class);	
 	
-	@Autowired
-	private BusiItemService busiItemService;
+	//@Autowired
+	//private BusiItemService busiItemService;
 	
 	@Autowired
 	private BusiCategoryService busiCategoryService;
@@ -44,11 +44,9 @@ public class BusiStockController extends BaseController {
 	@RequestHistory
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
-		List<BusiCategory> categories = busiCategoryService.findAll();
+		Page<BusiCategory> busiCategoryPage = busiCategoryService.findPage(searchForm);
 		
-		Page<BusiItem> busiItemPage = busiItemService.findPage(searchForm);
-		model.addAttribute("busiItemPage", busiItemPage);
-		model.addAttribute("categories", categories);
+		model.addAttribute("busiCategoryPage", busiCategoryPage);
 		
 		return "busiStock/list";
 	}
@@ -57,27 +55,27 @@ public class BusiStockController extends BaseController {
 	@ResponseBody
 	public void changeStock(@RequestParam("itemId") Integer itemId, @RequestParam("stock") Integer stock) {
 
-		busiItemService.changeStock(itemId, stock);
+		busiCategoryService.changeStock(itemId, stock);
 	}
 	
 	@RequestMapping(value = "/{itemId}/update", method = GET)
     public String update(@PathVariable("itemId") Integer itemId, Model model) {
-		List<BusiCategory> categories = busiCategoryService.findAll();
-		model.addAttribute("categories", categories);
-        model.addAttribute("busiItem", busiItemService.findByPk(itemId));
+		//List<BusiCategory> categories = busiCategoryService.findAll();
+		//model.addAttribute("categories", categories);
+        model.addAttribute("busiCatetory", busiCategoryService.findByPk(itemId));
         return "busiStock/edit";
 	}	
 	
 	@RequestMapping(value = "/{itemId}/update", method = POST)
-    public String update(@Valid @ModelAttribute BusiItem busiItem, BindingResult bindingResult, Model model) {
+    public String update(@Valid @ModelAttribute BusiCategory busiCategory, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	List<BusiCategory> categories = busiCategoryService.findAll();
-    		model.addAttribute("categories", categories);
-            model.addAttribute("busiItem", busiItem);
+        	//List<BusiCategory> categories = busiCategoryService.findAll();
+    		//model.addAttribute("categories", categories);
+            model.addAttribute("busiCategory", busiCategory);
             return "busiStock/edit";
         }
 
-        busiItemService.save(busiItem);
+        busiCategoryService.save(busiCategory);
         return "history:/busiStock";
     }	
 	
@@ -91,21 +89,21 @@ public class BusiStockController extends BaseController {
     }
     
 	@RequestMapping(value = "/create", method = POST)
-    public String create(@Valid BusiItem busiItem, BindingResult bindingResult, Model model) {
+    public String create(@Valid BusiCategory busiCategory, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-        	List<BusiCategory> categories = busiCategoryService.findAll();
-    		model.addAttribute("categories", categories);
-            model.addAttribute("busiItem", busiItem);
+        	//List<BusiCategory> categories = busiCategoryService.findAll();
+    		//model.addAttribute("categories", categories);
+            model.addAttribute("busiCategory", busiCategory);
             return "busiStock/edit";
         }
-        busiItem.setItemStockAmount(0);
-        busiItemService.save(busiItem);
+        busiCategory.setItemStockAmount(0);
+        busiCategoryService.save(busiCategory);
         return "history:/busiStock";
     }	
     
     @RequestMapping(value = "/{itemId}/remove", method = GET)
-    public String remove(@PathVariable("itemId") Integer itemId, Model model) {
-        busiItemService.remove(itemId);
+    public String remove(@PathVariable("itemId") Integer cateId, Model model) {
+    	busiCategoryService.remove(cateId);
         return "history:/busiStock";
     }
 	

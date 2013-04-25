@@ -11,4 +11,6 @@ public interface BusiCategoryService extends ISearchFormSupportService<BusiCateg
 
 	Map<String, List<BusiCategory>> findBusiCategoryListMap();
 
+	void changeStock(Integer itemId, Integer stock);
+
 }

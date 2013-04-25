@@ -34,6 +34,10 @@ public class BusiCategory implements IEntity<Integer> {
 	@Column(name="cate_name")
 	private String cateName;
 	
+	/** 库存 **/
+	@Column(name="item_stock_amount")
+	private Integer itemStockAmount;
+	
 	public BusiCategory() {
 	}
 	
@@ -63,6 +67,14 @@ public class BusiCategory implements IEntity<Integer> {
 
 	public void setCateName(String cateName) {
 		this.cateName = cateName;
+	}
+
+	public Integer getItemStockAmount() {
+		return itemStockAmount;
+	}
+
+	public void setItemStockAmount(Integer itemStockAmount) {
+		this.itemStockAmount = itemStockAmount;
 	}
 
 	@Override
