@@ -70,11 +70,11 @@ public class BusiStatisController extends BaseController {
 		searchForm.getForm().put("endTime", endTime);
 		
 		
-		Map<String, Double> busiSalesStatisA = busiSalesService.statis(deptId, "A", startTime, endTime);
-		Map<String, Double> busiSalesStatisB = busiSalesService.statis(deptId, "B", startTime, endTime);
-		Map<String, Double> busiSalesMakeupStatis = busiSalesMakeupService.statis(deptId, startTime, endTime);
-		Map<String, Double> busiSalesReturnStatis = busiSalesReturnService.statis(deptId, startTime, endTime);
-		Map<String, Double> busiSalesOrdersStatis = busiOrdersService.statis(deptId, startTime, endTime);
+		Map<String, Object> busiSalesStatisA = busiSalesService.statis(deptId, "A", startTime, endTime);
+		Map<String, Object> busiSalesStatisB = busiSalesService.statis(deptId, "B", startTime, endTime);
+		Map<String, Object> busiSalesMakeupStatis = busiSalesMakeupService.statis(deptId, startTime, endTime);
+		Map<String, Object> busiSalesReturnStatis = busiSalesReturnService.statis(deptId, startTime, endTime);
+		Map<String, Object> busiSalesOrdersStatis = busiOrdersService.statis(deptId, startTime, endTime);
 		
 		model.addAttribute("busiSalesStatisA", busiSalesStatisA);
 		model.addAttribute("busiSalesStatisB", busiSalesStatisB);

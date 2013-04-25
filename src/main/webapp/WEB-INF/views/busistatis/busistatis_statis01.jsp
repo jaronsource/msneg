@@ -44,7 +44,11 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th rowspan="5">销售单</th>
+								<th rowspan="6">销售单</th>
+								<th>数量</th>
+								<td style="background: #f0e0f0;">${busiSalesStatisA['count'] }</td>
+							</tr>
+							<tr>
 								<th>总计</th>
 								<td>${busiSalesStatisA['zongji'] }</td>
 							</tr>
@@ -66,7 +70,11 @@
 							</tr>
 							
 							<tr>
-								<th rowspan="5">内销单</th>
+								<th rowspan="6">内销单</th>
+								<th>数量</th>
+								<td style="background: #f0e0f0;">${busiSalesStatisB['count'] }</td>
+							</tr>
+							<tr>
 								<th>总计</th>
 								<td>${busiSalesStatisB['zongji'] }</td>
 							</tr>
@@ -88,7 +96,11 @@
 							</tr>
 							
 							<tr>
-								<th rowspan="3">定金单</th>
+								<th rowspan="4">定金单</th>
+								<th>数量</th>
+								<td style="background: #f0e0f0;">${busiSalesOrdersStatis['count'] }</td>
+							</tr>
+							<tr>
 								<th>总计</th>
 								<td>${busiSalesOrdersStatis['zongji'] }</td>
 							</tr>
@@ -102,7 +114,11 @@
 							</tr>
 							
 							<tr>
-								<th rowspan="3">补价单</th>
+								<th rowspan="4">补价单</th>
+								<th>数量</th>
+								<td style="background: #f0e0f0;">${busiSalesMakeupStatis['count'] }</td>
+							</tr>
+							<tr>
 								<th>总计</th>
 								<td>${busiSalesMakeupStatis['zongji'] }</td>
 							</tr>
@@ -116,8 +132,12 @@
 							</tr>
 							
 							<tr>
-								<th>返销单</th>
-								<th>总计</th>
+								<th rowspan="2">返销单</th>
+								<th>数量</th>
+								<td style="background: #f0e0f0;">${busiSalesReturnStatis['count'] }</td>
+							</tr>
+							<tr>
+								<th>总计</th> 
 								<td>${busiSalesReturnStatis['zongji'] }</td>
 							</tr>
 							

@@ -82,7 +82,25 @@ function actReturn() {
 	<div class="sys_btnBox">
 		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="退出" id="returnBtn"/>
 		<script>
-			$('#submitBtn').click(function() { $('#busiSalesReturnForm').submit(); });
+			$('#submitBtn').click(function() {
+
+				var returnSum = parseFloat($('#returnSum').val());
+				returnSum = isNaN(returnSum) ? 0 : returnSum;
+				var returnLoss = parseFloat($('#returnLoss').val());
+				returnLoss = isNaN(returnLoss) ? 0 : returnLoss;
+				var rerateLoss = parseFloat($('#rerateLoss').val());
+				rerateLoss = isNaN(rerateLoss) ? 0 : rerateLoss;
+				var actReturnSum = parseFloat($('#actReturnSum').val());
+				actReturnSum = isNaN(actReturnSum) ? 0 : actReturnSum;
+				
+				var msg = '应返金额：¥ ' + returnSum + ' 返销报损：¥ ' + returnLoss + ' 折扣报损：¥ ' + rerateLoss + ' 实返金额：¥ ' + actReturnSum + '\n\n' + '确定要保存此单据吗？'
+				
+				if (confirm(msg)) {
+					$('#busiSalesReturnForm').submit();
+				}				 
+				 
+			});
+			
 			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/sales'; });
 		</script>
 	</div>

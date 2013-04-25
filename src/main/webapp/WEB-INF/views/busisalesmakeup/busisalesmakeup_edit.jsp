@@ -17,7 +17,13 @@
 	<div class="sys_btnBox">
 		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="退出" id="returnBtn" />
 		<script>
-			$('#submitBtn').click(function() { $('#busiSalesMakeupForm').submit(); });
+			$('#submitBtn').click(function() {
+				var makeupSum = $('#makeupSum').val();
+				var msg = '补价总额：¥ ' + makeupSum + '\n\n' + '确定要保存此单据吗？';
+				if (confirm(msg)) {
+					$('#busiSalesMakeupForm').submit();
+				} 
+			});
 			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/sales'; });
 		</script>
 	</div>

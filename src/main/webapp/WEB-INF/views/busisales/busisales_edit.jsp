@@ -139,8 +139,18 @@ function feeRemain() {
 						}
 					}
 				});
-				console.debug(hasError);
-				if (!hasError) {
+
+				var feeSum = parseFloat($('#feeSum').val());
+				var feePrepayCash = parseFloat($('#feePrepayCash').val());
+				feePrepayCash = isNaN(feePrepayCash) ? 0 : feePrepayCash;
+				var feePrepayCard = parseFloat($('#feePrepayCard').val());
+				feePrepayCard = isNaN(feePrepayCard) ? 0 : feePrepayCard;
+				var feePrepay = feePrepayCash + feePrepayCard;
+				var feeRemain = feeSum - feePrepay; 
+				
+				var msg = '总金额：¥ ' + feeSum + ' 预付金额：¥ ' + feePrepay + ' 剩余尾款：¥ ' + feeRemain + '\n\n' + '确定要保存此单据吗？'
+				
+				if (!hasError && confirm(msg)) {
 					$('#busiSalesForm').submit();
 				}				 
 			});

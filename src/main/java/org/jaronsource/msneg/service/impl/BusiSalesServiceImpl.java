@@ -116,9 +116,18 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 	}
 
 	@Override
-	public Map<String, Double> statis(Integer deptId, String salesType, String startTime, String endTime) {
+	public Map<String, Object> statis(Integer deptId, String salesType, String startTime, String endTime) {
 		
-		Map<String, Double> statisMap = new HashMap<String, Double>();
+		Map<String, Object> statisMap = new HashMap<String, Object>();
+		
+		{
+			String jpql = "select count(o) from BusiSales o where o.salesTypeKey = ? and o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long count = getDao().executeQueryOne(jpql, salesType, startTime, endTime);
+			count = count == null ? 0 : count;
+			statisMap.put("count", count);
+		}
 		
 		{
 			String jpql = "select sum(o.feeSum) from BusiSales o where o.salesTypeKey = ? and o.createTime >= ? and o.createTime <= ?";
@@ -156,7 +165,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 			statisMap.put("fanxiao", fanxiao);
 		}
 		
-		Double weikuan = statisMap.get("zongji") - statisMap.get("jiesuan");
+		Double weikuan = (Double) statisMap.get("zongji") - (Double) statisMap.get("jiesuan");
 		statisMap.put("weikuan", weikuan);
 		
 		return statisMap;

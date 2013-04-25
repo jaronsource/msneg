@@ -18,7 +18,7 @@ public interface BusiSalesService extends ISearchFormSupportService<BusiSales, I
 	
 	void save(BusiSales busiSales, List<BusiSalesItem> busiSalesItems);
 
-	Map<String, Double> statis(Integer deptId, String salesType, String startTime, String endTime);
+	Map<String, Object> statis(Integer deptId, String salesType, String startTime, String endTime);
 
 	List<Object[]> statis02(Integer deptId, String startTime, String endTime);
 

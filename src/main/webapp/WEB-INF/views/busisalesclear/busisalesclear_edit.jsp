@@ -78,7 +78,11 @@ function actReturn() {
 	<div class="sys_btnBox">
 		<input type="button" value="保存" id="submitBtn" /> <input type="button" value="退出" id="returnBtn" />
 		<script>
-			$('#submitBtn').click(function() { $('#busiSalesClearForm').submit(); });
+			$('#submitBtn').click(function() { 
+				if (confirm('确定要保存此单据吗？')) {
+					$('#busiSalesClearForm').submit();
+				} 
+			});
 			$('#returnBtn').click(function() { window.location = '${pageContext.request.contextPath}/sales'; });
 		</script>
 	</div>

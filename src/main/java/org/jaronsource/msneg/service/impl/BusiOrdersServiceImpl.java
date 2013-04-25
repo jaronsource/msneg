@@ -53,9 +53,18 @@ public class BusiOrdersServiceImpl extends SearchFormSupportService<BusiOrders, 
 	}
 
 	@Override
-	public Map<String, Double> statis(Integer deptId, String startTime, String endTime) {
+	public Map<String, Object> statis(Integer deptId, String startTime, String endTime) {
 		
-		Map<String, Double> statisMap = new HashMap<String, Double>();
+		Map<String, Object> statisMap = new HashMap<String, Object>();
+		
+		{
+			String jpql = "select count(o) from BusiOrders o where o.createTime >= ? and o.createTime <= ?";
+			if (deptId != 0)
+				jpql += " and o.sysDept.deptId = " + deptId;
+			Long count = getDao().executeQueryOne(jpql, startTime, endTime);
+			count = count == null ? 0 : count;
+			statisMap.put("count", count);
+		}
 		
 		{
 			String jpql = "select sum(o.ordersSum) from BusiOrders o where o.createTime >= ? and o.createTime <= ?";
