@@ -216,5 +216,15 @@ values ('item_unit', 'C', '米');
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('item_unit', 'D', '套');
 
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'preord_state', '报备状态');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('preord_state', 'A', '未确认');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('preord_state', 'B', '确认');
+
 set foreign_key_checks = 1;
 

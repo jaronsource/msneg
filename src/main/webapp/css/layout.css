@@ -49,6 +49,7 @@ body{ background:#e1e1e1 url(../images/bg/bg_wrap.gif) center top repeat-y; font
 .lnb li .lnb10{ background-image:url(../images/guide/lnb10.gif);}
 .lnb li .lnb11{ background-image:url(../images/guide/lnb11.gif);}
 .lnb li .lnb12{ background-image:url(../images/guide/lnb12.gif);}
+.lnb li .lnb13{ background-image:url(../images/guide/lnb13.gif);}
 
 .lnb li .lnb01:hover,
 .lnb li .lnb01.hover{ background-image:url(../images/guide/lnb01_on.jpg);}
@@ -74,6 +75,8 @@ body{ background:#e1e1e1 url(../images/bg/bg_wrap.gif) center top repeat-y; font
 .lnb li .lnb11.hover{ background-image:url(../images/guide/lnb11_on.jpg);}
 .lnb li .lnb12:hover,
 .lnb li .lnb12.hover{ background-image:url(../images/guide/lnb12_on.jpg);}
+.lnb li .lnb13:hover,
+.lnb li .lnb13.hover{ background-image:url(../images/guide/lnb13_on.gif);}
 
 
 #content{ float:right;  width:1020px;}
