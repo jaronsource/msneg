@@ -15,6 +15,7 @@
 <script src="${pageContext.request.contextPath}/scripts/jquery-ui-1.92.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/scripts/jquery.ui.datepicker-zh-CN.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/scripts/common.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/scripts/checkdata.js" type="text/javascript"></script>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/artTemplate/template.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/pager.js"></script>

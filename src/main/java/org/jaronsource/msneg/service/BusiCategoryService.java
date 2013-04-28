@@ -13,4 +13,6 @@ public interface BusiCategoryService extends ISearchFormSupportService<BusiCateg
 
 	void changeStock(Integer itemId, Integer stock);
 
+	List<BusiCategory> findByItemType(String itemType);
+
 }

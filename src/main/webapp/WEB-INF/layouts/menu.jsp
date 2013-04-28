@@ -15,6 +15,6 @@
 			href="javascript: void(0)"
 			onclick="alert('对不起，您无权操作本功能'); return false;"
 		</security:noPerm> 
-		class="${perm.funcRemarks } <c:if test="${fn:startsWith(RELATIVE_REQUESTURI, perm.url)}" >hover</c:if>">${perm.name }</a></li>
+		class="${perm.funcRemarks } <c:if test="${fn:startsWith(RELATIVE_REQUESTURI_QUERYSTR, perm.url)}" >hover</c:if>">${perm.name }</a></li>
    	</c:forEach>
 </ul>

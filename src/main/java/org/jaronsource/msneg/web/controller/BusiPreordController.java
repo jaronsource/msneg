@@ -18,7 +18,10 @@ import org.jaronsource.msneg.domain.BusiPreord;
 import org.jaronsource.msneg.service.BusiPreordService;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
+import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
+import com.ccesun.framework.util.BeanUtils;
+import com.ccesun.framework.util.DateUtils;
 
 @RequestMapping("/busiPreord")
 @Controller
@@ -30,6 +33,7 @@ public class BusiPreordController extends BaseController {
 	private BusiPreordService busiPreordService;
 	
 	@RequestMapping(method = {GET, POST})
+	@RequestHistory
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
 		Page<BusiPreord> busiPreordPage = busiPreordService.findPage(searchForm);
@@ -50,9 +54,11 @@ public class BusiPreordController extends BaseController {
             model.addAttribute("busiPreord", busiPreord);
             return "busiPreord/update";
         }
-
-        busiPreordService.save(busiPreord);
-        return "redirect:/busiPreord/" + busiPreord.getPreordId() + "/show";
+        
+        BusiPreord original = busiPreordService.findByPk(busiPreord.getPreordId());
+        BeanUtils.mergeProperties(original, busiPreord);
+        busiPreordService.save(original);
+        return "history:/busiPreord";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
@@ -68,9 +74,12 @@ public class BusiPreordController extends BaseController {
             model.addAttribute("busiPreord", busiPreord);
             return "busiPreord/create";
         }
-
+        
+        String currentDatetime = DateUtils.currentDateTime();
+        busiPreord.setCreateTime(currentDatetime);
+        busiPreord.setPreordStateKey("A");
         busiPreordService.save(busiPreord);
-        return "redirect:/busiPreord/" + busiPreord.getPreordId() + "/show";
+        return "history:/busiPreord";
     }	
 	
 	@RequestMapping(value = "/{preordId}/show", method = GET)
@@ -83,7 +92,7 @@ public class BusiPreordController extends BaseController {
     @RequestMapping(value = "/{preordId}/remove", method = GET)
     public String remove(@PathVariable("preordId") Integer preordId, Model model) {
         busiPreordService.remove(preordId);
-        return "redirect:/busiPreord";
+        return "history:/busiPreord";
     }
 }
 

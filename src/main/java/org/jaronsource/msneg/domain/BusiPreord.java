@@ -31,8 +31,13 @@ public class BusiPreord implements IEntity<Integer> {
 	
 	/***/
 	@DocDescription("客户电话")
-	@Column(name="client_phone")
-	private String clientPhone;
+	@Column(name="client_cellphone")
+	private String clientCellphone;
+	
+	/***/
+	@DocDescription("客户地址")
+	@Column(name="client_address")
+	private String clientAddress;
 	
 	/***/
 	@DocDescription("报备人姓名")
@@ -75,14 +80,14 @@ public class BusiPreord implements IEntity<Integer> {
 		return clientName;
 	}
 	
-	public void setClientPhone(String clientPhone) {
-		this.clientPhone = clientPhone;
+	public String getClientCellphone() {
+		return clientCellphone;
 	}
-	
-	public String getClientPhone() {
-		return clientPhone;
+
+	public void setClientCellphone(String clientCellphone) {
+		this.clientCellphone = clientCellphone;
 	}
-	
+
 	public void setPreordPerson(String preordPerson) {
 		this.preordPerson = preordPerson;
 	}
@@ -123,6 +128,14 @@ public class BusiPreord implements IEntity<Integer> {
 		return preordStateKey;
 	}
 	
+	public String getClientAddress() {
+		return clientAddress;
+	}
+
+	public void setClientAddress(String clientAddress) {
+		this.clientAddress = clientAddress;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

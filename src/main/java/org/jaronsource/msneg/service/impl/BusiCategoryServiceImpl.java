@@ -52,9 +52,15 @@ public class BusiCategoryServiceImpl extends SearchFormSupportService<BusiCatego
 	}
 
 	@Override
-	public void changeStock(Integer itemId, Integer stock) {
-		String jpql = "update BusiCategory o set o.itemStockAmount = ? where o.itemId = ?";
-		getDao().execute(jpql, stock, itemId);
+	public void changeStock(Integer cateId, Integer stock) {
+		String jpql = "update BusiCategory o set o.itemStockAmount = ? where o.cateId = ?";
+		getDao().execute(jpql, stock, cateId);
+	}
+
+	@Override
+	public List<BusiCategory> findByItemType(String itemType) {
+		String jpql = "select o from BusiCategory o where o .itemTypeKey = ?";
+		return getDao().find(jpql, itemType);
 	}
 
 }

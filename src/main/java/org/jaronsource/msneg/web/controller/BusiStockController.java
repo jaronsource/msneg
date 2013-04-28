@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import org.jaronsource.msneg.domain.BusiCategory;
 import org.jaronsource.msneg.domain.BusiItem;
 import org.jaronsource.msneg.service.BusiCategoryService;
-import org.jaronsource.msneg.service.BusiItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,20 +52,20 @@ public class BusiStockController extends BaseController {
 	
 	@RequestMapping(value = "/changeStock", method = {GET, POST})
 	@ResponseBody
-	public void changeStock(@RequestParam("itemId") Integer itemId, @RequestParam("stock") Integer stock) {
+	public void changeStock(@RequestParam("cateId") Integer cateId, @RequestParam("stock") Integer stock) {
 
-		busiCategoryService.changeStock(itemId, stock);
+		busiCategoryService.changeStock(cateId, stock);
 	}
 	
-	@RequestMapping(value = "/{itemId}/update", method = GET)
-    public String update(@PathVariable("itemId") Integer itemId, Model model) {
+	@RequestMapping(value = "/{cateId}/update", method = GET)
+    public String update(@PathVariable("cateId") Integer cateId, Model model) {
 		//List<BusiCategory> categories = busiCategoryService.findAll();
 		//model.addAttribute("categories", categories);
-        model.addAttribute("busiCatetory", busiCategoryService.findByPk(itemId));
+        model.addAttribute("busiCategory", busiCategoryService.findByPk(cateId));
         return "busiStock/edit";
 	}	
 	
-	@RequestMapping(value = "/{itemId}/update", method = POST)
+	@RequestMapping(value = "/{cateId}/update", method = POST)
     public String update(@Valid @ModelAttribute BusiCategory busiCategory, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
         	//List<BusiCategory> categories = busiCategoryService.findAll();
@@ -101,8 +100,8 @@ public class BusiStockController extends BaseController {
         return "history:/busiStock";
     }	
     
-    @RequestMapping(value = "/{itemId}/remove", method = GET)
-    public String remove(@PathVariable("itemId") Integer cateId, Model model) {
+    @RequestMapping(value = "/{cateId}/remove", method = GET)
+    public String remove(@PathVariable("cateId") Integer cateId, Model model) {
     	busiCategoryService.remove(cateId);
         return "history:/busiStock";
     }

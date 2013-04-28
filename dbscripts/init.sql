@@ -84,19 +84,19 @@ insert into sys_rolefunc (role_id, func_id) values (4, 10);
 
 truncate table busi_category;
 
-insert into busi_category (item_type_key, cate_name) values ('A', 'NK壁纸1');
-insert into busi_category (item_type_key, cate_name) values ('A', 'NK壁纸2');
-insert into busi_category (item_type_key, cate_name) values ('A', 'NK壁纸3');
-insert into busi_category (item_type_key, cate_name) values ('A', 'NK壁纸4');
-insert into busi_category (item_type_key, cate_name) values ('B', 'B类商品1');
-insert into busi_category (item_type_key, cate_name) values ('B', 'B类商品2');
-insert into busi_category (item_type_key, cate_name) values ('C', 'C类商品1');
-insert into busi_category (item_type_key, cate_name) values ('C', 'C类商品1');
-insert into busi_category (item_type_key, cate_name) values ('C', 'C类商品1');
-insert into busi_category (item_type_key, cate_name) values ('D', 'D类商品1');
-insert into busi_category (item_type_key, cate_name) values ('D', 'D类商品2');
-insert into busi_category (item_type_key, cate_name) values ('D', 'D类商品3');
-insert into busi_category (item_type_key, cate_name) values ('D', 'D类商品4');
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('A', 'NK壁纸1', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('A', 'NK壁纸2', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('A', 'NK壁纸3', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('A', 'NK壁纸4', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('B', 'B类商品1', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('B', 'B类商品2', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('C', 'C类商品1', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('C', 'C类商品1', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('C', 'C类商品1', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('D', 'D类商品1', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('D', 'D类商品2', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('D', 'D类商品3', 0);
+insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('D', 'D类商品4', 0);
 
 truncate table busi_item;
 

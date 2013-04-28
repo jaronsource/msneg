@@ -3,7 +3,12 @@ package org.jaronsource.msneg.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.List;
+
 import javax.validation.Valid;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.jaronsource.msneg.domain.BusiCategory;
 import org.jaronsource.msneg.service.BusiCategoryService;
@@ -16,6 +21,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
@@ -78,6 +85,45 @@ public class BusiCategoryController extends BaseController {
     public String remove(@PathVariable("cateId") Integer cateId, Model model) {
         busiCategoryService.remove(cateId);
         return "history:/sysConfig/category";
+    }
+    
+    @RequestMapping(value = "/ajaxFindBusiCategory", method = {GET, POST})
+    @ResponseBody
+    public JSONArray ajaxFindBusiCategory(@RequestParam("itemType") String itemType) {
+        
+    	List<BusiCategory> busiCategoryList = busiCategoryService.findByItemType(itemType);
+    	
+    	JSONArray result = new JSONArray();
+    	for (BusiCategory busiCategory : busiCategoryList) {
+    		JSONObject jsonObject = getJsonObject(busiCategory);
+    		result.add(jsonObject);
+		}
+    	
+    	return result;
+
+    }
+    
+    private JSONObject getJsonObject(BusiCategory busiCategory) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.element("cateId", busiCategory.getCateId());
+		jsonObject.element("cateName", busiCategory.getCateName());
+		jsonObject.element("itemStockAmount", busiCategory.getItemStockAmount());
+		return jsonObject;
+	}
+    
+    @RequestMapping(value = "/ajaxFindStock", method = {GET, POST})
+    @ResponseBody
+    public JSONObject ajaxFindStock(@RequestParam("cateId") Integer cateId) {
+        
+    	BusiCategory busiCategory = busiCategoryService.findByPk(cateId);
+    	
+    	JSONObject result = new JSONObject();
+    	Integer stockAmount = busiCategory.getItemStockAmount();
+    	stockAmount = stockAmount == null ? 0 : stockAmount;
+    	result.element("stockAmount",  stockAmount);
+    	
+    	return result;
+
     }
 }
 

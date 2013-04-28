@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
 <dict:loadDictList type="item_unit" var="item_unit" />
+<dict:loadDictList type="item_type" var="item_type" />
 <dict:loadDictList type="serv_logis" var="serv_logis" />
 <dict:loadDictList type="serv_getmethod" var="serv_getmethod" />
 <dict:loadDictList type="serv_installmethod" var="serv_installmethod" />
@@ -16,32 +17,43 @@ var $selectCateId;
 var $selectCateIdDisplay; 
 function addSaleItems(element) {
 	var $tr = $('<tr></tr>');
-	var $td1 = $('<td><input type="hidden" name="cateId" class="cateId"/><input class="cateIdBtn" type="button" value="选择系列" /></td>');
-	//var $td1 = $('<td><select name="cateId" class="cateId"></select></td>');
-	//<c:forEach items="${busiCategories}" var="entry">
-	//	$('<option value="${entry.cateId}">${entry.cateName}</option>').appendTo($td1.find('select'));
-	//</c:forEach>
-	var $td2 = $('<td><input type="hidden" name="itemId" /><input type="text" name="itemName" class="wb95 input_text itemName" /></td>');
-	var $td3 = $('<td><select name="itemUnit" class="itemUnit"></select></td>');
-	<c:forEach items="${item_unit}" var="entry">
-		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td3.find('select'));
+	//var $td1 = $('<td><input type="hidden" name="cateId" class="cateId"/><input class="cateIdBtn" type="button" value="选择系列" /></td>');
+	var $td1 = $('<td><select class="itemType"></select></td>');
+	$('<option value="">请选择</option>').appendTo($td1.find('select'));
+	<c:forEach items="${item_type}" var="entry">
+		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td1.find('select'));
 	</c:forEach>
-	var $td4 = $('<td><input type="text" name="itemAmount" class="w_50 input_text itemAmount" value="0" /></td>');
-	var $td5 = $('<td>¥ <input type="text" class="w_50 input_money itemPrice" name="itemPrice" value="0.00" /></td>');
-	var $td6 = $('<td><input type="hidden" name="itemSum" />¥ <span class="money itemSum">0.00</span></td>');
-	var $td7 = $('<td><input type="text" name="itemRemarks" class="wb95 input_text itemRemarks" /></td>');
-	var $td8 = $('<td><span class="green stockAmount"></span></td>');
+	var $td2 = $('<td><select name="cateId" class="busiCategory"></select></td>');
+		$('<option value="">请选择</option>').appendTo($td2.find('select'));
+	var $td3 = $('<td><input type="hidden" name="itemId" /><input type="text" name="itemName" class="wb95 input_text itemName" /></td>');
+	var $td4 = $('<td><select name="itemUnit" class="itemUnit"></select></td>');
+	<c:forEach items="${item_unit}" var="entry">
+		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td4.find('select'));
+	</c:forEach>
+	var $td5 = $('<td><input type="text" name="itemAmount" class="w_50 input_text itemAmount" value="0" /></td>');
+	var $td6 = $('<td>¥ <input type="text" class="w_50 input_money itemPrice" name="itemPrice" value="0.00" /></td>');
+	var $td7 = $('<td><input type="hidden" name="itemSum" />¥ <span class="money itemSum">0.00</span></td>');
+	var $td8 = $('<td><input type="text" name="itemRemarks" class="wb95 input_text itemRemarks" /></td>');
+	var $td9 = $('<td><span class="green stockAmount"></span></td>');
 	
-	$tr.append($td1).append($td2).append($td3).append($td4).append($td5).append($td6).append($td7).append($td8);
+	$tr.append($td1).append($td2).append($td3).append($td4).append($td5).append($td6).append($td7).append($td8).append($td9);
 	$tr.appendTo(element);
-	
+
+	/**
 	$tr.find('.cateIdBtn').click(function() {
 		var $parent = $(this).parents('tr');
 		$selectCateId = $parent.find('.cateId');
 		$selectCateIdDisplay = $parent.find('.cateIdBtn');
 		$('#busiCategorySelector').dialog('open');
 	});
-	
+	*/
+
+	$tr.find('.itemType').change(function() {
+		var itemType = $(this).val();
+		queryBusiCategory.call(this, itemType);
+	});
+
+	/*
 	$tr.find('.itemName').autocomplete(
 			{
 				source : function(request, response) {
@@ -64,6 +76,19 @@ function addSaleItems(element) {
 					$parent.find('.stockAmount').text(stock);
 				}
 			});
+	*/
+	$tr.find('.busiCategory').change(function() {
+
+		var $self = $(this);
+		var cateId = $self.val();
+		$.post('${pageContext.request.contextPath}/sysConfig/category/ajaxFindStock', {'cateId': cateId}, function(data) {
+			var $parent = $self.parents('tr');
+			var stock = parseInt(data.stockAmount) == 0 ? '没货' : '有货(' + data.stockAmount + ')';
+			$parent.find('.stockAmount').text(stock);
+		});
+		
+		
+	});
 	
 	$tr.find(".itemAmount, .itemPrice").keyup(function() {
 		var $parent = $(this).parents('tr');
@@ -81,6 +106,19 @@ function addSaleItems(element) {
 	
 	$tr.find('.input_money').change(formatMoney);
 	
+}
+
+function queryBusiCategory(itemType) {
+	var $self = $(this); 
+	$.post('${pageContext.request.contextPath}/sysConfig/category/ajaxFindBusiCategory', {'itemType': itemType}, function(data) {
+		
+		var $select = $self.parents('tr').find('select.busiCategory');
+		$select.empty();
+		$('<option value="">请选择</option>').appendTo($select);
+		$.each(data, function(index, value) {
+			$('<option value="' + value.cateId + '">' + value.cateName + '</option>').appendTo($select);
+		});
+	});
 }
 
 function sumTotal () {
@@ -121,7 +159,7 @@ function feeRemain() {
 	<div class="sys_btnBox">
 		<input type="button" id="submitBtn" value="保存" /> <input id="returnBtn" type="button" value="退出" />
 		<script>
-			$('#submitBtn').click(function() { 
+			$('#submitBtn').click(function(e) { 
 				var hasError = false;
 				$('.itemName').each(function() {
 					var $parent = $(this).parents('tr');
@@ -139,6 +177,20 @@ function feeRemain() {
 						}
 					}
 				});
+
+				var ck = new CheckObj();
+				
+				var $from = $('#busiSalesForm');
+				ck.addVal($('#clientName', $from).val(), "客户名称", ck.CHECK_NULL);
+				ck.addVal($('#address', $from).val(), "物业地址", ck.CHECK_NULL);
+				ck.addVal($('#cellPhone', $from).val(), "联系手机", ck.CHECK_NULL);
+				ck.addVal($('#cellPhone', $from).val(), "联系手机", ck.CHECK_SJHM);
+				
+				if(ck.doCheckVal() == 0) {
+					hasError = true; 
+					e.preventDefault();
+					return false;
+				}
 
 				var feeSum = parseFloat($('#feeSum').val());
 				var feePrepayCash = parseFloat($('#feePrepayCash').val());
@@ -239,7 +291,8 @@ function feeRemain() {
 		</script>
 		<table id="items" width="100%" border="1" class="tbl_w" cellspacing="0" cellpadding="0">
 			<colgroup>
-				<col width="50" />
+				<col width="80" />
+				<col width="80" />
 				<col width="400" />
 				<col width="50" />
 				<col width="80" />
@@ -250,6 +303,7 @@ function feeRemain() {
 			</colgroup>
 			<thead>
 				<tr>
+					<th>类别</th>
 					<th>系列</th>
 					<th>名称/货号/型号</th>
 					<th>单位</th>
@@ -419,5 +473,5 @@ function feeRemain() {
 		$selectCateIdDisplay.val(cateName);
 		$('#busiCategorySelector').dialog('close');
 	}
-	
+
 </script>
