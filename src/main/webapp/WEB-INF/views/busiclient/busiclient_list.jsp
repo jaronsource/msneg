@@ -3,6 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="pg" uri="http://www.ccesun.com/tags/pager" %>
+<%@ taglib prefix="utils" uri="http://www.ccesun.com/tags/utils" %>
+<%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
 <div class="title_box">
 	<h2>客户信息管理</h2>
 </div>
@@ -22,11 +24,13 @@
 	<h3 class="title_line">客户信息列表<a href="#this" class="toggle_table">折叠</a></h3>
 	<table width="100%" border="1" class="tbl_l" cellspacing="0" cellpadding="0">
 			<colgroup>
-			<col width="120" />
+			<col width="80" />
 			<col width="60" />
 			<col width="120" />
+			<col width="120" />
+			<col width="180" />
 			<col width="*" />
-			<%-- <col width="120" /> --%>
+			<col width="120" />
 		</colgroup>
 		<thead>
 			<tr>
@@ -35,6 +39,7 @@
 				<th>电话</th>
 				<th>手机</th>
 				<th>地址</th>
+				<th>相关订单</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -47,8 +52,22 @@
 				<td>${entry.cellPhone }</td>
 				<td>${entry.address }</td>
 				<td>
-					<a href="${pageContext.request.contextPath }/busiClient/${entry.clientId}/update" class="btn btn-small">修改</a> 
-		    		<a href="${pageContext.request.contextPath }/busiClient/${entry.clientId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')">删除</a> 
+					<utils:methodInvokor methodName="findSalesByClientId" var="busiSalesList" className="org.jaronsource.msneg.service.BusiSalesService">
+						<utils:miParam type="java.lang.Integer" value="${entry.clientId }"></utils:miParam>
+					</utils:methodInvokor>
+					
+					<c:forEach items="${busiSalesList }" var="busiSales">
+						<a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${busiSales.salesId}" target="_blank">${busiSales.salesCode }</a>
+					</c:forEach>
+				</td>
+				<td>
+					<security:hasPerm permCode="13">
+						<a href="${pageContext.request.contextPath }/busiClient/${entry.clientId}/update" class="btn btn-small">修改</a> 
+		    			<a href="${pageContext.request.contextPath }/busiClient/${entry.clientId}/remove" class="btn btn-small" onclick="return confirm('确定要删除吗？')">删除</a> 
+		    		</security:hasPerm>
+		    		<security:noPerm permCode="13">
+		    		-
+		    		</security:noPerm>
 				</td>
 			</tr>
 			</c:forEach>

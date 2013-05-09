@@ -24,6 +24,6 @@ public interface BusiSalesService extends ISearchFormSupportService<BusiSales, I
 
 	void invalid(Integer id);
 
-
+	List<BusiSales> findSalesByClientId(Integer clientId);
 
 }

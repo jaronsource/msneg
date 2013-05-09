@@ -39,18 +39,19 @@ insert into sys_userrole (user_id, role_id) values (2, 4);
 
 truncate table sys_func;
 
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '销售开单打印', '/sales', 1, 'lnb01');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '单据查看管理', '/busiBills', 2, 'lnb03');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '定金预定管理', '/busiOrders', 3, 'lnb02');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '财务统计审核', '/busiFinance?form[\'salesStateKey_eq\']=A', 4, 'lnb07');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '货物发配管理', '/busiAssign?form[\'salesStateKey_eq\']=B', 5, 'lnb05');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '库存管理查询', '/busiStock', 6, 'lnb06');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '综合数据分析', '/busiStatis/statis01', 7, 'lnb08');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '客户信息整理', '/busiClient', 8, 'lnb11');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '客户信息整理', '/busiPreord', 9, 'lnb13');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('menu', '综合管理系统', '/sysConfig', 10, 'lnb12');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('mod', '作废单据', '', 1, '');
-insert into sys_func (func_groupcode, func_name, func_url, func_order, func_remarks) values ('mod', '完结单据', '', 2, '');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (1, 'menu', '销售开单打印', '/sales', 1, 'lnb01');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (2, 'menu', '单据查看管理', '/busiBills', 2, 'lnb03');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (3, 'menu', '定金预定管理', '/busiOrders', 3, 'lnb02');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (4, 'menu', '财务统计审核', '/busiFinance?form[\'salesStateKey_eq\']=A', 4, 'lnb07');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (5, 'menu', '货物发配管理', '/busiAssign?form[\'salesStateKey_eq\']=B', 5, 'lnb05');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (6, 'menu', '库存管理查询', '/busiStock', 6, 'lnb06');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (7, 'menu', '综合数据分析', '/busiStatis/statis01', 7, 'lnb08');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (8, 'menu', '客户信息整理', '/busiClient', 8, 'lnb11');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (9, 'menu', '报备管理系统', '/busiPreord', 9, 'lnb13');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (10, 'menu', '综合管理系统', '/sysConfig', 10, 'lnb12');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (11, 'mod', '作废单据', '', 1, '');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (12, 'mod', '完结单据', '', 2, '');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (13, 'mod', '客户修改与删除', '', 3, '');
 
 truncate table sys_role;
 
@@ -63,14 +64,19 @@ truncate table sys_rolefunc;
 
 insert into sys_rolefunc (role_id, func_id) values (1, 1);
 insert into sys_rolefunc (role_id, func_id) values (1, 2);
+insert into sys_rolefunc (role_id, func_id) values (1, 3);
+insert into sys_rolefunc (role_id, func_id) values (1, 6);
 insert into sys_rolefunc (role_id, func_id) values (1, 8);
+insert into sys_rolefunc (role_id, func_id) values (1, 9);
 insert into sys_rolefunc (role_id, func_id) values (2, 2);
 insert into sys_rolefunc (role_id, func_id) values (2, 4);
 insert into sys_rolefunc (role_id, func_id) values (2, 7);
 insert into sys_rolefunc (role_id, func_id) values (2, 8);
+insert into sys_rolefunc (role_id, func_id) values (2, 9);
 insert into sys_rolefunc (role_id, func_id) values (3, 2);
 insert into sys_rolefunc (role_id, func_id) values (3, 5);
 insert into sys_rolefunc (role_id, func_id) values (3, 8);
+insert into sys_rolefunc (role_id, func_id) values (3, 9);
 insert into sys_rolefunc (role_id, func_id) values (4, 1);
 insert into sys_rolefunc (role_id, func_id) values (4, 2);
 insert into sys_rolefunc (role_id, func_id) values (4, 3);
@@ -81,6 +87,9 @@ insert into sys_rolefunc (role_id, func_id) values (4, 7);
 insert into sys_rolefunc (role_id, func_id) values (4, 8);
 insert into sys_rolefunc (role_id, func_id) values (4, 9);
 insert into sys_rolefunc (role_id, func_id) values (4, 10);
+insert into sys_rolefunc (role_id, func_id) values (4, 11);
+insert into sys_rolefunc (role_id, func_id) values (4, 12);
+insert into sys_rolefunc (role_id, func_id) values (4, 13);
 
 truncate table busi_category;
 

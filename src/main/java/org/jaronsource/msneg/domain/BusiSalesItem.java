@@ -54,6 +54,10 @@ public class BusiSalesItem implements IEntity<Integer> {
 	@Column(name="item_price")
 	private Float itemPrice;
 	
+	/** 备货状态 */
+	@Column(name="assign_state_key")
+	private String assignStateKey;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="cate_id")
 	private BusiCategory busiCategory;
@@ -135,6 +139,14 @@ public class BusiSalesItem implements IEntity<Integer> {
 
 	public void setBusiCategory(BusiCategory busiCategory) {
 		this.busiCategory = busiCategory;
+	}
+
+	public String getAssignStateKey() {
+		return assignStateKey;
+	}
+
+	public void setAssignStateKey(String assignStateKey) {
+		this.assignStateKey = assignStateKey;
 	}
 
 	@Override

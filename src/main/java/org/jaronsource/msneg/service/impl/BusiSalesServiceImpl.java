@@ -95,6 +95,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 			
 			busiSalesItem.setBusiCategory(busiCategoryDao.findReferenceByPk(busiSalesItem.getBusiCategory().getCateId()));
 			busiSalesItem.setBusiSales(busiSales);
+			busiSalesItem.setAssignStateKey("B");
 			
 			busiSalesItemDao.save(busiSalesItem);
 		}
@@ -186,6 +187,12 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		BusiSales busiSales = findByPk(id);
 		busiSales.setBillStateKey("B");
 		save(busiSales);
+	}
+
+	@Override
+	public List<BusiSales> findSalesByClientId(Integer clientId) {
+		String jpql = "select o from BusiSales o where o.busiClient.clientId = ?";
+		return getDao().find(jpql, clientId);
 	}
 
 

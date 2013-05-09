@@ -103,17 +103,19 @@
 				<table class="tbl_l" border="1" cellpadding="0" cellspacing="0" width="100%">
 						<colgroup>
 							<col width="40">
-							<col width="140">
+							<col width="180">
+							<col width="100">
 							<col width="100">
 							<col width="25%">
 							<col width="100">
-							<col width="30">
+							<col width="60">
 						</colgroup>
 						<thead>
 							<tr>
 								<th></th>
 								<th>日期/时间</th>
 								<th>订单号</th>
+								<th>总金额</th>
 								<th>单据简明</th>
 								<th>单据状态</th>
 								<th>操作</th>
@@ -125,7 +127,8 @@
 								<td><a href="javascript: void(0)" class="detailLink" style="text-decoration: none" title="查看商品">+</a></td>
 								<td>${entry.createTime }</td>
 								<td>${entry.salesCode }</td>
-								<td class="tl">${entry.salesRemarks }</td>
+								<td>${entry.feeSum }</td>
+								<td>${entry.busiClient.clientName } ${entry.busiClient.cellPhone } ${entry.busiClient.address }</td>
 								<td><dict:lookupDictValue key="${entry.salesStateKey }" type="sales_state" /> </td>
 								<td>
 									<c:choose>

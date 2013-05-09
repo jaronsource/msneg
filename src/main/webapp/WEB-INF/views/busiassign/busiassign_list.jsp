@@ -104,20 +104,20 @@
 				<table class="tbl_l" border="1" cellpadding="0" cellspacing="0" width="100%">
 						<colgroup>
 							<col width="40">
-							<col width="140">
+							<col width="180">
 							<col width="100">
-							<col width="25%">
 							<col width="100">
-							<col width="30">
+							<col width="*">
+							<col width="100">
 						</colgroup>
 						<thead>
 							<tr>
 								<th></th>
 								<th>日期/时间</th>
 								<th>订单号</th>
+								<th>总金额</th>
 								<th>单据简明</th>
 								<th>单据状态</th>
-								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -126,9 +126,10 @@
 								<td><a href="javascript: void(0)" class="detailLink" style="text-decoration: none" title="查看商品">+</a></td>
 								<td>${entry.createTime }</td>
 								<td>${entry.salesCode }</td>
-								<td class="tl">${entry.salesRemarks }</td>
+								<td>${entry.feeSum }</td>
+								<td class="tl">${entry.busiClient.clientName } ${entry.busiClient.cellPhone } ${entry.busiClient.address }</td>
 								<td><dict:lookupDictValue key="${entry.salesStateKey }" type="sales_state" /> </td>
-								<td>
+								<!-- <td>
 									<c:choose>
 										<c:when test="${salesState == 'B' }">
 											<input type="button" value="备货" onclick="if (confirm('确定进行此操作吗？')) {window.location='busiAssign/changeState?salesId=${entry.salesId }&state=C';}" />
@@ -141,6 +142,7 @@
 										</c:otherwise>
 									</c:choose>
 								</td>
+								-->
 							</tr>
 							<utils:methodInvokor methodName="findSalesItemBySalesId" var="items" className="org.jaronsource.msneg.service.BusiSalesItemService">
 								<utils:miParam type="java.lang.Integer" value="${entry.salesId }"></utils:miParam>
@@ -156,6 +158,7 @@
 											<col width="80">
 											<col width="80">
 											<col width="*">
+											<col width="80">
 										</colgroup>
 										<thead>
 											<th>系列</th>
@@ -165,6 +168,7 @@
 											<th>单价</th>
 											<th>合计</th>
 											<th>信息备注</th>
+											<th>操作</th>
 										</thead>
 										<tbody>
 											<c:forEach items="${items}" var="item">
@@ -176,6 +180,19 @@
 												<td><span class="money">${item.itemPrice }</span></td>
 												<td><span class="money">${item.itemSum }</span></td>
 												<td>${item.itemRemarks }</td>
+												<td>
+													<c:choose>
+														<c:when test="${item.assignStateKey == 'B' }">
+															<input type="button" value="备货" onclick="if (confirm('确定进行此操作吗？')) {window.location='busiAssign/changeState?salesItemId=${item.salesItemId }&state=C';}" />
+														</c:when>
+														<c:when test="${item.assignStateKey == 'C' }">
+															<input type="button" value="到货" onclick="if (confirm('确定进行此操作吗？')) {window.location='busiAssign/changeState?salesItemId=${item.salesItemId }&state=D';}" />
+														</c:when>
+														<c:otherwise>
+															-
+														</c:otherwise>
+													</c:choose>
+												</td>
 											</tr>
 											</c:forEach>
 										</tbody>

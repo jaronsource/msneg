@@ -111,6 +111,7 @@
 						<colgroup>
 							<col width="150">
 							<col width="150">
+							<col width="100">
 							<col width="*">
 							<col width="100">
 							<col width="220">
@@ -119,6 +120,7 @@
 							<tr>
 								<th>日期/时间</th>
 								<th>订单号</th>
+								<th>总金额</th>
 								<th>单据简明</th>
 								<th>单据状态</th>
 								<th>系统关联提示</th>
@@ -129,6 +131,7 @@
 							<tr>
 								<td>${entry.createTime }</td>
 								<td><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">${entry.salesCode }</a></td>
+								<td>${entry.feeSum }</td>
 								<td class="tl nowrap">${entry.busiClient.clientName } | ${entry.busiClient.cellPhone } | ${entry.busiClient.address }</td>
 								<td><dict:lookupDictValue key="${entry.salesStateKey }" type="sales_state" /> </td>
 								<td class="tl">

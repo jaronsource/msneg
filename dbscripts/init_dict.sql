@@ -191,6 +191,20 @@ values ('sales_state', 'E', '已安装');
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'O', '已完结');
 
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'assign_state', '备货状态');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('assign_state', 'B', '待备货');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('assign_state', 'C', '已备货');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('assign_state', 'D', '已到货');
+
+
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'bill_state', '单据状态');
 

@@ -6,9 +6,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.math.NumberUtils;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.SysDept;
+import org.jaronsource.msneg.service.BusiSalesItemService;
 import org.jaronsource.msneg.service.BusiSalesService;
 import org.jaronsource.msneg.service.SysDeptService;
 import org.slf4j.Logger;
@@ -24,6 +24,7 @@ import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.util.DateUtils;
+import com.ccesun.framework.util.NumberUtils;
 
 @RequestMapping("/busiAssign")
 @Controller
@@ -33,6 +34,9 @@ public class BusiAssignController extends BaseController {
 	
 	@Autowired
 	private BusiSalesService busiSalesService;
+
+	@Autowired
+	private BusiSalesItemService busiSalesItemService;
 	
 	@Autowired
 	private SysDeptService sysDeptService;
@@ -58,6 +62,14 @@ public class BusiAssignController extends BaseController {
 		return "busiAssign/list";
 	}
 	
+	/**
+	 * 状态由销售商品的状态决定
+	 * 当所有销售商品的备货状态都改变时，才更改销售单状态
+	 * @param model
+	 * @return
+	 */
+	/*
+	@Deprecated
 	@RequestMapping(value = "changeState", method = {GET, POST})
 	public String changeState(Model model) {
 
@@ -73,6 +85,17 @@ public class BusiAssignController extends BaseController {
 		
 		return "history:/busiAssign";
 	}
+	*/
 	
+	@RequestMapping(value = "changeState", method = {GET, POST})
+	public String changeState(Model model) {
+
+		String salesItemId = getHttpServletRequest().getParameter("salesItemId");
+		String state = getHttpServletRequest().getParameter("state");
+		
+		busiSalesItemService.changeState(NumberUtils.toInt(salesItemId), state);
+		
+		return "history:/busiAssign";
+	}
 }
 
