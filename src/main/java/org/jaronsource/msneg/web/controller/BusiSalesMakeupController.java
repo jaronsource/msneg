@@ -91,6 +91,7 @@ public class BusiSalesMakeupController extends BaseController {
 		String currentTime = DateUtils.currentDateTime();
 		busiSalesMakeup.setCreateTime(currentTime);
 		busiSalesMakeup.setBillStateKey("A");
+		busiSalesMakeup.setFinanceStateKey("A");
 		busiSalesMakeupService.save(busiSalesMakeup);
         return "redirect:/busiSalesMakeup/" + busiSalesMakeup.getMakeupId() + "/show";
     }	

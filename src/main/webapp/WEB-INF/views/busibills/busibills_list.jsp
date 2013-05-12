@@ -5,6 +5,7 @@
 <%@ taglib prefix="pg" uri="http://www.ccesun.com/tags/pager" %>
 <%@ taglib prefix="dict" uri="http://www.ccesun.com/tags/dict" %>
 <%@ taglib prefix="utils" uri="http://www.ccesun.com/tags/utils" %>
+<%@ taglib prefix="security" uri="http://www.ccesun.com/tags/security" %>
 <dict:loadDictList type="sales_type" var="sales_type" />
 <dict:loadDictList type="sales_state" var="sales_state" />
 
@@ -115,6 +116,7 @@
 							<col width="*">
 							<col width="100">
 							<col width="220">
+							<col width="80">
 						</colgroup>
 						<thead>
 							<tr>
@@ -124,6 +126,7 @@
 								<th>单据简明</th>
 								<th>单据状态</th>
 								<th>系统关联提示</th>
+								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -147,6 +150,23 @@
 									<c:if test="${countSalesClear > 0 }"><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">结算单(${countSalesClear })</a></c:if> 
 									<c:if test="${countSalesMakeup > 0 }"><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">补价单(${countSalesMakeup })</a></c:if>
 									<c:if test="${countSalesReturn > 0 }"><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">返销单(${countSalesReturn })</a></c:if>
+								</td>
+								<td>
+									<c:choose>
+										<c:when test="${entry.billStateKey != 'B' && entry.billStateKey != 'C' && entry.billStateKey != 'D' }">
+											<security:hasPerm permCode="12">
+												<a href="${pageContext.request.contextPath }/busiBills/changeBillState?salesId=${entry.salesId }&state=C">申请完结</a>
+											</security:hasPerm>
+										</c:when>
+										<c:when test="${entry.billStateKey == 'C'}">
+											<security:hasPerm permCode="13">
+												<a href="${pageContext.request.contextPath }/busiBills/changeBillState?salesId=${entry.salesId }&state=D">完结</a>
+											</security:hasPerm>
+										</c:when>
+										<c:otherwise>
+											-
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 							</c:forEach>

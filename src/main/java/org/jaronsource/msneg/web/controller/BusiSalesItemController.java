@@ -114,7 +114,7 @@ public class BusiSalesItemController extends BaseController {
     		jsonObject.element("itemSum", busiSalesItem.getItemSum().toString());
     		jsonObject.element("itemAmount", busiSalesItem.getItemAmount());
     		jsonObject.element("itemRemarks", busiSalesItem.getItemRemarks());
-    		jsonObject.element("category", busiSalesItem.getBusiCategory().getCateName());
+    		jsonObject.element("category", busiSalesItem.getCateName());
     		result.add(jsonObject);
 		}
     	

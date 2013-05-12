@@ -18,4 +18,6 @@ public interface BusiSalesReturnService extends ISearchFormSupportService<BusiSa
 
 	void invalid(Integer id);
 
+	List<BusiSalesReturn> findBySalesId(Integer salesId);
+
 }

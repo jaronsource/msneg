@@ -29,9 +29,6 @@
 				</p>
 			</div>
 			</form:form>
-			<script>
-				$('.input_date').datepicker({ dateFormat: "yymmdd" });
-			</script>
 		<div class="order_box"> 
 			<!--box-->
 			<div class="com_box">

@@ -34,6 +34,8 @@ import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.plugins.dictionary.DictionaryHelper;
 import com.ccesun.framework.plugins.report.JasperReportUtils;
 import com.ccesun.framework.plugins.security.SecurityTokenHolder;
+import com.ccesun.framework.util.DateUtils;
+import com.ccesun.framework.util.StringUtils;
 
 @RequestMapping("/busiSalesClear")
 @Controller
@@ -90,9 +92,12 @@ public class BusiSalesClearController extends BaseController {
             return "busiSalesClear/create";
         }
         
+        String currentDateTime = DateUtils.currentDateTime();
         SysUser currentUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
         busiSalesClear.setSysUser(currentUser);
         busiSalesClear.setBillStateKey("A");
+        busiSalesClear.setFinanceStateKey("A");
+        busiSalesClear.setCreateTime(currentDateTime);
         
         busiSalesClearService.save(busiSalesClear);
         return "redirect:/busiSalesClear/" + busiSalesClear.getClearId() + "/show";
@@ -129,16 +134,19 @@ public class BusiSalesClearController extends BaseController {
 		paramMap.put("sysUser", busiSalesClear.getBusiSales().getSysUser().getRealName());
 		paramMap.put("clientAddress", busiSalesClear.getBusiSales().getBusiClient().getAddress());
 		paramMap.put("salesRemarks", busiSalesClear.getBusiSales().getSalesRemarks());
-		paramMap.put("createTime", busiSalesClear.getCreateTime());
+		paramMap.put("clearSum", busiSalesClear.getClearSum() == null ? "0.00" : busiSalesClear.getClearSum().toString());
+		paramMap.put("createTime", StringUtils.substring(busiSalesClear.getCreateTime(), 0, 8));
+		paramMap.put("clearMethod", dictionaryHelper.lookupDictValue0("clear_method", busiSalesClear.getClearMethodKey()));
 		paramMap.put("servLogis", dictionaryHelper.lookupDictValue0("serv_logis", busiSalesClear.getBusiSales().getServLogisKey()));
 		paramMap.put("servGetmethod", dictionaryHelper.lookupDictValue0("serv_getmethod", busiSalesClear.getBusiSales().getServGetmethodKey()));
 		paramMap.put("servInstallmethod", dictionaryHelper.lookupDictValue0("serv_installmethod", busiSalesClear.getBusiSales().getServInstallmethodKey()));
 		
 		
 		List<Map<String, String>> entries = new ArrayList<Map<String, String>>();
+		/*
 		for (BusiSalesItem busiSalesItem : busiSalesItemList) {
 			Map<String, String> entry = new HashMap<String, String>();
-			entry.put("cateName", busiSalesItem.getBusiCategory().getCateName());
+			entry.put("cateName", busiSalesItem.getCateName());
 			entry.put("itemName", busiSalesItem.getItemName());
 			entry.put("itemUnit", dictionaryHelper.lookupDictValue0("item_unit", busiSalesItem.getItemUnitKey()) );
 			entry.put("itemAmount", busiSalesItem.getItemAmount() == null ? "0" : busiSalesItem.getItemAmount().toString());
@@ -147,7 +155,7 @@ public class BusiSalesClearController extends BaseController {
 			entry.put("itemRemarks", busiSalesItem.getItemRemarks());
 			entries.add(entry);
 		}
-		
+		*/
 		String filePath = getRealPath("/WEB-INF/print/sales_clear.jasper");
 		
 		try {

@@ -7,13 +7,18 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.jaronsource.msneg.dao.BusiCategoryDao;
 import org.jaronsource.msneg.dao.BusiClientDao;
+import org.jaronsource.msneg.dao.BusiSalesClearDao;
 import org.jaronsource.msneg.dao.BusiSalesDao;
 import org.jaronsource.msneg.dao.BusiSalesItemDao;
+import org.jaronsource.msneg.dao.BusiSalesMakeupDao;
+import org.jaronsource.msneg.dao.BusiSalesReturnDao;
 import org.jaronsource.msneg.domain.BusiClient;
 import org.jaronsource.msneg.domain.BusiSales;
+import org.jaronsource.msneg.domain.BusiSalesClear;
 import org.jaronsource.msneg.domain.BusiSalesItem;
+import org.jaronsource.msneg.domain.BusiSalesMakeup;
+import org.jaronsource.msneg.domain.BusiSalesReturn;
 import org.jaronsource.msneg.domain.SysDept;
 import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesService;
@@ -23,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccesun.framework.core.dao.support.IDao;
 import com.ccesun.framework.core.dao.support.PageRequest;
+import com.ccesun.framework.core.dao.support.QCriteria;
+import com.ccesun.framework.core.dao.support.QCriteria.Op;
 import com.ccesun.framework.core.service.SearchFormSupportService;
 import com.ccesun.framework.plugins.security.SecurityTokenHolder;
 import com.ccesun.framework.util.BeanUtils;
@@ -37,11 +44,21 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 	@Autowired
 	private BusiSalesItemDao busiSalesItemDao;
 
-	@Autowired
-	private BusiCategoryDao busiCategoryDao;
+	//@Autowired
+	//private BusiCategoryDao busiCategoryDao;
 	
 	@Autowired
 	private BusiClientDao busiClientDao;
+	
+	@Autowired
+	private BusiSalesReturnDao busiSalesReturnDao;
+	
+	@Autowired
+	private BusiSalesClearDao busiSalesClearDao;
+	
+	@Autowired
+	private BusiSalesMakeupDao busiSalesMakeupDao;
+	
 	
 	@Override
 	public IDao<BusiSales, Integer> getDao() {
@@ -86,16 +103,18 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		busiSales.setSysDept(currentUser.getDept());
 		busiSales.setSysUser(currentUser);
 		busiSales.setCreateTime(DateUtils.currentDateTime());
+		busiSales.setFeePrepay(busiSales.getFeePrepayCard() + busiSales.getFeePrepayCash());
 		busiSales.setSalesStateKey("A");
 		busiSales.setBillStateKey("A");
+		busiSales.setFinanceStateKey("A");
 		
 		save(busiSales);
 		
 		for (BusiSalesItem busiSalesItem : busiSalesItems) {
 			
-			busiSalesItem.setBusiCategory(busiCategoryDao.findReferenceByPk(busiSalesItem.getBusiCategory().getCateId()));
+			//busiSalesItem.setBusiCategory(busiCategoryDao.findReferenceByPk(busiSalesItem.getBusiCategory().getCateId()));
 			busiSalesItem.setBusiSales(busiSales);
-			busiSalesItem.setAssignStateKey("B");
+			busiSalesItem.setAssignStateKey("A");
 			
 			busiSalesItemDao.save(busiSalesItem);
 		}
@@ -104,7 +123,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 
 	@Override
 	public List<BusiSales> findSalesBySalesCode(String term) {
-		String jpql = "select o from BusiSales o inner join o.busiClient o2 where o.salesCode like ? ";
+		String jpql = "select o from BusiSales o inner join o.busiClient o2 where o.salesCode like ? and o.billStateKey like 'A%'";
 		PageRequest pageRequest = new PageRequest(1, 20);
 		return getDao().find(pageRequest, jpql, '%' + term + '%');
 	}
@@ -193,6 +212,91 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 	public List<BusiSales> findSalesByClientId(Integer clientId) {
 		String jpql = "select o from BusiSales o where o.busiClient.clientId = ?";
 		return getDao().find(jpql, clientId);
+	}
+
+	@Override
+	@Transactional
+	public void changeFinanceState(int salesId, String state) {
+		
+		BusiSales busiSales = getDao().findByPk(salesId);
+		
+		if (busiSales != null) {
+			busiSales.setFinanceStateKey(state);
+			getDao().save(busiSales);
+		}
+		
+		QCriteria criteria = new QCriteria();
+		criteria.addEntry("busiSales.salesId", Op.EQ, salesId);
+		
+		List<BusiSalesReturn> busiSalesReturnList = busiSalesReturnDao.find(criteria);
+		List<BusiSalesClear> busiSalesClearList = busiSalesClearDao.find(criteria);
+		List<BusiSalesMakeup> busiSalesMakeupList = busiSalesMakeupDao.find(criteria);
+		
+		for (BusiSalesReturn busiSalesReturn : busiSalesReturnList) {
+			busiSalesReturn.setFinanceStateKey("B");
+			busiSalesReturnDao.save(busiSalesReturn);
+		}
+		
+		for (BusiSalesClear busiSalesClear : busiSalesClearList) {
+			busiSalesClear.setFinanceStateKey("B");
+			busiSalesClearDao.save(busiSalesClear);
+		}
+		
+		for (BusiSalesMakeup busiSalesMakeup : busiSalesMakeupList) {
+			busiSalesMakeup.setFinanceStateKey("B");
+			busiSalesMakeupDao.save(busiSalesMakeup);
+		}
+		
+		
+	}
+
+	@Override
+	@Transactional
+	public void changeBillState(Integer salesId, String state) {
+		
+		BusiSales busiSales = getDao().findByPk(salesId);
+		if (busiSales != null) {
+			busiSales.setBillStateKey(state);
+			getDao().save(busiSales);
+		}
+		
+	}
+
+	@Override
+	public Float summary(Integer salesId) {
+		Float result = 0F;
+		
+		/*
+		{
+			String jpql = "select sum(o.feePrepay) from BusiSales o where o.salesId = ?";
+			Float sum = getDao().executeQueryOne(jpql, salesId);
+			sum = sum == null ? 0F : sum;
+			result += sum;
+		}
+		*/
+		
+		{
+			String jpql = "select sum(o.feeSum) from BusiSales o where o.salesId = ?";
+			Double sum = getDao().executeQueryOne(jpql, salesId);
+			sum = sum == null ? 0 : sum;
+			result += sum.floatValue();
+		}
+		
+		{
+			String jpql = "select sum(o.makeupSum) from BusiSalesMakeup o where o.busiSales.salesId = ?";
+			Double sum = getDao().executeQueryOne(jpql, salesId);
+			sum = sum == null ? 0 : sum;
+			result += sum.floatValue();
+		}
+		
+		{
+			String jpql = "select sum(o.actReturnSum) from BusiSalesReturn o where o.busiSales.salesId = ?";
+			Double sum = getDao().executeQueryOne(jpql, salesId);
+			sum = sum == null ? 0 : sum;
+			result -= sum.floatValue();
+		}
+		
+		return result;
 	}
 
 

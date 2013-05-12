@@ -1,5 +1,7 @@
 package org.jaronsource.msneg.service.impl;
 
+import java.util.List;
+
 import org.jaronsource.msneg.dao.BusiSalesClearDao;
 import org.jaronsource.msneg.dao.BusiSalesDao;
 import org.jaronsource.msneg.domain.BusiSales;
@@ -33,7 +35,8 @@ public class BusiSalesClearServiceImpl extends SearchFormSupportService<BusiSale
 	public BusiSalesClear save(BusiSalesClear target) {
 		BusiSales busiSales = busiSalesDao.findReferenceByPk(target.getBusiSales().getSalesId());
 		//busiSales.setSalesStateKey("B");
-		//busiSalesDao.save(busiSales);
+		busiSales.setFinanceStateKey("A");
+		busiSalesDao.save(busiSales);
 		target.setClearSum(busiSales.getFeeRemain());
 		return super.save(target);
 	}
@@ -53,5 +56,12 @@ public class BusiSalesClearServiceImpl extends SearchFormSupportService<BusiSale
 		save(busiSalesClear);
 	}
 
+	@Override
+	public List<BusiSalesClear> findBySalesId(Integer salesId) {
+		QCriteria criteria = new QCriteria();
+		criteria.addEntry("busiSales.salesId", Op.EQ, salesId);
+		return getDao().find(criteria);
+	}
 
+	
 }

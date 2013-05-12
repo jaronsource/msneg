@@ -9,6 +9,6 @@ public interface BusiSalesItemService extends ISearchFormSupportService<BusiSale
 
 	List<BusiSalesItem> findSalesItemBySalesId(Integer salesId);
 
-	void changeState(Integer salesItemId, String state);
+	void changeState(Integer salesItemId, String state, String assignNum);
 
 }

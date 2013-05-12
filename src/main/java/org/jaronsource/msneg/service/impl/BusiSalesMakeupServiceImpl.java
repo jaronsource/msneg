@@ -1,25 +1,31 @@
 package org.jaronsource.msneg.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.jaronsource.msneg.dao.BusiSalesDao;
 import org.jaronsource.msneg.dao.BusiSalesMakeupDao;
+import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesMakeup;
 import org.jaronsource.msneg.service.BusiSalesMakeupService;
-import com.ccesun.framework.core.service.SearchFormSupportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ccesun.framework.core.dao.support.IDao;
 import com.ccesun.framework.core.dao.support.QCriteria;
 import com.ccesun.framework.core.dao.support.QCriteria.Op;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.ccesun.framework.core.service.SearchFormSupportService;
 
 @Service
 public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSalesMakeup, Integer> implements BusiSalesMakeupService {
 
 	@Autowired
 	private BusiSalesMakeupDao busiSalesMakeupDao;
+	
+	@Autowired
+	private BusiSalesDao busiSalesDao;
 	
 	@Override
 	public IDao<BusiSalesMakeup, Integer> getDao() {
@@ -84,4 +90,22 @@ public class BusiSalesMakeupServiceImpl extends SearchFormSupportService<BusiSal
 		busiSalesMakeup.setBillStateKey("B");
 		save(busiSalesMakeup);
 	}
+
+	@Override
+	@Transactional
+	public BusiSalesMakeup save(BusiSalesMakeup target) {
+		BusiSales busiSales = busiSalesDao.findReferenceByPk(target.getBusiSales().getSalesId());
+		busiSales.setFinanceStateKey("A");
+		busiSalesDao.save(busiSales);
+		return super.save(target);
+	}
+
+	@Override
+	public List<BusiSalesMakeup> findBySalesId(Integer salesId) {
+		QCriteria criteria = new QCriteria();
+		criteria.addEntry("busiSales.salesId", Op.EQ, salesId);
+		return getDao().find(criteria);
+	}
+	
+	
 }

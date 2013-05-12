@@ -81,6 +81,12 @@ public class BusiSalesReturn implements IEntity<Integer> {
 	@Column(name="bill_state_key")
 	private String billStateKey;
 	
+	/**
+	 * 财务确认状态
+	 */
+	@Column(name="finance_state_key")
+	private String financeStateKey;
+	
 	public void setReturnId(Integer returnId) {
 		this.returnId = returnId;
 	}
@@ -183,6 +189,14 @@ public class BusiSalesReturn implements IEntity<Integer> {
 
 	public void setBillStateKey(String billStateKey) {
 		this.billStateKey = billStateKey;
+	}
+
+	public String getFinanceStateKey() {
+		return financeStateKey;
+	}
+
+	public void setFinanceStateKey(String financeStateKey) {
+		this.financeStateKey = financeStateKey;
 	}
 
 	@Override

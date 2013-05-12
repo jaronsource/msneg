@@ -18,14 +18,15 @@ var $selectCateIdDisplay;
 function addSaleItems(element) {
 	var $tr = $('<tr></tr>');
 	//var $td1 = $('<td><input type="hidden" name="cateId" class="cateId"/><input class="cateIdBtn" type="button" value="选择系列" /></td>');
-	var $td1 = $('<td><select class="itemType"></select></td>');
+	var $td1 = $('<td><select class="itemType" name="itemType"></select></td>');
 	$('<option value="">请选择</option>').appendTo($td1.find('select'));
 	<c:forEach items="${item_type}" var="entry">
 		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td1.find('select'));
 	</c:forEach>
-	var $td2 = $('<td><select name="cateId" class="busiCategory"></select></td>');
-		$('<option value="">请选择</option>').appendTo($td2.find('select'));
-	var $td3 = $('<td><input type="hidden" name="itemId" /><input type="text" name="itemName" class="wb95 input_text itemName" /></td>');
+	//var $td2 = $('<td><select name="cateId" class="busiCategory"></select></td>');
+	//	$('<option value="">请选择</option>').appendTo($td2.find('select'));
+	var $td2 = $('<td><input type="text" name="cateName" class="w_50 input_text cateName" /></td>');
+	var $td3 = $('<td><input type="text" name="itemName" class="wb95 input_text itemName" /></td>');
 	var $td4 = $('<td><select name="itemUnit" class="itemUnit"></select></td>');
 	<c:forEach items="${item_unit}" var="entry">
 		$('<option value="${entry.dictKey}">${entry.dictValue0}</option>').appendTo($td4.find('select'));
@@ -48,10 +49,10 @@ function addSaleItems(element) {
 	});
 	*/
 
-	$tr.find('.itemType').change(function() {
-		var itemType = $(this).val();
-		queryBusiCategory.call(this, itemType);
-	});
+	//$tr.find('.itemType').change(function() {
+	//	var itemType = $(this).val();
+	//	queryBusiCategory.call(this, itemType);
+	//});
 
 	/*
 	$tr.find('.itemName').autocomplete(
@@ -59,30 +60,36 @@ function addSaleItems(element) {
 				source : function(request, response) {
 					
 					var $parent = $($(this)[0].element).parents('tr');
-					var cateIdValue = $parent.find('.cateId').val();
-					request['cateId'] = cateIdValue;
+					var cateNameValue = $parent.find('.cateName').val();
+					var itemNameValue = $parent.find('.itemName').val();
+					request['cateName'] = cateNameValue;
+					request['valueName'] = valueNameValue;
 					
-					$.getJSON('${pageContext.request.contextPath}/busiItem/ajaxFindItem', request, function(data) {
+					$.getJSON('${pageContext.request.contextPath}/busiCategory/ajaxFindCategory', request, function(data) {
 						response(data); 
 					});
 				}
 				,autoFocus: true
 				,select: function(event, ui) {
 					var $parent = $(this).parents('tr');
-					$parent.find('input[name=itemId]').val(ui.item.itemId);
-					$parent.find('.itemPrice').val(new Number(ui.item.price).toFixed(2));
-					$parent.find('.itemUnit').children('[value="' + ui.item.unit + '"]').attr('selected', true);
+					//$parent.find('.itemPrice').val(new Number(ui.item.price).toFixed(2));
+					//$parent.find('.itemUnit').children('[value="' + ui.item.unit + '"]').attr('selected', true);
 					var stock = parseInt(ui.item.stockAmount) == 0 ? '没货' : '有货(' + ui.item.stockAmount + ')';
 					$parent.find('.stockAmount').text(stock);
 				}
 			});
 	*/
-	$tr.find('.busiCategory').change(function() {
-
-		var $self = $(this);
-		var cateId = $self.val();
-		$.post('${pageContext.request.contextPath}/sysConfig/category/ajaxFindStock', {'cateId': cateId}, function(data) {
-			var $parent = $self.parents('tr');
+	
+	//$tr.find('.itemName').change(function() {});
+	
+	$tr.find('.itemName').change(function() {
+		var $parent = $(this).parents('tr');
+		var cateNameValue = $parent.find('.cateName').val();
+		var itemNameValue = $parent.find('.itemName').val();
+		
+		$.post('${pageContext.request.contextPath}/sysConfig/category/ajaxFindStock', 
+				{'cateName': cateNameValue, 'itemName': itemNameValue}, function(data) {
+			
 			var stock = parseInt(data.stockAmount) == 0 ? '没货' : '有货(' + data.stockAmount + ')';
 			$parent.find('.stockAmount').text(stock);
 		});
@@ -261,20 +268,22 @@ function feeRemain() {
 					<td colspan="5"><form:input path="busiSales.busiClient.address" cssClass="wb95 input_text" id="address"/></td>
 				</tr>
 				<tr>
-					<th>联系电话</th>
-					<td><form:input path="busiSales.busiClient.areacode" cssClass="w_40 input_text" id="areacode" /> - <form:input path="busiSales.busiClient.phone" cssClass="w_70 input_text" id="phone" /></td>
 					<th>联系手机</th>
 					<td><form:input path="busiSales.busiClient.cellPhone" cssClass="wb90 input_text" id="cellPhone"/></td>
+					<th>联系电话</th>
+					<td><form:input path="busiSales.busiClient.areacode" cssClass="w_40 input_text" id="areacode" /> - <form:input path="busiSales.busiClient.phone" cssClass="w_70 input_text" id="phone" /></td>
 					<th>出单部门</th>
 					<td>${user.dept.deptName }</td>
 					<th>单据经手</th>
-					<td>${user.realName }</td>
+					<td><form:input path="busiSales.handleUser" cssClass="wb90 input_text"/></td>
 				</tr>
 				<tr>
 					<th>单据编号</th>
 					<td>${salesCode }</td>
 					<th>相关备注</th>
-					<td colspan="5"><form:input path="busiSales.salesRemarks" cssClass="wb95 input_text" /></td>
+					<td colspan="3"><form:input path="busiSales.salesRemarks" cssClass="wb90 input_text" /></td>
+					<th>选配负责人</th>
+					<td><form:input path="busiSales.huaseMaster" cssClass="wb90 input_text" /></td>
 				</tr>
 			</tbody>
 		</table>

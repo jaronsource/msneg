@@ -31,6 +31,8 @@
 .wb90{ width:90%;}
 .wb95{ width:95%;}
 
+.mt5{ margin-top:5px;}
+
 /* button */
 .button{ margin-top:25px;}
 .button.center{ text-align:center;}
@@ -43,8 +45,8 @@
 
 .money{ font-size:14px; color:#F00; font-weight:bold;}
 /* 开单系统 */
-.sales_index{ text-align:center; margin:20px 30px;}
-.sales_index li{ display:inline-block; margin:30px;}
+.sales_index{ text-align:center; margin:50px 30px 0;}
+.sales_index li{ display:inline; margin:30px;}
 
 .tbl_w{ border:1px solid #afafaf; color:#666666; }
 .tbl_w th,
@@ -57,6 +59,10 @@
 .tbl_l td{ background:#fff;padding:1px 2px 1px 2px;}
 .tbl_l td a{ text-decoration:underline;}
 .tbl_l td.nowrap{white-space: nowrap; overflow: hidden;}
+
+
+/* 奖罚 */
+.tbl_l td.jiang a{ display:block; float:left; background:url(../images/ico/kong.png) no-repeat; width:19px; height:19px; overflow:hidden; text-indent:-5000px;}
 
 .com_box h3{ position:relative; line-height:1.8; font-size:14px;  background:#dadada; border:1px solid #afafaf; border-bottom:0; text-align:center; }
 .com_box h3.title_line{ margin-top:5px;}
@@ -114,3 +120,4 @@
 .text_path span{ position:absolute; top:5px; right:5px;}
 
 .invalid { text-decoration: line-through !important; color: maroon !important;}
+

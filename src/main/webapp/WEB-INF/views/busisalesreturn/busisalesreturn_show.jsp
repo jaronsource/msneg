@@ -35,10 +35,10 @@
 					<td colspan="5">${busiSalesReturn.busiSales.busiClient.address }</td>
 				</tr>
 				<tr>
-					<th>联系电话</th>
-					<td>${busiSalesReturn.busiSales.busiClient.areacode } - ${busiSalesReturn.busiSales.busiClient.phone }</td>
 					<th>联系手机</th>
 					<td>${busiSalesReturn.busiSales.busiClient.cellPhone }</td>
+					<th>联系电话</th>
+					<td>${busiSalesReturn.busiSales.busiClient.areacode } - ${busiSalesReturn.busiSales.busiClient.phone }</td>
 					<th>出单部门</th>
 					<td>${busiSalesReturn.busiSales.sysDept.deptName }</td>
 					<th>单据经手</th>
@@ -86,15 +86,15 @@
 					<tbody>
 						<c:forEach items="${salesReturnItemList}" var="salesReturnItem">
 						<tr>
-							<td>${salesReturnItem.busiSalesItem.busiCategory.cateName }</td>
+							<td>${salesReturnItem.busiSalesItem.cateName }</td>
 							<td>${salesReturnItem.busiSalesItem.itemName }</td>
 							<td><dict:lookupDictValue key="${salesReturnItem.busiSalesItem.itemUnitKey }" type="item_unit" /></td>
 							<td>${salesReturnItem.busiSalesItem.itemAmount }</td>
 							<td>${salesReturnItem.returnAmount }</td>
 							<td><span class="money">${salesReturnItem.busiSalesItem.itemPrice }</span></td>
 							<td><span class="money">${salesReturnItem.returnPrice }</span></td>
-							<td><span class="money">${salesReturnItem.returnSum }</span></td>
-							<td><dict:lookupDictValue key="${salesRenturnItem.returnReasonKey }" type="return_reason" /></td>
+							<td><span class="money">${salesReturnItem.returnSum }</span></td> 
+							<td><dict:lookupDictValue key="${salesReturnItem.returnReasonKey }" type="return_reason" /></td>
 							<td>${salesReturnItem.busiSalesItem.itemRemarks}</td>
 						</tr>
 						</c:forEach>

@@ -2443,7 +2443,7 @@ function log() {
 					(arguments.callee.caller) ? arguments.callee.caller : '';
 		}
 		var title = (isError == true) ? errTxt : "";
-		window.console.debug('%s: %o', title + txt, _caller);// this
+		//window.console.debug('%s: %o', title + txt, _caller);// this
 		// console.debug("%s: %o", msg, this);
 	} else if (true) {/* isdebug() && false 调试模式下 */
 		var id = "___com_log_div";

@@ -26,4 +26,10 @@ public interface BusiSalesService extends ISearchFormSupportService<BusiSales, I
 
 	List<BusiSales> findSalesByClientId(Integer clientId);
 
+	void changeFinanceState(int salesId, String state);
+
+	void changeBillState(Integer salesId, String state);
+
+	Float summary(Integer salesId);
+
 }

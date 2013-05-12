@@ -35,10 +35,10 @@
 					<td colspan="5">${busiSalesMakeup.busiSales.busiClient.address }</td>
 				</tr>
 				<tr>
-					<th>联系电话</th>
-					<td>${busiSalesMakeup.busiSales.busiClient.areacode } - ${busiSalesMakeup.busiSales.busiClient.phone }</td>
 					<th>联系手机</th>
 					<td>${busiSalesMakeup.busiSales.busiClient.cellPhone }</td>
+					<th>联系电话</th>
+					<td>${busiSalesMakeup.busiSales.busiClient.areacode } - ${busiSalesMakeup.busiSales.busiClient.phone }</td>
 					<th>出单部门</th>
 					<td>${busiSalesMakeup.busiSales.sysDept.deptName }</td>
 					<th>单据经手</th>

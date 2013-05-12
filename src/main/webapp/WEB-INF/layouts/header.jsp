@@ -9,6 +9,9 @@
 <a href="javascript: void(0)" onclick="alert('正在建设中...');"><img src="${pageContext.request.contextPath}/images/ico/ico06.jpg" width="16" height="16" alt="帮助" />帮助</a></p>
 <div class="bar">
 	<p><span class="user">您好：${sysUser.userName }</span>       
-	<span class="bumen">隶属：${sysUser.dept.deptName }</span>      
+	<span class="bumen">隶属：${sysUser.dept.deptName }</span> 
+	<span class="news_text">新消息</span> 
+	<!-- <span class="date">2012.11.20 星期六</span> --> 
+	<span class="help">系统提示：<a href="#this"></a></span>      
 	<a href="${pageContext.request.contextPath }/logout" class="out_link">安全退出</a></p>
 </div>

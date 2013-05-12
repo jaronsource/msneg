@@ -92,17 +92,19 @@ public class BusiSalesReturnController extends BaseController {
 		String[] salesItemIds = request.getParameterValues("salesItemId");
 		String[] returnAmounts = request.getParameterValues("returnAmount");
 		String[] returnReasonKeys = request.getParameterValues("returnReasonKey");
-		String[] returnSum = request.getParameterValues("returnSum");
+		String[] returnSum = request.getParameterValues("returnItemSum");
 		String[] returnPrices = request.getParameterValues("returnPrice");
 		//String[] returnMarkers0 = requst.getParameterValues("returnMarkers");
 		
 		List<BusiSalesReturnItem> busiSalesReturnItems = new ArrayList<BusiSalesReturnItem>();
 		for (int i = 0; i < salesItemIds.length; i++) {
 			if (StringUtils.isNotBlank(salesItemIds[i])) {
+				
 				BusiSalesReturnItem busiSalesReturnItem = new BusiSalesReturnItem();
 				busiSalesReturnItem.setReturnPrice(NumberUtils.toFloat(returnPrices[i]));
-				busiSalesReturnItem.setReturnSum(NumberUtils.toFloat(returnSum[i]));
+				//busiSalesReturnItem.setReturnSum(NumberUtils.toFloat(returnSum[i]));
 				busiSalesReturnItem.setReturnAmount(NumberUtils.toInt(returnAmounts[i]));
+				busiSalesReturnItem.setReturnSum(NumberUtils.toFloat(returnPrices[i]) * NumberUtils.toInt(returnAmounts[i]));
 				busiSalesReturnItem.setReturnReasonKey(returnReasonKeys[i]);
 				//busiSalesReturnItem.setReturnRemarks(returnMarkers0[i]);
 				busiSalesReturnItem.setBusiSalesItem(new BusiSalesItem(NumberUtils.toInt(salesItemIds[i])));
@@ -160,7 +162,7 @@ public class BusiSalesReturnController extends BaseController {
 		List<Map<String, String>> entries = new ArrayList<Map<String, String>>();
 		for (BusiSalesReturnItem busiSalesReturnItem : salesReturnItemList) {
 			Map<String, String> entry = new HashMap<String, String>();
-			entry.put("cateName", busiSalesReturnItem.getBusiSalesItem().getBusiCategory().getCateName());
+			entry.put("cateName", busiSalesReturnItem.getBusiSalesItem().getCateName());
 			entry.put("itemName", busiSalesReturnItem.getBusiSalesItem().getItemName());
 			entry.put("itemUnit", dictionaryHelper.lookupDictValue0("item_unit", busiSalesReturnItem.getBusiSalesItem().getItemUnitKey()) );
 			entry.put("returnReason", dictionaryHelper.lookupDictValue0("return_reason", busiSalesReturnItem.getReturnReasonKey()) );

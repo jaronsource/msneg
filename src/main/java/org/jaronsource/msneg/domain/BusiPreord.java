@@ -25,6 +25,20 @@ public class BusiPreord implements IEntity<Integer> {
 	private Integer preordId;
 	
 	/***/
+	@DocDescription("报备人姓名")
+	@Column(name="preord_person")
+	private String preordPerson;
+	
+	/***/
+	@DocDescription("报备人电话")
+	@Column(name="preord_person_phone")
+	private String preordPersonPhone;
+	
+	/***/
+	@Column(name="preord_person_company")
+	private String preordPersonCompay;
+	
+	/***/
 	@DocDescription("客户姓名")
 	@Column(name="client_name")
 	private String clientName;
@@ -40,16 +54,6 @@ public class BusiPreord implements IEntity<Integer> {
 	private String clientAddress;
 	
 	/***/
-	@DocDescription("报备人姓名")
-	@Column(name="preord_person")
-	private String preordPerson;
-	
-	/***/
-	@DocDescription("报备人电话")
-	@Column(name="preord_person_phone")
-	private String preordPersonPhone;
-	
-	/***/
 	@DocDescription("备注")
 	@Column(name="remarks")
 	private String remarks;
@@ -63,6 +67,12 @@ public class BusiPreord implements IEntity<Integer> {
 	@DocDescription("状态")
 	@Column(name="preord_state_key")
 	private String preordStateKey;
+	
+	@Column(name="input_user")
+	private String inputUser;
+	
+	@Column(name="check_user")
+	private String checkUser;
 	
 	public void setPreordId(Integer preordId) {
 		this.preordId = preordId;
@@ -134,6 +144,30 @@ public class BusiPreord implements IEntity<Integer> {
 
 	public void setClientAddress(String clientAddress) {
 		this.clientAddress = clientAddress;
+	}
+
+	public String getPreordPersonCompay() {
+		return preordPersonCompay;
+	}
+
+	public void setPreordPersonCompay(String preordPersonCompay) {
+		this.preordPersonCompay = preordPersonCompay;
+	}
+
+	public String getInputUser() {
+		return inputUser;
+	}
+
+	public void setInputUser(String inputUser) {
+		this.inputUser = inputUser;
+	}
+
+	public String getCheckUser() {
+		return checkUser;
+	}
+
+	public void setCheckUser(String checkUser) {
+		this.checkUser = checkUser;
 	}
 
 	@Override

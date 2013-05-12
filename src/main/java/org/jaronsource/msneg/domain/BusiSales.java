@@ -105,6 +105,18 @@ public class BusiSales implements IEntity<Integer> {
 	@Column(name="bill_state_key")
 	private String billStateKey;
 	
+	/** 财务审核状态 */
+	@Column(name="finance_state_key")
+	private String financeStateKey;
+	
+	/** 经手人 */
+	@Column(name="handle_user")
+	private String handleUser;
+	
+	/** 花色选色负责人 */
+	@Column(name="huase_master")
+	private String huaseMaster;
+	
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
 	}
@@ -263,6 +275,30 @@ public class BusiSales implements IEntity<Integer> {
 
 	public void setBillStateKey(String billStateKey) {
 		this.billStateKey = billStateKey;
+	}
+
+	public String getFinanceStateKey() {
+		return financeStateKey;
+	}
+
+	public void setFinanceStateKey(String financeStateKey) {
+		this.financeStateKey = financeStateKey;
+	}
+
+	public String getHandleUser() {
+		return handleUser;
+	}
+
+	public void setHandleUser(String handleUser) {
+		this.handleUser = handleUser;
+	}
+
+	public String getHuaseMaster() {
+		return huaseMaster;
+	}
+
+	public void setHuaseMaster(String huaseMaster) {
+		this.huaseMaster = huaseMaster;
 	}
 
 	@Override

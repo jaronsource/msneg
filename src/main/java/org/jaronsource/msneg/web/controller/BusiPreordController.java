@@ -45,6 +45,7 @@ public class BusiPreordController extends BaseController {
 	@RequestMapping(value = "/{preordId}/update", method = GET)
     public String update(@PathVariable("preordId") Integer preordId, Model model) {
         model.addAttribute("busiPreord", busiPreordService.findByPk(preordId));
+        model.addAttribute("preordId", preordId);
         return "busiPreord/update";
 	}	
 	

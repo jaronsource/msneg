@@ -49,6 +49,12 @@ public class BusiSalesClear implements IEntity<Integer> {
 	@Column(name="bill_state_key")
 	private String billStateKey;
 	
+	/**
+	 * 财务确认状态
+	 */
+	@Column(name="finance_state_key")
+	private String financeStateKey;
+	
 	public void setClearId(Integer clearId) {
 		this.clearId = clearId;
 	}
@@ -103,6 +109,15 @@ public class BusiSalesClear implements IEntity<Integer> {
 
 	public void setBillStateKey(String billStateKey) {
 		this.billStateKey = billStateKey;
+	}
+
+	
+	public String getFinanceStateKey() {
+		return financeStateKey;
+	}
+
+	public void setFinanceStateKey(String financeStateKey) {
+		this.financeStateKey = financeStateKey;
 	}
 
 	@Override

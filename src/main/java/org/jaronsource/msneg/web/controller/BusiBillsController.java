@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesClear;
 import org.jaronsource.msneg.domain.BusiSalesItem;
@@ -29,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccesun.framework.core.dao.support.Page;
-import com.ccesun.framework.core.dao.support.QCriteria;
-import com.ccesun.framework.core.dao.support.QCriteria.Op;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
@@ -86,12 +85,17 @@ public class BusiBillsController extends BaseController {
 		
 		BusiSales busiSales = busiSalesService.findByPk(salesId);
 		
-		QCriteria criteria = new QCriteria();
-		criteria.addEntry("busiSales.salesId", Op.EQ, salesId);
+		//QCriteria criteria = new QCriteria();
+		//criteria.addEntry("busiSales.salesId", Op.EQ, salesId);
 		
-		List<BusiSalesMakeup> busiSalesMakeupList = busiSalesMakeupService.find(criteria);
-		List<BusiSalesClear> busiSalesClearList = busiSalesClearService.find(criteria);
-		List<BusiSalesReturn> busiSalesReturnList = busiSalesReturnService.find(criteria);
+		if (StringUtils.equals(busiSales.getBillStateKey(), "D")) {
+			Float salesSummary = busiSalesService.summary(salesId);
+			model.addAttribute("salesSummary", salesSummary);
+		}
+		
+		List<BusiSalesMakeup> busiSalesMakeupList = busiSalesMakeupService.findBySalesId(salesId);
+		List<BusiSalesClear> busiSalesClearList = busiSalesClearService.findBySalesId(salesId);
+		List<BusiSalesReturn> busiSalesReturnList = busiSalesReturnService.findBySalesId(salesId);
 		
 		List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(salesId);
 		
@@ -127,6 +131,18 @@ public class BusiBillsController extends BaseController {
 			busiSalesReturnService.invalid(id);
 		}
 	}
+	
+	@RequestMapping(value="/changeBillState", method = {GET, POST})
+	public String changeBillState(
+			@RequestParam(value="salesId", required=false) Integer salesId, 
+			@RequestParam(value="state", required=false) String state, 
+			Model model) {
+		
+		busiSalesService.changeBillState(salesId, state);
+		return "history:/busiBills";
+	}
+	
+	
 	
 }
 

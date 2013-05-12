@@ -15,4 +15,6 @@ public interface BusiCategoryService extends ISearchFormSupportService<BusiCateg
 
 	List<BusiCategory> findByItemType(String itemType);
 
+	Long findStockByCateNameAndItemName(String cateName, String itemName);
+
 }

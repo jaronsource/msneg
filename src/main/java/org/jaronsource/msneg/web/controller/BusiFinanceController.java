@@ -34,6 +34,15 @@ public class BusiFinanceController extends BaseController {
 	@Autowired
 	private BusiSalesService busiSalesService;
 	
+	//@Autowired
+	//private BusiSalesReturnService busiSalesReturnService;
+	
+	//@Autowired
+	//private BusiSalesClearService busiSalesClearService;
+	
+	//@Autowired
+	//private BusiSalesMakeupService busiSalesMakeupService;
+	
 	@Autowired
 	private SysDeptService sysDeptService;
 	
@@ -46,6 +55,8 @@ public class BusiFinanceController extends BaseController {
 		String weekTime = DateUtils.format(DateUtils.addDays(now, 7), DateUtils.PATTERN_DATETIME);
 		String monthTime = DateUtils.format(DateUtils.addDays(now, 30), DateUtils.PATTERN_DATETIME);
 		String threeMonthTime = DateUtils.format(DateUtils.addDays(now, 90), DateUtils.PATTERN_DATETIME);
+		
+		searchForm.addFormEntry("billStateKey_lk", "A%");
 		
 		Page<BusiSales> busiSalesPage = busiSalesService.findPage(searchForm);
 		model.addAttribute("busiSalesPage", busiSalesPage);
@@ -62,14 +73,16 @@ public class BusiFinanceController extends BaseController {
 	public String changeState(Model model) {
 
 		String salesId = getHttpServletRequest().getParameter("salesId");
-		String state = getHttpServletRequest().getParameter("state");
+		//String state = getHttpServletRequest().getParameter("state");
 		
-		BusiSales busiSales = busiSalesService.findByPk(NumberUtils.toInt(salesId));
+		//BusiSales busiSales = busiSalesService.findByPk(NumberUtils.toInt(salesId));
 		
-		if (busiSales != null) {
-			busiSales.setSalesStateKey(state);
-			busiSalesService.save(busiSales);
-		}
+		//if (busiSales != null) {
+			//busiSales.setSalesStateKey(state);
+			//busiSales.setFinanceStateKey("B");
+			busiSalesService.changeFinanceState(NumberUtils.toInt(salesId), "B");
+			 
+		//}
 		
 		return "history:/busiFinance";
 	}

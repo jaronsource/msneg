@@ -111,6 +111,7 @@ public class BusiCategoryController extends BaseController {
 		return jsonObject;
 	}
     
+    /*
     @RequestMapping(value = "/ajaxFindStock", method = {GET, POST})
     @ResponseBody
     public JSONObject ajaxFindStock(@RequestParam("cateId") Integer cateId) {
@@ -121,6 +122,23 @@ public class BusiCategoryController extends BaseController {
     	Integer stockAmount = busiCategory.getItemStockAmount();
     	stockAmount = stockAmount == null ? 0 : stockAmount;
     	result.element("stockAmount",  stockAmount);
+    	
+    	return result;
+
+    }
+    */
+    
+    @RequestMapping(value = "/ajaxFindStock", method = {GET, POST})
+    @ResponseBody
+    public JSONObject ajaxFindStock(@RequestParam("cateName") String cateName, @RequestParam("itemName") String itemName) {
+        
+    	//BusiCategory busiCategory = busiCategoryService.findByPk(cateId);
+    	Long stock = busiCategoryService.findStockByCateNameAndItemName(cateName, itemName);
+    	stock = stock == null ? 0 : stock;
+    	JSONObject result = new JSONObject();
+    	//Integer stockAmount = busiCategory.getItemStockAmount();
+    	//stockAmount = stockAmount == null ? 0 : stockAmount;
+    	result.element("stockAmount",  stock);
     	
     	return result;
 

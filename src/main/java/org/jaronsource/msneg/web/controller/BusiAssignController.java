@@ -51,6 +51,8 @@ public class BusiAssignController extends BaseController {
 		String monthTime = DateUtils.format(DateUtils.addDays(now, 30), DateUtils.PATTERN_DATETIME);
 		String threeMonthTime = DateUtils.format(DateUtils.addDays(now, 90), DateUtils.PATTERN_DATETIME);
 		
+		searchForm.addFormEntry("billStateKey_lk", "A");
+		
 		Page<BusiSales> busiSalesPage = busiSalesService.findPage(searchForm);
 		model.addAttribute("busiSalesPage", busiSalesPage);
 		
@@ -92,8 +94,9 @@ public class BusiAssignController extends BaseController {
 
 		String salesItemId = getHttpServletRequest().getParameter("salesItemId");
 		String state = getHttpServletRequest().getParameter("state");
+		String assignNum = getHttpServletRequest().getParameter("assignNum");
 		
-		busiSalesItemService.changeState(NumberUtils.toInt(salesItemId), state);
+		busiSalesItemService.changeState(NumberUtils.toInt(salesItemId), state, assignNum);
 		
 		return "history:/busiAssign";
 	}

@@ -48,7 +48,7 @@ function sumTotal () {
 			var returnAmountValue = parseFloat($parent.find('.returnAmount').val());
 			returnAmountValue = isNaN(returnAmountValue) ? 0 : returnAmountValue;
 			total += returnPriceValue * returnAmountValue;
-			console.debug(total);
+			//console.debug(total);
 		}
 	});
 	
@@ -179,10 +179,10 @@ function actReturn() {
 					<td colspan="5"><span id="address"></span></td>
 				</tr>
 				<tr>
-					<th>联系电话</th>
-					<td><span id="phone"></span></td>
 					<th>联系手机</th>
 					<td><span id="cellPhone"></span></td>
+					<th>联系电话</th>
+					<td><span id="phone"></span></td>
 					<th>出单部门</th>
 					<td><span id="deptName"></span></td>
 					<th>单据经手</th>

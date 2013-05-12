@@ -14,7 +14,7 @@ body{ background:#e1e1e1 url(../images/bg/bg_wrap.gif) center top repeat-y; font
 .login .login_form p.tanzheng a{ text-decoration:underline; color:#00F;}
 .login .login_form p.id_worong{ margin-left:54px; color:#F00; background: url(../images/ico/ico01.jpg) 0 center no-repeat; padding-left:24px;}
 .login .login_form p.btn_login{ position:absolute; top:280px; left:25px; width:250px;}
-.login .login_form p.btn_login a{ margin:0 2px;}
+.login .login_form p.btn_login a{ margin:0 2px; float:left;}
 
 
 #wrap{ width:1200px; margin:0 auto;}

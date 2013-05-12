@@ -69,10 +69,10 @@
 					<td colspan="5"><form:input path="busiClient.address" cssClass="wb95 input_text" id="address"/></td>
 				</tr> 
 				<tr>
-					<th>联系电话</th>
-					<td><form:input path="busiClient.areacode" cssClass="w_40 input_text" id="areacode" /> - <form:input path="busiClient.phone" cssClass="w_70 input_text" id="phone" /></td>
 					<th>联系手机</th>
 					<td><form:input path="busiClient.cellPhone" cssClass="wb90 input_text" id="cellPhone"/></td>
+					<th>联系电话</th>
+					<td><form:input path="busiClient.areacode" cssClass="w_40 input_text" id="areacode" /> - <form:input path="busiClient.phone" cssClass="w_70 input_text" id="phone" /></td>
 					<th>出单部门</th>
 					<td>${user.dept.deptName }</td>
 					<th>单据经手</th>

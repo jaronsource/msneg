@@ -35,14 +35,14 @@
 					<td colspan="5">${busiSales.busiClient.address }</td>
 				</tr>
 				<tr>
-					<th>联系电话</th>
-					<td>${busiSales.busiClient.areacode } - ${busiSales.busiClient.phone }</td>
 					<th>联系手机</th>
 					<td>${busiSales.busiClient.cellPhone }</td>
+					<th>联系电话</th>
+					<td>${busiSales.busiClient.areacode } - ${busiSales.busiClient.phone }</td>
 					<th>出单部门</th>
 					<td>${busiSales.sysDept.deptName }</td>
 					<th>单据经手</th>
-					<td>${busiSales.sysUser.userName }</td>
+					<td>${busiSales.handleUser }</td>
 				</tr>
 				<tr>
 					<th>单据编号</th>
@@ -80,7 +80,7 @@
 					<tbody>
 						<c:forEach items="${busiSalesItemList }" var="entry">
 						<tr>
-							<td>${entry.busiCategory.cateName }</td>
+							<td>${entry.cateName }</td>
 							<td>${entry.itemName }</td>
 							<td><dict:lookupDictValue key="${entry.itemUnitKey }" type="item_unit" /></td>
 							<td>${entry.itemAmount }</td>

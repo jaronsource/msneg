@@ -90,7 +90,7 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('clear_method', 'A', '现金');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('clear_method', 'B', '财务挂记');
+values ('clear_method', 'B', '刷卡');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('clear_method', 'C', '内部抵扣');
@@ -177,42 +177,55 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'A', '已定');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('sales_state', 'B', '已确认 ');
+values ('sales_state', 'B', '已备货');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('sales_state', 'C', '已备货');
+values ('sales_state', 'C', '已到货');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('sales_state', 'D', '已到货');
-
-insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('sales_state', 'E', '已安装');
+values ('sales_state', 'D', '已安装');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'O', '已完结');
 
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'finance_state', '财务状态');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('finance_state', 'A', '未确认');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('finance_state', 'B', '已确认');
+
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'assign_state', '备货状态');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('assign_state', 'B', '待备货');
+values ('assign_state', 'A', '待备货');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('assign_state', 'C', '已备货');
+values ('assign_state', 'B', '已备货');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('assign_state', 'D', '已到货');
+values ('assign_state', 'C', '已到货');
 
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'bill_state', '单据状态');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('bill_state', 'A', '正常');
+values ('bill_state', 'A0', '正常');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('bill_state', 'A1', '申请完结 ');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('bill_state', 'B', '作废 ');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('bill_state', 'C', '已完结');
 
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
@@ -235,10 +248,20 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'preord_state', '报备状态');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('preord_state', 'A', '未确认');
+values ('preord_state', 'A', '未成交');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('preord_state', 'B', '确认');
+values ('preord_state', 'B', '成交');
+
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('KIND', 'stock_reason', '入库原因');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('stock_reason', 'A', '历史库存');
+
+insert into sys_dict (dict_type, dict_key, dict_value0)
+values ('stock_reason', 'B', '返销');
 
 set foreign_key_checks = 1;
 

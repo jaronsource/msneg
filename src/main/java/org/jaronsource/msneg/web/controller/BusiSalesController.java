@@ -115,7 +115,8 @@ public class BusiSalesController extends BaseController {
         //}
         
 		HttpServletRequest requst = getHttpServletRequest();
-		String[] cateIds = requst.getParameterValues("cateId");
+		String[] cateNames = requst.getParameterValues("cateName");
+		String[] itemTypes = requst.getParameterValues("itemType");
 		String[] itemNames = requst.getParameterValues("itemName");
 		String[] itemAmounts = requst.getParameterValues("itemAmount");
 		String[] itemSums = requst.getParameterValues("itemSum");
@@ -124,16 +125,18 @@ public class BusiSalesController extends BaseController {
 		String[] itemPrices = requst.getParameterValues("itemPrice");
 		
 		List<BusiSalesItem> busiSalesItems = new ArrayList<BusiSalesItem>();
-		for (int i = 0; i < cateIds.length; i++) {
+		for (int i = 0; i < cateNames.length; i++) {
 			if (StringUtils.isNotBlank(itemNames[i])) {
 				BusiSalesItem busiSalesItem = new BusiSalesItem();
 				busiSalesItem.setItemAmount(NumberUtils.toInt(itemAmounts[i]));
+				busiSalesItem.setItemTypeKey(itemTypes[i]);
 				busiSalesItem.setItemName(itemNames[i]);
 				busiSalesItem.setItemRemarks(itemRemarks[i]);
 				busiSalesItem.setItemSum(NumberUtils.toFloat(itemSums[i]));
 				busiSalesItem.setItemUnitKey(itemUnits[i]);
 				busiSalesItem.setItemPrice(NumberUtils.toFloat(itemPrices[i]));
-				busiSalesItem.setBusiCategory(new BusiCategory(NumberUtils.toInt(cateIds[i])));
+				//busiSalesItem.setBusiCategory(new BusiCategory(NumberUtils.toInt(cateIds[i])));
+				busiSalesItem.setCateName(cateNames[i]);
 				busiSalesItems.add(busiSalesItem);
 			}
 		}
@@ -164,7 +167,7 @@ public class BusiSalesController extends BaseController {
 		paramMap.put("clientName", busiSales.getBusiClient().getClientName());
 		paramMap.put("clientPhone", PhoneUtils.decode(busiSales.getBusiClient().getAreacode(), busiSales.getBusiClient().getPhone()));
 		paramMap.put("clientCellPhone", busiSales.getBusiClient().getCellPhone());
-		paramMap.put("sysUser", busiSales.getSysUser().getRealName());
+		paramMap.put("sysUser", busiSales.getHandleUser());
 		paramMap.put("clientAddress", busiSales.getBusiClient().getAddress());
 		paramMap.put("salesRemarks", busiSales.getSalesRemarks());
 		paramMap.put("servLogis", dictionaryHelper.lookupDictValue0("serv_logis", busiSales.getServLogisKey()));
@@ -172,8 +175,10 @@ public class BusiSalesController extends BaseController {
 		paramMap.put("servInstallmethod", dictionaryHelper.lookupDictValue0("serv_installmethod", busiSales.getServInstallmethodKey()));
 		paramMap.put("feeSum", busiSales.getFeeSum() == null ? "0.00" : busiSales.getFeeSum().toString());
 		paramMap.put("feePrepay", busiSales.getFeePrepay() == null ? "0.00" : busiSales.getFeePrepay().toString());
+		paramMap.put("feePrepayCard", busiSales.getFeePrepayCard() == null ? "0.00" : busiSales.getFeePrepayCard().toString());
+		paramMap.put("feePrepayCash", busiSales.getFeePrepayCash() == null ? "0.00" : busiSales.getFeePrepayCash().toString());
 		paramMap.put("feeRemain", busiSales.getFeeRemain() == null ? "0.00" : busiSales.getFeeRemain().toString());
-		paramMap.put("createTime", busiSales.getCreateTime());
+		paramMap.put("createTime", StringUtils.substring(busiSales.getCreateTime(), 0, 8));
 		paramMap.put("otherRemarks", busiSales.getOtherRemarks());
 		paramMap.put("deptAddress", AppContext.getInstance().getString("deptAddress"));
 		paramMap.put("deptPhone", AppContext.getInstance().getString("deptPhone"));
@@ -184,7 +189,8 @@ public class BusiSalesController extends BaseController {
 		List<Map<String, String>> entries = new ArrayList<Map<String, String>>();
 		for (BusiSalesItem busiSalesItem : busiSalesItemList) {
 			Map<String, String> entry = new HashMap<String, String>();
-			entry.put("cateName", busiSalesItem.getBusiCategory().getCateName());
+			entry.put("itemType", dictionaryHelper.lookupDictValue0("item_type", busiSalesItem.getItemTypeKey()));
+			entry.put("cateName", busiSalesItem.getCateName());
 			entry.put("itemName", busiSalesItem.getItemName());
 			entry.put("itemUnit", dictionaryHelper.lookupDictValue0("item_unit", busiSalesItem.getItemUnitKey()) );
 			entry.put("itemAmount", busiSalesItem.getItemAmount() == null ? "0" : busiSalesItem.getItemAmount().toString());
@@ -235,7 +241,7 @@ public class BusiSalesController extends BaseController {
 		jsonObject.element("phone", busiSales.getBusiClient().getPhone());
 		jsonObject.element("cellPhone", busiSales.getBusiClient().getCellPhone());
 		jsonObject.element("deptName", busiSales.getSysDept().getDeptName());
-		jsonObject.element("sysUser", busiSales.getBusiClient().getCellPhone());
+		jsonObject.element("sysUser", busiSales.getHandleUser());
 		jsonObject.element("salesCode", busiSales.getSalesCode());
 		jsonObject.element("salesRemarks", busiSales.getSalesRemarks());
 		jsonObject.element("salesId", busiSales.getSalesId());

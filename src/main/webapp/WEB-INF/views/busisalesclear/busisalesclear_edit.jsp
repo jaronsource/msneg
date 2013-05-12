@@ -91,7 +91,7 @@ function actReturn() {
 	<p>手工输入母单号 <input type="text" name="salesCodeTerm" class="input_text w_172" placeholder="请输入母单号" id="salesCodeTerm" /> 快速查找客户：<input type="text" name="clientPhoneTerm" class="input_text w_172" placeholder="请输入电话号码" id="clientPhoneTerm" /></p>
 	<script>
 		function select(event, ui) {
-			console.debug(ui.item);
+			//console.debug(ui.item);
 			$('#clientName').text(ui.item.clientName);
 			$('#address').text(ui.item.address);
 			$('#areacode').text(ui.item.areacode);
@@ -170,10 +170,10 @@ function actReturn() {
 					<td colspan="5"><span id="address"></span></td>
 				</tr>
 				<tr>
-					<th>联系电话</th>
-					<td><span id="phone"></span></td>
 					<th>联系手机</th>
 					<td><span id="cellPhone"></span></td>
+					<th>联系电话</th>
+					<td><span id="phone"></span></td>
 					<th>出单部门</th>
 					<td><span id="deptName"></span></td>
 					<th>单据经手</th>

@@ -26,12 +26,12 @@
 		<script>
 		var todayDate = new Date();
 		if (todayDate.getDay() == 0) document.write("日");
-		if (todayDate.getDay() == 1) document.write("一");
-		if (todayDate.getDay() == 2) document.write("二");
-		if (todayDate.getDay() == 3) document.write("三");
-		if (todayDate.getDay() == 4) document.write("四");
-		if (todayDate.getDay() == 5) document.write("五");
-		if (todayDate.getDay() == 6) document.write("六");
+		if (todayDate.getDay() == 1) document.write("1");
+		if (todayDate.getDay() == 2) document.write("2");
+		if (todayDate.getDay() == 3) document.write("3");
+		if (todayDate.getDay() == 4) document.write("4");
+		if (todayDate.getDay() == 5) document.write("5");
+		if (todayDate.getDay() == 6) document.write("6");
 		</script>
 		</h2>
 		<!-- <p class="news">公告信息：本系统12.20日晚升级维护，21日正常使用...</p> -->

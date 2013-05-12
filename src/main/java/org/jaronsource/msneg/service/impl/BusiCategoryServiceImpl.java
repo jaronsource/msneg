@@ -63,4 +63,11 @@ public class BusiCategoryServiceImpl extends SearchFormSupportService<BusiCatego
 		return getDao().find(jpql, itemType);
 	}
 
+	@Override
+	public Long findStockByCateNameAndItemName(String cateName, String itemName) {
+		String jpql = "select sum(o.itemStockAmount) from BusiCategory o where cateName = ? and itemName = ?";
+		Long stockCount = (Long) getDao().executeQueryOne(jpql, cateName, itemName);
+		return stockCount;
+	}
+
 }

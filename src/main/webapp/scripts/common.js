@@ -16,4 +16,5 @@ $(function(){
 			}
 	);
 	$('.input_money').change(formatMoney);
+	$('.input_date').datepicker({ dateFormat: "yymmdd" });
 });

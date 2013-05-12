@@ -40,10 +40,11 @@ public class BusiSalesItemServiceImpl extends SearchFormSupportService<BusiSales
 
 	@Override
 	@Transactional
-	public void changeState(Integer salesItemId, String state) {
+	public void changeState(Integer salesItemId, String state, String assignNum) {
 		
 		BusiSalesItem busiSalesItem = busiSalesItemDao.findByPk(salesItemId);
 		busiSalesItem.setAssignStateKey(state);
+		busiSalesItem.setAssignNum(assignNum);
 		getDao().save(busiSalesItem);
 		
 		Integer salesId = busiSalesItem.getBusiSales().getSalesId();
@@ -52,8 +53,10 @@ public class BusiSalesItemServiceImpl extends SearchFormSupportService<BusiSales
 		
 		BusiSales busiSales = busiSalesDao.findByPk(salesId);
 		if (busiSales != null) {
-			if (StringUtils.equals(busiSales.getSalesStateKey(), assignStateKey)) 
+			if (!StringUtils.equals(busiSales.getSalesStateKey(), assignStateKey)) { 
 				busiSales.setSalesStateKey(assignStateKey);
+				//busiSalesDao.save(busiSales);
+			}
 			
 		}
 		

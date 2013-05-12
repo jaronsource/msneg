@@ -4,9 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jaronsource.msneg.dao.BusiCategoryDao;
+import org.jaronsource.msneg.dao.BusiSalesDao;
 import org.jaronsource.msneg.dao.BusiSalesItemDao;
 import org.jaronsource.msneg.dao.BusiSalesReturnDao;
 import org.jaronsource.msneg.dao.BusiSalesReturnItemDao;
+import org.jaronsource.msneg.domain.BusiCategory;
+import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesReturn;
 import org.jaronsource.msneg.domain.BusiSalesReturnItem;
 import org.jaronsource.msneg.domain.SysUser;
@@ -29,10 +33,16 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 	private BusiSalesReturnDao busiSalesReturnDao;
 	
 	@Autowired
+	private BusiSalesDao busiSalesDao;
+	
+	@Autowired
 	private BusiSalesReturnItemDao busiSalesReturnItemDao;
 	
 	@Autowired
 	private BusiSalesItemDao busiSalesItemDao;
+	
+	@Autowired
+	private BusiCategoryDao busiCategoryDao;
 	
 	@Override
 	public IDao<BusiSalesReturn, Integer> getDao() {
@@ -50,12 +60,31 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 		busiSalesReturn.setBillStateKey("A");
 		save(busiSalesReturn);
 		
+		BusiSales busiSales = busiSalesDao.findReferenceByPk(busiSalesReturn.getBusiSales().getSalesId());
+		busiSales.setFinanceStateKey("A");
+		busiSalesDao.save(busiSales);
+		
 		for (BusiSalesReturnItem busiSalesReturnItem : busiSalesReturnItems) {
 			
 			busiSalesReturnItem.setBusiSalesItem(
 					busiSalesItemDao.findReferenceByPk(busiSalesReturnItem.getBusiSalesItem().getSalesItemId()));
 			busiSalesReturnItem.setBusiSalesReturn(busiSalesReturn);
 			busiSalesReturnItemDao.save(busiSalesReturnItem);
+			
+			// 保存库存
+			BusiCategory busiCategory = new BusiCategory();
+			//BusiCategory salesBusiCategory = busiSalesReturnItem.getBusiSalesItem().();
+			
+			busiCategory.setCateName(busiSalesReturnItem.getBusiSalesItem().getCateName());
+			busiCategory.setItemStockAmount(busiSalesReturnItem.getReturnAmount());
+			busiCategory.setItemTypeKey(busiSalesReturnItem.getBusiSalesItem().getItemTypeKey());
+			busiCategory.setStockReasonKey("B");
+			busiCategory.setItemName(busiSalesReturnItem.getBusiSalesItem().getItemName());
+			busiCategory.setInputUser(busiSalesReturn.getSysUser().getUserName());
+			busiCategory.setItemUnitKey(busiSalesReturnItem.getBusiSalesItem().getItemUnitKey());
+			busiCategory.setCreateTime(busiSalesReturn.getCreateTime());
+			
+			busiCategoryDao.save(busiCategory);
 		}
 		
 	}
@@ -95,6 +124,13 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 		BusiSalesReturn busiSalesReturn = findByPk(id);
 		busiSalesReturn.setBillStateKey("B");
 		save(busiSalesReturn);
+	}
+
+	@Override
+	public List<BusiSalesReturn> findBySalesId(Integer salesId) {
+		QCriteria criteria = new QCriteria();
+		criteria.addEntry("busiSales.salesId", Op.EQ, salesId);
+		return getDao().find(criteria);
 	}
 
 }

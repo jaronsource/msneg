@@ -58,9 +58,21 @@ public class BusiSalesItem implements IEntity<Integer> {
 	@Column(name="assign_state_key")
 	private String assignStateKey;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="cate_id")
-	private BusiCategory busiCategory;
+	//@ManyToOne(fetch=FetchType.LAZY)
+	//@JoinColumn(name="cate_id")
+	//private BusiCategory busiCategory;
+	
+	@Column(name="item_type_key")
+	private String itemTypeKey;
+	
+	@Column(name="cate_name")
+	private String cateName;
+	
+	/**
+	 * 到货批次号
+	 */
+	@Column(name="assign_num")
+	private String assignNum;
 	
 	public BusiSalesItem() {}
 	
@@ -133,12 +145,12 @@ public class BusiSalesItem implements IEntity<Integer> {
 		this.itemName = itemName;
 	}
 	
-	public BusiCategory getBusiCategory() {
-		return busiCategory;
+	public String getCateName() {
+		return cateName;
 	}
 
-	public void setBusiCategory(BusiCategory busiCategory) {
-		this.busiCategory = busiCategory;
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
 	}
 
 	public String getAssignStateKey() {
@@ -147,6 +159,22 @@ public class BusiSalesItem implements IEntity<Integer> {
 
 	public void setAssignStateKey(String assignStateKey) {
 		this.assignStateKey = assignStateKey;
+	}
+
+	public String getAssignNum() {
+		return assignNum;
+	}
+
+	public void setAssignNum(String assignNum) {
+		this.assignNum = assignNum;
+	}
+
+	public String getItemTypeKey() {
+		return itemTypeKey;
+	}
+
+	public void setItemTypeKey(String itemTypeKey) {
+		this.itemTypeKey = itemTypeKey;
 	}
 
 	@Override

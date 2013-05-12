@@ -47,14 +47,14 @@ $(function() {
 					<td colspan="5">${busiSales.busiClient.address }</td>
 				</tr>
 				<tr>
-					<th>联系电话</th>
-					<td>${busiSales.busiClient.areacode } - ${busiSales.busiClient.phone }</td>
 					<th>联系手机</th>
 					<td>${busiSales.busiClient.cellPhone }</td>
+					<th>联系电话</th>
+					<td>${busiSales.busiClient.areacode } - ${busiSales.busiClient.phone }</td>
 					<th>出单部门</th>
 					<td>${busiSales.sysDept.deptName }</td>
 					<th>单据经手</th>
-					<td>${busiSales.sysUser.userName }</td>
+					<td>${busiSales.handleUser }</td>
 				</tr>
 				<tr>
 					<th>单据编号</th>
@@ -78,12 +78,15 @@ $(function() {
 			<c:forEach items="${busiSalesReturnList }" var="entry" varStatus="status">
 				<li url="${pageContext.request.contextPath }/busiSalesReturn/${entry.returnId}/print"><a href="#return-${status.index }" <c:if test="${entry.billStateKey == 'B' }">class="invalid"</c:if>>返销单</a></li>	
 			</c:forEach>
+			<c:if test="${busiSales.billStateKey == 'D'}">
+				<li><a href="#this" ><span class="money">结算金额: ¥ ${salesSummary }</span></a></li>	
+			</c:if>
 		</ul>
 		<div id="tabs-1" > 
 			<!--box-->
 			<div class="com_box">
 				<h3>商品信息
-					<security:hasPerm permCode="10">
+					<security:hasPerm permCode="11">
 						<c:if test="${busiSales.billStateKey == 'A' }">
 							<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSales&id=${busiSales.salesId}">标记作废</a>
 						</c:if>
@@ -97,6 +100,7 @@ $(function() {
 					<col width="50">
 					<col width="80">
 					<col width="80">
+					<col width="100">
 					<col width="*">
 					</colgroup>
 					<thead>
@@ -107,18 +111,20 @@ $(function() {
 							<th>数量</th>
 							<th>单价</th>
 							<th>合计</th>
+							<th>到货批次号</th>
 							<th>信息备注</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${busiSalesItemList }" var="entry">
 						<tr>
-							<td>${entry.busiCategory.cateName }</td>
+							<td>${entry.cateName }</td>
 							<td>${entry.itemName }</td>
 							<td><dict:lookupDictValue key="${entry.itemUnitKey }" type="item_unit" /></td>
 							<td>${entry.itemAmount }</td>
 							<td><span class="money">${entry.itemPrice }</span></td>
 							<td><span class="money">${entry.itemSum }</span></td>
+							<td>${entry.assignNum }</td>
 							<td>${entry.itemRemarks }</td>
 						</tr>
 						</c:forEach>
@@ -167,9 +173,9 @@ $(function() {
 					<tbody>
 						<tr>
 							<th>总金额</th>
-							<td><span class="money">${busiSales.feeSum}</span></td>
+							<td> ¥ <span class="money">${busiSales.feeSum}</span></td>
 							<th>预付金额</th>
-							<td> 现金 <span class="money">${busiSales.feePrepayCash}</span> 刷卡 <span class="money">${busiSales.feePrepayCard}</span></td>
+							<td> 现金 ¥ <span class="money">${busiSales.feePrepayCash}</span> 刷卡 ¥ <span class="money">${busiSales.feePrepayCard}</span></td>
 							<th>剩余尾款</th>
 							<td><span class="money">${busiSales.feeRemain}</span></td>
 						</tr>
@@ -213,7 +219,7 @@ $(function() {
 			<!--box-->
 			<div class="com_box">
 				<h3>商品信息
-				<security:hasPerm permCode="10">
+				<security:hasPerm permCode="11">
 					<c:if test="${entry.billStateKey == 'A' }">
 						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesClear&id=${entry.clearId}">标记作废</a>
 					</c:if>
@@ -243,7 +249,7 @@ $(function() {
 					<tbody>
 						<c:forEach items="${busiSalesItemList }" var="salesItem">
 						<tr>
-							<td>${salesItem.busiCategory.cateName }</td>
+							<td>${salesItem.cateName }</td>
 							<td>${salesItem.itemName }</td>
 							<td><dict:lookupDictValue key="${salesItem.itemUnitKey }" type="item_unit" /></td>
 							<td>${salesItem.itemAmount }</td>
@@ -298,11 +304,11 @@ $(function() {
 					<tbody>
 						<tr>
 							<th>总金额</th>
-							<td><span class="money">${entry.busiSales.feeSum}</span></td>
+							<td> ¥ <span class="money">${entry.busiSales.feeSum}</span></td>
 							<th>预付金额</th>
-							<td> 现金 <span class="money">${entry.busiSales.feePrepayCash}</span> 刷卡 <span class="money">${entry.busiSales.feePrepayCard}</span></td>
+							<td> 现金 ¥ <span class="money">${entry.busiSales.feePrepayCash}</span> 刷卡 ¥ <span class="money">${entry.busiSales.feePrepayCard}</span></td>
 							<th>剩余尾款</th>
-							<td><span class="money">${entry.busiSales.feeRemain}</span></td>
+							<td> ¥ <span class="money">${entry.busiSales.feeRemain}</span></td>
 						</tr>
 					</tbody>
 				</table>
@@ -331,7 +337,7 @@ $(function() {
 			<!--box-->
 			<div class="com_box">
 				<h3>商品信息
-				<security:hasPerm permCode="10">
+				<security:hasPerm permCode="11">
 					<c:if test="${entry.billStateKey == 'A' }">
 						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesMakeup&id=${entry.makeupId}">标记作废</a>
 					</c:if>
@@ -409,7 +415,7 @@ $(function() {
 					<tbody>
 						<tr>
 							<th>补价总额</th>
-							<td>${entry.makeupSum }</td>
+							<td> ¥ ${entry.makeupSum }</td>
 							<th>结算形式</th>
 							<td><dict:lookupDictValue key="${entry.clearMethodKey }" type="clear_method" /></td>
 							<th>经手人</th>
@@ -447,7 +453,7 @@ $(function() {
 			
 			<div class="com_box">
 				<h3>商品信息
-				<security:hasPerm permCode="10">
+				<security:hasPerm permCode="11">
 					<c:if test="${entry.billStateKey == 'A' }">
 						<a class="invalidBillLink" href="${pageContext.request.contextPath }/busiBills/invalidBill?type=busiSalesReturn&id=${entry.returnId}">标记作废</a>
 					</c:if>
@@ -483,7 +489,7 @@ $(function() {
 					<tbody>
 						<c:forEach items="${salesReturnItemList}" var="salesReturnItem">
 						<tr>
-							<td>${salesReturnItem.busiSalesItem.busiCategory.cateName }</td>
+							<td>${salesReturnItem.busiSalesItem.cateName }</td>
 							<td>${salesReturnItem.busiSalesItem.itemName }</td>
 							<td><dict:lookupDictValue key="${salesReturnItem.busiSalesItem.itemUnitKey }" type="item_unit" /></td>
 							<td>${salesReturnItem.busiSalesItem.itemAmount }</td>
@@ -517,17 +523,17 @@ $(function() {
 					<tbody>
 						<tr>
 							<th>应返金额</th>
-							<td><span class="money">${entry.returnSum }</span></td>
+							<td> ¥ <span class="money">${entry.returnSum }</span></td>
 							<th>返销报损</th>
-							<td>${entry.returnLoss }</td>
+							<td> ¥ ${entry.returnLoss }</td>
 							<th>折扣报损</th>
-							<td>${entry.rerateLoss }</td>
+							<td> ¥ ${entry.rerateLoss }</td>
 							<th>其他备注</th>
 							<td>${entry.returnRemarks }</td>
 						</tr>
 						<tr>
 							<th>实返金额</th>
-							<td><span class="money">${entry.actReturnSum }</span></td>
+							<td> ¥ <span class="money">${entry.actReturnSum }</span></td>
 							<th>结算形式</th>
 							<td colspan="3"><dict:lookupDictValue key="${entry.clearMethodKey }" type="clear_method" /></td>
 							<th>经手人</th>
