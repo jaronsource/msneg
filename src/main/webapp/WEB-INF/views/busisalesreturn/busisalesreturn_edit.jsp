@@ -93,6 +93,12 @@ function actReturn() {
 				var actReturnSum = parseFloat($('#actReturnSum').val());
 				actReturnSum = isNaN(actReturnSum) ? 0 : actReturnSum;
 				
+				var salesItemIdLength = $('.salesItemId:checked').length;
+				if (salesItemIdLength == 0) {
+					alert('请选择返销商品!');
+					return false;
+				}
+				
 				var msg = '应返金额：¥ ' + returnSum + ' 返销报损：¥ ' + returnLoss + ' 折扣报损：¥ ' + rerateLoss + ' 实返金额：¥ ' + actReturnSum + '\n\n' + '确定要保存此单据吗？'
 				
 				if (confirm(msg)) {

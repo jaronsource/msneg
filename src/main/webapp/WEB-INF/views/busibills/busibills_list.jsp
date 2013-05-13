@@ -136,7 +136,7 @@
 								<td><a href="${pageContext.request.contextPath }/busiBills/viewBills?salesId=${entry.salesId}" title="查看">${entry.salesCode }</a></td>
 								<td>${entry.feeSum }</td>
 								<td class="tl nowrap">${entry.busiClient.clientName } | ${entry.busiClient.cellPhone } | ${entry.busiClient.address }</td>
-								<td><dict:lookupDictValue key="${entry.salesStateKey }" type="sales_state" /> </td>
+								<td><dict:lookupDictValue key="${entry.billStateKey }" type="bill_state" /> </td>
 								<td class="tl">
 									<utils:methodInvokor methodName="countBySalesId" var="countSalesClear" className="org.jaronsource.msneg.service.BusiSalesClearService" >
 										<utils:miParam type="java.lang.Integer" value="${entry.salesId }"></utils:miParam>
@@ -153,14 +153,14 @@
 								</td>
 								<td>
 									<c:choose>
-										<c:when test="${entry.billStateKey != 'B' && entry.billStateKey != 'C' && entry.billStateKey != 'D' }">
+										<c:when test="${entry.billStateKey == 'A0'}">
 											<security:hasPerm permCode="12">
-												<a href="${pageContext.request.contextPath }/busiBills/changeBillState?salesId=${entry.salesId }&state=C">申请完结</a>
+												<a href="${pageContext.request.contextPath }/busiBills/changeBillState?salesId=${entry.salesId }&state=A1">申请完结</a>
 											</security:hasPerm>
 										</c:when>
-										<c:when test="${entry.billStateKey == 'C'}">
+										<c:when test="${entry.billStateKey == 'A1'}"> 
 											<security:hasPerm permCode="13">
-												<a href="${pageContext.request.contextPath }/busiBills/changeBillState?salesId=${entry.salesId }&state=D">完结</a>
+												<a href="${pageContext.request.contextPath }/busiBills/changeBillState?salesId=${entry.salesId }&state=C">完结</a>
 											</security:hasPerm>
 										</c:when>
 										<c:otherwise>

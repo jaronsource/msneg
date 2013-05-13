@@ -7,6 +7,8 @@ truncate table busi_sales_return;
 truncate table busi_sales_return_item;
 truncate table busi_sales_makeup;
 truncate table busi_sales_clear;
+truncate table busi_orders;
+truncate table busi_preord;
 
 truncate table sys_dept;
 
@@ -95,7 +97,7 @@ insert into sys_rolefunc (role_id, func_id) values (4, 13);
 insert into sys_rolefunc (role_id, func_id) values (4, 14);
 
 truncate table busi_category;
-
+/*
 insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('A', 'NK壁纸1', 0);
 insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('A', 'NK壁纸2', 0);
 insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('A', 'NK壁纸3', 0);
@@ -109,7 +111,7 @@ insert into busi_category (item_type_key, cate_name, item_stock_amount) values (
 insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('D', 'D类商品2', 0);
 insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('D', 'D类商品3', 0);
 insert into busi_category (item_type_key, cate_name, item_stock_amount) values ('D', 'D类商品4', 0);
-
+*/
 truncate table busi_item;
 
 insert into busi_item
@@ -117,7 +119,7 @@ insert into busi_item
 values ('NK', 'D', 100, 'YHBZ', 1, 300);
 
 truncate table busi_client;
-
+/*
 insert into busi_client
 (client_name, areacode, phone, cell_phone, address) 
 values ('张三', '0431', '85112710', '15500440021', '长春市朝阳区红旗街');
@@ -125,5 +127,5 @@ values ('张三', '0431', '85112710', '15500440021', '长春市朝阳区红旗�
 insert into busi_client
 (client_name, areacode, phone, cell_phone, address) 
 values ('李四', '0431', '57413243', '15567105305', '长春市朝阳区湖西路');
-
+*/
 set foreign_key_checks = 1;

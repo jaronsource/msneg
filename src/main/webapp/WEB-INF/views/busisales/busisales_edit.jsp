@@ -170,12 +170,13 @@ function feeRemain() {
 				var hasError = false;
 				$('.itemName').each(function() {
 					var $parent = $(this).parents('tr');
-					var cateIdValue = $parent.find('.cateId').val();
+					var itemTypeValue = $parent.find('.itemType').val();
+					var cateNameValue = $parent.find('.cateName').val();
 					var itemAmountValue = $parent.find('.itemAmount').val();
 					var itemPriceValue = $parent.find('.itemPrice').val();
 					var itemNameValue = $parent.find('.itemName').val();
 					if (itemNameValue != '') {
-						if (cateIdValue == '' || isNaN(itemAmountValue) || parseInt(itemAmountValue) == 0 || isNaN(itemPriceValue) || parseFloat(itemPriceValue) == 0) {
+						if (itemTypeValue == '' || cateNameValue == '' || isNaN(itemAmountValue) || parseInt(itemAmountValue) == 0 || isNaN(itemPriceValue) || parseFloat(itemPriceValue) == 0) {
 							$parent.find('td').css('background-color', '#FF6600');
 							hasError = true;
 						}

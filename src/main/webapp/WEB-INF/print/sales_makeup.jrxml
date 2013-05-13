@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aec5262d-bc2b-430e-b553-27d452247757">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="salesCode" class="java.lang.String"/>
@@ -14,18 +14,7 @@
 	<parameter name="servGetmethod" class="java.lang.String"/>
 	<parameter name="servInstallmethod" class="java.lang.String"/>
 	<parameter name="createTime" class="java.lang.String"/>
-	<parameter name="addItem1" class="java.lang.String"/>
-	<parameter name="addItem2" class="java.lang.String"/>
-	<parameter name="addItem3" class="java.lang.String"/>
-	<parameter name="addItem4" class="java.lang.String"/>
-	<parameter name="addItem5" class="java.lang.String"/>
-	<parameter name="addItem6" class="java.lang.String"/>
-	<parameter name="minusItem1" class="java.lang.String"/>
-	<parameter name="minusItem2" class="java.lang.String"/>
-	<parameter name="minusItem3" class="java.lang.String"/>
-	<parameter name="minusItem4" class="java.lang.String"/>
-	<parameter name="minusItem5" class="java.lang.String"/>
-	<parameter name="minusItem6" class="java.lang.String"/>
+	<parameter name="makeupInfo" class="java.lang.String"/>
 	<parameter name="makeupSum" class="java.lang.String"/>
 	<parameter name="clearMethod" class="java.lang.String"/>
 	<parameter name="otherRemarks" class="java.lang.String"/>
@@ -223,62 +212,51 @@
 	<summary>
 		<band height="245" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="40296598-d37f-42f0-bd30-e5a6a789621c" x="0" y="151" width="57" height="25"/>
+				<reportElement uuid="40296598-d37f-42f0-bd30-e5a6a789621c" x="2" y="92" width="57" height="25"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[补价总额]]></text>
+				<text><![CDATA[补价总额:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="38cb4bf7-9aa1-4380-a8ea-4d1e90115579" x="57" y="151" width="68" height="25"/>
+				<reportElement uuid="38cb4bf7-9aa1-4380-a8ea-4d1e90115579" x="59" y="92" width="82" height="25"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{makeupSum}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fd8b3c80-ddb0-4ea2-be3b-0cf0e1c81e2f" x="139" y="151" width="67" height="25"/>
+				<reportElement uuid="fd8b3c80-ddb0-4ea2-be3b-0cf0e1c81e2f" x="141" y="92" width="67" height="25"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[结算方式]]></text>
+				<text><![CDATA[结算方式:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="d8db8841-da95-4b1d-8fbf-5ee248745d2a" x="206" y="151" width="65" height="25"/>
+				<reportElement uuid="d8db8841-da95-4b1d-8fbf-5ee248745d2a" x="208" y="92" width="65" height="25"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clearMethod}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="10daa3b1-f035-489d-9dc1-61a346ab002d" x="125" y="151" width="14" height="25"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[元]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="513be869-8b27-44bd-bd03-c644921b56c1" x="0" y="176" width="430" height="25"/>
+				<reportElement uuid="513be869-8b27-44bd-bd03-c644921b56c1" x="2" y="142" width="430" height="25"/>
 				<box>
 					<bottomPen lineWidth="0.0"/>
 				</box>
@@ -288,7 +266,7 @@
 				<text><![CDATA[其它备注信息：]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="669387a5-63de-4f89-a5c1-fcbcf24977f1" x="0" y="201" width="430" height="40"/>
+				<reportElement uuid="669387a5-63de-4f89-a5c1-fcbcf24977f1" x="2" y="167" width="430" height="40"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -298,337 +276,75 @@
 				<textFieldExpression><![CDATA[$P{otherRemarks}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="dcc879ca-5551-4068-8962-71fd9c217eec" x="435" y="190" width="120" height="51"/>
+				<reportElement uuid="dcc879ca-5551-4068-8962-71fd9c217eec" x="437" y="153" width="118" height="54"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Top">
 					<font size="14" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[顾客签字]]></text>
+				<text><![CDATA[  顾客签字]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e1468a27-becc-44f3-abc5-dc4da3433bfd" x="271" y="151" width="67" height="25"/>
+				<reportElement uuid="e1468a27-becc-44f3-abc5-dc4da3433bfd" x="273" y="92" width="67" height="25"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[单据打印日期]]></text>
+				<text><![CDATA[单据打印日期:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="0c249537-9797-4718-8e0c-3e10949dcbbb" x="338" y="151" width="93" height="25"/>
+				<reportElement uuid="0c249537-9797-4718-8e0c-3e10949dcbbb" x="340" y="92" width="93" height="25"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{createTime}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="95f654ac-ec77-4a6d-b7c6-d05e394f4d47" x="435" y="151" width="120" height="39"/>
+				<reportElement uuid="95f654ac-ec77-4a6d-b7c6-d05e394f4d47" x="437" y="102" width="118" height="51"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Top">
 					<font size="14" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[报审签字]]></text>
+				<text><![CDATA[  报审签字]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="a910c5b4-b6c1-452e-ad55-0876f79fa5f3" x="0" y="0" width="27" height="75"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+			<textField>
+				<reportElement uuid="1a09ad66-ca9e-4073-bd11-211de4588ff7" x="0" y="0" width="555" height="50"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="14" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[增
-加
-补
-价]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="856ba471-c6bf-47cd-9774-8d3d3338bb4f" x="0" y="75" width="27" height="75"/>
+				<textFieldExpression><![CDATA["商品信息请查看   编号为：  " + $P{salesCode} + "  商品订单"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="333cff30-2444-48da-8285-fab692065bdd" x="2" y="117" width="431" height="25"/>
 				<box>
-					<bottomPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="10" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[减
-少
-补
-价]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="d4d062e9-739f-40f1-b43a-c109c326a344" x="90" y="6" width="151" height="20"/>
+				<textFieldExpression><![CDATA["此款为编号： " + $P{salesCode} + "销售单  尾款结算收据凭证。"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="dd21f90a-edfa-4f08-a68a-64ae75acfcea" x="0" y="50" width="555" height="41"/>
 				<box>
-					<bottomPen lineWidth="0.0"/>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
 				</textElement>
-				<text><![CDATA[新增临时性损耗费用]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="9d08a7bd-00e6-49bb-9603-3ba8cb3c0b6a" x="90" y="26" width="152" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[上衣托管安装（含多施工费用）]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="7cb0ad16-6cb9-4fa2-8c93-0534e9910d12" x="90" y="46" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[新增运输及商品管理费用]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="058a183c-850a-4422-903f-1846044ef45d" x="322" y="26" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[变更议价补价]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="e2c84cd0-ff6a-4430-af8d-4263f37e3472" x="322" y="6" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[增值服务取费]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="8f955bab-8687-4d42-97d9-0a97e96e77a1" x="322" y="46" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[其他商议费用]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="7044bc85-1c4c-42f2-b4de-74666efa6e75" x="90" y="81" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[递减临时性损耗费用]]></text>
-			</staticText>
-			<image>
-				<reportElement uuid="585ff9a0-f5b4-45da-a558-09342777f610" x="60" y="6" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{addItem1}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="0c04480d-6b48-46b3-9561-c6a16e9488af" x="60" y="26" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{addItem3}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="5f9ab87b-5790-4005-8195-11008790b2d7" x="60" y="47" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{addItem5}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="81351583-200b-463b-be54-cc3df3eeb762" x="60" y="101" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{minusItem3}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="d880fe07-fb4b-408d-b386-5821fbfea656" x="60" y="81" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{minusItem1}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="80e973b9-0a0b-4c91-9b33-835bfc6e71df" x="60" y="121" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{minusItem5}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="84b0f2fc-7861-4ce0-8e7a-c6bf9cb8902f" x="289" y="7" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{addItem2}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="4ee4cac4-e5df-4024-857e-1669ae2ba2b5" x="289" y="26" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{addItem4}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="b516820b-271b-4a84-8624-e8ba0f1f6607" x="289" y="48" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{addItem5}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="f294a95d-694a-454a-972d-2e8cbcdcf218" x="290" y="82" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{minusItem2}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="4eb6ab79-c761-4afb-8600-5e34a3be84d0" x="290" y="102" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{minusItem4}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="cfacc87b-ae2e-47e7-9765-127a460940f7" x="290" y="121" width="20" height="20">
-					<printWhenExpression><![CDATA[!$P{minusItem6}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c.jpg"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement uuid="4766f0e2-3cd7-471f-8f17-254fbd05a553" x="90" y="101" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[递减托管安装（含少施工费用）]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1209fc14-2773-40cd-ab4b-543d3656858a" x="90" y="121" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[ 商品瑕疵/破损议价差额]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="2cbdd9ae-8a85-4291-854b-2c6f7c724a89" x="323" y="80" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[补退议价差额]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="c2ef80a3-03f7-436a-b450-1707df31fa2e" x="323" y="100" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[遇零取整差价]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="0bb2f279-4a25-43de-878c-917b3c608e89" x="323" y="120" width="151" height="20"/>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[ 其他商议费用]]></text>
-			</staticText>
-			<image>
-				<reportElement uuid="1d58f268-2062-4225-9f3d-344d2fb662d3" x="59" y="7" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{addItem1}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="176499a5-d3dc-46aa-b563-dbf614b6a9d9" x="58" y="27" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{addItem3}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="7afc91ef-6ab5-44d3-90c8-3c8402005708" x="57" y="47" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{addItem5}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="0b8e591b-2df6-4ce4-a634-1248b3c59099" x="290" y="7" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{addItem2}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="0c1a8f3f-ac18-4a62-bc47-3541dc29aeef" x="289" y="48" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{addItem6}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="c77db815-b89b-4174-95a3-4b5ce734991b" x="290" y="27" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{addItem4}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="c543358f-f97b-4b11-bb32-231a377f902f" x="59" y="82" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{minusItem1}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="62eba437-a94a-49f1-908b-ecbaf9f39841" x="59" y="101" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{minusItem3}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="eb1f418a-84dd-46ec-aace-d5875aaee3f1" x="59" y="121" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{minusItem5}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="637a4de5-32c1-49f0-9a42-06a35649687e" x="290" y="81" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{minusItem2}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="e3523b62-a2b9-41dd-9b81-7d53dbf79413" x="290" y="102" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{minusItem4}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="4de76940-49fe-4d8d-8aa0-57ff6a3e22bf" x="290" y="122" width="20" height="20">
-					<printWhenExpression><![CDATA[$P{minusItem6}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["D:\\java\\workspace-jaronsource\\msneg\\src\\main\\webapp\\WEB-INF\\print\\c1.jpg"]]></imageExpression>
-			</image>
+				<textFieldExpression><![CDATA["补价信息: " + $P{makeupInfo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

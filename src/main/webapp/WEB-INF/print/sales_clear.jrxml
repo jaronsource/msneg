@@ -326,7 +326,7 @@
 				<textElement verticalAlignment="Top">
 					<font size="14" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[顾客确认签字]]></text>
+				<text><![CDATA[  顾客确认签字]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="0c249537-9797-4718-8e0c-3e10949dcbbb" x="394" y="25" width="161" height="25"/>

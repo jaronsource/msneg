@@ -68,7 +68,7 @@
 .com_box h3.title_line{ margin-top:5px;}
 .com_box h3 a.invalidBillLink{ position:absolute;  top:2px; right:40px; font-weight:normal; text-decoration: underline; border-left:1px solid #CCC; padding-left:5px;}
 .com_box h3 a.toggle_table{ position:absolute;  top:2px; right:5px; font-weight:normal; text-decoration: underline; border-left:1px solid #CCC; padding-left:5px;}
-.com_box h3 a.add_tr{ right:40px;}
+.com_box h3 a.add_tr{ right:40px;position: absolute;}
 
 
 

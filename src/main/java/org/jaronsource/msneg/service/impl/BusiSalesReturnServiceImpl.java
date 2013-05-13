@@ -57,7 +57,7 @@ public class BusiSalesReturnServiceImpl extends SearchFormSupportService<BusiSal
 		busiSalesReturn.setSysDept(currentUser.getDept());
 		busiSalesReturn.setSysUser(currentUser);
 		busiSalesReturn.setCreateTime(DateUtils.currentDateTime());
-		busiSalesReturn.setBillStateKey("A");
+		busiSalesReturn.setBillStateKey("A0");
 		save(busiSalesReturn);
 		
 		BusiSales busiSales = busiSalesDao.findReferenceByPk(busiSalesReturn.getBusiSales().getSalesId());

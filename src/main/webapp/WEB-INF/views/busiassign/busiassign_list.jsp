@@ -138,7 +138,7 @@
 								<td>${entry.feePrepayCard }</td>
 								<td>${entry.feeRemain }</td>
 								<td class="tl">${entry.busiClient.clientName } ${entry.busiClient.cellPhone }</td>
-								<td><dict:lookupDictValue key="${entry.salesStateKey }" type="sales_state" /> </td>
+								<td><dict:lookupDictValue key="${entry.billStateKey }" type="bill_state" /> </td>
 								<!-- <td>
 									<c:choose>
 										<c:when test="${salesState == 'B' }">

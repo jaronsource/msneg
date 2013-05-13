@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesItem;
 import org.jaronsource.msneg.domain.BusiSalesReturn;
 import org.jaronsource.msneg.domain.BusiSalesReturnItem;
 import org.jaronsource.msneg.service.BusiSalesReturnItemService;
 import org.jaronsource.msneg.service.BusiSalesReturnService;
+import org.jaronsource.msneg.service.BusiSalesService;
 import org.jaronsource.msneg.utils.PhoneUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,9 @@ public class BusiSalesReturnController extends BaseController {
 
 	@Autowired
 	private BusiSalesReturnItemService busiSalesReturnItemService;
+
+	@Autowired
+	private BusiSalesService busiSalesService;
 	
 	@Autowired
 	private DictionaryHelper dictionaryHelper;
@@ -88,6 +93,21 @@ public class BusiSalesReturnController extends BaseController {
 	@RequestMapping(value = "/create", method = POST)
     public String create(@Valid BusiSalesReturn busiSalesReturn, BindingResult bindingResult, Model model) {
 		
+		BusiSales busiSales = busiSalesService.findByPk(busiSalesReturn.getBusiSales().getSalesId());
+        if (busiSales == null) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.notFound"));
+        	return "error";
+        }
+        
+        if (StringUtils.equals(busiSales.getBillStateKey(), "B")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.invalid"));
+        	return "error";
+        }
+        
+        if (StringUtils.equals(busiSales.getBillStateKey(), "C")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.close"));
+        	return "error";
+        }
 		HttpServletRequest request = getHttpServletRequest();
 		String[] salesItemIds = request.getParameterValues("salesItemId");
 		String[] returnAmounts = request.getParameterValues("returnAmount");
@@ -156,12 +176,13 @@ public class BusiSalesReturnController extends BaseController {
 		paramMap.put("rerateLoss", busiSalesReturn.getRerateLoss() == null ? "0.00" : busiSalesReturn.getRerateLoss().toString());
 		paramMap.put("actReturnSum", busiSalesReturn.getActReturnSum() == null ? "0.00" : busiSalesReturn.getActReturnSum().toString());
 		paramMap.put("clearMethod", dictionaryHelper.lookupDictValue0("clear_method", busiSalesReturn.getClearMethodKey()));
-		paramMap.put("createTime", busiSalesReturn.getCreateTime());
+		paramMap.put("createTime", StringUtils.substring(busiSalesReturn.getCreateTime(), 0, 8));
 		paramMap.put("otherRemarks", busiSalesReturn.getOtherRemarks());
 		
 		List<Map<String, String>> entries = new ArrayList<Map<String, String>>();
 		for (BusiSalesReturnItem busiSalesReturnItem : salesReturnItemList) {
 			Map<String, String> entry = new HashMap<String, String>();
+			entry.put("itemType", dictionaryHelper.lookupDictValue0("item_type", busiSalesReturnItem.getBusiSalesItem().getItemTypeKey()));
 			entry.put("cateName", busiSalesReturnItem.getBusiSalesItem().getCateName());
 			entry.put("itemName", busiSalesReturnItem.getBusiSalesItem().getItemName());
 			entry.put("itemUnit", dictionaryHelper.lookupDictValue0("item_unit", busiSalesReturnItem.getBusiSalesItem().getItemUnitKey()) );

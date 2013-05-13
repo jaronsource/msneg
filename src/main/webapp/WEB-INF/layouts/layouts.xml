@@ -10,5 +10,9 @@
     <put-attribute name="menu" value="/WEB-INF/layouts/menu.jsp" />
     <put-attribute name="footer" value="/WEB-INF/layouts/footer.jsp" />
   </definition>
+  
+  <definition name="error" extends="default">
+    <put-attribute name="body" value="/WEB-INF/layouts/error.jsp" />
+  </definition>
 
 </tiles-definitions>

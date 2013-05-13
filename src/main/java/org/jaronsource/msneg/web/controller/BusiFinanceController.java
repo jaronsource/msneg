@@ -24,6 +24,7 @@ import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.util.DateUtils;
+import com.ccesun.framework.util.StringUtils;
 
 @RequestMapping("/busiFinance")
 @Controller
@@ -75,6 +76,21 @@ public class BusiFinanceController extends BaseController {
 		String salesId = getHttpServletRequest().getParameter("salesId");
 		//String state = getHttpServletRequest().getParameter("state");
 		
+		BusiSales busiSales = busiSalesService.findByPk(NumberUtils.toInt(salesId));
+        if (busiSales == null) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.notFound"));
+        	return "error";
+        }
+        
+        if (StringUtils.equals(busiSales.getBillStateKey(), "B")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.invalid"));
+        	return "error";
+        }
+        
+        if (StringUtils.equals(busiSales.getBillStateKey(), "C")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.close"));
+        	return "error";
+        }
 		//BusiSales busiSales = busiSalesService.findByPk(NumberUtils.toInt(salesId));
 		
 		//if (busiSales != null) {

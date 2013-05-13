@@ -11,11 +11,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesClear;
 import org.jaronsource.msneg.domain.BusiSalesItem;
 import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesClearService;
 import org.jaronsource.msneg.service.BusiSalesItemService;
+import org.jaronsource.msneg.service.BusiSalesService;
 import org.jaronsource.msneg.utils.PhoneUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,9 @@ public class BusiSalesClearController extends BaseController {
 
 	@Autowired
 	private BusiSalesItemService busiSalesItemService;
+
+	@Autowired
+	private BusiSalesService busiSalesService;
 	
 	@Autowired
 	private DictionaryHelper dictionaryHelper;
@@ -92,10 +97,26 @@ public class BusiSalesClearController extends BaseController {
             return "busiSalesClear/create";
         }
         
+        BusiSales busiSales = busiSalesService.findByPk(busiSalesClear.getBusiSales().getSalesId());
+        if (busiSales == null) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.notFound"));
+        	return "error";
+        }
+        
+        if (StringUtils.equals(busiSales.getBillStateKey(), "B")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.invalid"));
+        	return "error";
+        }
+        
+        if (StringUtils.equals(busiSales.getBillStateKey(), "C")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.close"));
+        	return "error";
+        }
+        
         String currentDateTime = DateUtils.currentDateTime();
         SysUser currentUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
         busiSalesClear.setSysUser(currentUser);
-        busiSalesClear.setBillStateKey("A");
+        busiSalesClear.setBillStateKey("A0");
         busiSalesClear.setFinanceStateKey("A");
         busiSalesClear.setCreateTime(currentDateTime);
         
@@ -124,7 +145,7 @@ public class BusiSalesClearController extends BaseController {
 	@ResponseBody
     public void print(@PathVariable("clearId") Integer clearId, HttpServletResponse response) {
     	BusiSalesClear busiSalesClear = busiSalesClearService.findByPk(clearId);
-    	List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(busiSalesClear.getBusiSales().getSalesId());
+    	//List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(busiSalesClear.getBusiSales().getSalesId());
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("salesCode", busiSalesClear.getBusiSales().getSalesCode());

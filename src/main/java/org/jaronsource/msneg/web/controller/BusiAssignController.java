@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.jaronsource.msneg.domain.BusiSales;
+import org.jaronsource.msneg.domain.BusiSalesItem;
 import org.jaronsource.msneg.domain.SysDept;
 import org.jaronsource.msneg.service.BusiSalesItemService;
 import org.jaronsource.msneg.service.BusiSalesService;
@@ -25,6 +26,7 @@ import com.ccesun.framework.core.spring.RequestHistory;
 import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.util.DateUtils;
 import com.ccesun.framework.util.NumberUtils;
+import com.ccesun.framework.util.StringUtils;
 
 @RequestMapping("/busiAssign")
 @Controller
@@ -91,11 +93,28 @@ public class BusiAssignController extends BaseController {
 	
 	@RequestMapping(value = "changeState", method = {GET, POST})
 	public String changeState(Model model) {
-
+		
 		String salesItemId = getHttpServletRequest().getParameter("salesItemId");
 		String state = getHttpServletRequest().getParameter("state");
 		String assignNum = getHttpServletRequest().getParameter("assignNum");
 		
+		BusiSalesItem busiSalesItem = busiSalesItemService.findByPk(NumberUtils.toInt(salesItemId)); 
+		
+		BusiSales busiSales = busiSalesService.findByPk(busiSalesItem.getBusiSales().getSalesId());
+        if (busiSales == null) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.notFound"));
+        	return "error";
+        }
+        
+        if (StringUtils.equals(busiSales.getBillStateKey(), "B")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.invalid"));
+        	return "error";
+        }
+        if (StringUtils.equals(busiSales.getBillStateKey(), "C")) {
+        	model.addAttribute("errorMsg", getMessage("busiSales.errMsg.close"));
+        	return "error";
+        }
+        
 		busiSalesItemService.changeState(NumberUtils.toInt(salesItemId), state, assignNum);
 		
 		return "history:/busiAssign";

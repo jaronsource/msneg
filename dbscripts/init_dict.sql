@@ -221,10 +221,10 @@ insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('bill_state', 'A0', '正常');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('bill_state', 'A1', '申请完结 ');
+values ('bill_state', 'A1', '申请完结');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
-values ('bill_state', 'B', '作废 ');
+values ('bill_state', 'B', '作废');
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('bill_state', 'C', '已完结');

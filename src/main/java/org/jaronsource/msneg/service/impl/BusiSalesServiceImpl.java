@@ -110,7 +110,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		busiSales.setFeePrepay(feePrepayCard + feePrepayCash);
 		busiSales.setSalesStateKey("A");
 		busiSales.setAssignStateKey("A");
-		busiSales.setBillStateKey("A");
+		busiSales.setBillStateKey("A0");
 		busiSales.setFinanceStateKey("A");
 		
 		save(busiSales);
@@ -198,10 +198,10 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 
 	@Override
 	public List<Object[]> statis02(Integer deptId, String startTime, String endTime) {
-		String jpql = "select o.busiCategory, count(o) from BusiSalesItem o inner join o.busiSales o2 where o2.createTime >= ? and o2.createTime <= ?";
+		String jpql = "select o.itemTypeKey, o.cateName, count(o) from BusiSalesItem o inner join o.busiSales o2 where o2.createTime >= ? and o2.createTime <= ?";
 		if (deptId != 0)
 			jpql += " and o.busiSales.sysDept.deptId = " + deptId;
-		jpql += " group by o.busiCategory ";
+		jpql += " group by o.itemTypeKey, o.cateName ";
 		return getDao().executeQuery(jpql, startTime, endTime);
 	}
 

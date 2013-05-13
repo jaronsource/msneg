@@ -52,9 +52,9 @@
 				<tbody>
 					<c:forEach items="${busiSalesStatis}" var="entry">
 					<tr>
-						<td><dict:lookupDictValue key="${entry[0].itemTypeKey }" type="item_type"/> </td>
-						<td>${entry[0].cateName }</td>
+						<td><dict:lookupDictValue key="${entry[0] }" type="item_type"/> </td>
 						<td>${entry[1] }</td>
+						<td>${entry[2] }</td>
 					</tr>
 					</c:forEach>
 				</tbody>
