@@ -6,22 +6,28 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.jaronsource.msneg.dao.BusiClientDao;
 import org.jaronsource.msneg.dao.BusiOrdersDao;
+import org.jaronsource.msneg.domain.BusiClient;
 import org.jaronsource.msneg.domain.BusiOrders;
 import org.jaronsource.msneg.domain.SysDept;
 import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiOrdersService;
-import com.ccesun.framework.core.service.SearchFormSupportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.ccesun.framework.core.dao.support.IDao;
-import com.ccesun.framework.plugins.security.SecurityTokenHolder;
-import com.ccesun.framework.util.DateUtils;
-
 import org.springframework.stereotype.Service;
+
+import com.ccesun.framework.core.dao.support.IDao;
+import com.ccesun.framework.core.service.SearchFormSupportService;
+import com.ccesun.framework.plugins.security.SecurityTokenHolder;
+import com.ccesun.framework.util.BeanUtils;
+import com.ccesun.framework.util.DateUtils;
 
 @Service
 public class BusiOrdersServiceImpl extends SearchFormSupportService<BusiOrders, Integer> implements BusiOrdersService {
 
+	@Autowired
+	private BusiClientDao busiClientDao;
+	
 	@Autowired
 	private BusiOrdersDao busiOrdersDao;
 	
@@ -95,5 +101,20 @@ public class BusiOrdersServiceImpl extends SearchFormSupportService<BusiOrders, 
 		
 		return statisMap;
 	}
+
+	@Override
+	public BusiOrders save(BusiOrders busiOrders) {
+
+		BusiClient busiClient = busiOrders.getBusiClient();
+		if (!busiClient.isNew()) {
+			BusiClient origBusiClient = busiClientDao.findByPk(busiClient.getClientId());
+			BeanUtils.mergeProperties(origBusiClient, busiClient);
+			busiOrders.setBusiClient(origBusiClient);
+		}
+		
+		return super.save(busiOrders);
+	}
+	
+	
 
 }

@@ -1,5 +1,6 @@
 package org.jaronsource.msneg.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class BusiOrders implements IEntity<Integer> {
 	
 	/***/
 	@DocDescription("客户ID")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@JoinColumn(name="client_id")
 	private BusiClient busiClient;
 	

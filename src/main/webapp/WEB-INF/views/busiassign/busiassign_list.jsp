@@ -9,8 +9,8 @@
 <dict:loadDictList type="sales_type" var="sales_type" />
 <dict:loadDictList type="sales_state" var="sales_state" />
 			<%
-				String salesState = request.getParameter("form['salesStateKey_eq']");
-				pageContext.setAttribute("salesState", salesState);
+				String state = request.getParameter("form['assignStateKey_eq']");
+				pageContext.setAttribute("state", state);
 			%>
 			
 			<div class="title_box">
@@ -19,9 +19,9 @@
 			
 			<div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 				<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
-					<li class="ui-state-default ui-corner-top <c:if test="${salesState == 'A' }" >ui-tabs-active ui-state-active</c:if>" role="tab" tabindex="0" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="true"><a href="${pageContext.request.contextPath}/busiAssign?form['salesStateKey_eq']=A" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">待备货</a></li>
-					<li class="ui-state-default ui-corner-top <c:if test="${salesState == 'B' }" >ui-tabs-active ui-state-active</c:if>" role="tab" tabindex="-1" aria-controls="tabs-2" aria-labelledby="ui-id-2" aria-selected="false"><a href="${pageContext.request.contextPath}/busiAssign?form['salesStateKey_eq']=B" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">已备货</a></li>
-					<li class="ui-state-default ui-corner-top <c:if test="${salesState == 'C' }" >ui-tabs-active ui-state-active</c:if>" role="tab" tabindex="-1" aria-controls="tabs-3" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/busiAssign?form['salesStateKey_eq']=C" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">已到货</a></li>
+					<li class="ui-state-default ui-corner-top <c:if test="${state == 'A' }" >ui-tabs-active ui-state-active</c:if>" role="tab" tabindex="0" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="true"><a href="${pageContext.request.contextPath}/busiAssign?form['assignStateKey_eq']=A" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">待备货</a></li>
+					<li class="ui-state-default ui-corner-top <c:if test="${state == 'B' }" >ui-tabs-active ui-state-active</c:if>" role="tab" tabindex="-1" aria-controls="tabs-2" aria-labelledby="ui-id-2" aria-selected="false"><a href="${pageContext.request.contextPath}/busiAssign?form['assignStateKey_eq']=B" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">已备货</a></li>
+					<li class="ui-state-default ui-corner-top <c:if test="${state == 'C' }" >ui-tabs-active ui-state-active</c:if>" role="tab" tabindex="-1" aria-controls="tabs-3" aria-labelledby="ui-id-3" aria-selected="false"><a href="${pageContext.request.contextPath}/busiAssign?form['assignStateKey_eq']=C" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">已到货</a></li>
 				</ul>
 				
 				<form:form modelAttribute="searchForm" action="${REQUEST_URI}" class="form-inline" >
@@ -195,10 +195,10 @@
 														<c:when test="${item.assignStateKey == 'A' }">
 															<input type="button" value="备货" onclick="if (confirm('确定进行此操作吗？')) {window.location='busiAssign/changeState?salesItemId=${item.salesItemId }&state=B';}" />
 														</c:when>
-														<c:when test="${item.assignStateKey == 'B' && salesState == 'B'}">
+														<c:when test="${item.assignStateKey == 'B' && state == 'B'}">
 															<input class="assign_num w_70" placeholder="批次号"/><input class="daohuoBtn" type="button" value="到货" salesItemId="${item.salesItemId }" />
 														</c:when>
-														<c:when test="${item.assignStateKey == 'C' && salesState == 'B'}">
+														<c:when test="${item.assignStateKey == 'C' && state == 'B'}">
 															批次号: ${item.assignNum }
 														</c:when>
 														<c:otherwise>

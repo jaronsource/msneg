@@ -103,8 +103,13 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 		busiSales.setSysDept(currentUser.getDept());
 		busiSales.setSysUser(currentUser);
 		busiSales.setCreateTime(DateUtils.currentDateTime());
-		busiSales.setFeePrepay(busiSales.getFeePrepayCard() + busiSales.getFeePrepayCash());
+		
+		Float feePrepayCard = busiSales.getFeePrepayCard() == null ? 0 : busiSales.getFeePrepayCard();
+		Float feePrepayCash = busiSales.getFeePrepayCash() == null ? 0 : busiSales.getFeePrepayCash();
+		
+		busiSales.setFeePrepay(feePrepayCard + feePrepayCash);
 		busiSales.setSalesStateKey("A");
+		busiSales.setAssignStateKey("A");
 		busiSales.setBillStateKey("A");
 		busiSales.setFinanceStateKey("A");
 		
@@ -130,7 +135,7 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 
 	@Override
 	public List<BusiSales> findSalesByClientCellPhone(String term) {
-		String jpql = "select o from BusiSales o inner join o.busiClient o2 where o2.cellPhone like ?";
+		String jpql = "select o from BusiSales o inner join o.busiClient o2 where o2.cellPhone like ? and o.billStateKey like 'A%'";
 		PageRequest pageRequest = new PageRequest(1, 20);
 		return getDao().find(pageRequest, jpql, '%' + term + '%');
 	}

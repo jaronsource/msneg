@@ -43,7 +43,7 @@ insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, 
 insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (2, 'menu', '单据查看管理', '/busiBills', 2, 'lnb03');
 insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (3, 'menu', '定金预定管理', '/busiOrders', 3, 'lnb02');
 insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (4, 'menu', '财务统计审核', '/busiFinance?form[\'financeStateKey_eq\']=A', 4, 'lnb07');
-insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (5, 'menu', '货物发配管理', '/busiAssign?form[\'salesStateKey_eq\']=A', 5, 'lnb05');
+insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (5, 'menu', '货物发配管理', '/busiAssign?form[\'assignStateKey_eq\']=A', 5, 'lnb05');
 insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (6, 'menu', '库存管理查询', '/busiStock', 6, 'lnb06');
 insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (7, 'menu', '综合数据分析', '/busiStatis/statis01', 7, 'lnb08');
 insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, func_remarks) values (8, 'menu', '客户信息整理', '/busiClient', 8, 'lnb11');

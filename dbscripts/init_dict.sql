@@ -173,6 +173,7 @@ values ('orders_return', 'C', '定金不可退');
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'sales_state', '销售单状态');
 
+/*
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'A', '已定');
 
@@ -185,9 +186,10 @@ values ('sales_state', 'C', '已到货');
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'D', '已安装');
 
+
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('sales_state', 'O', '已完结');
-
+*/
 
 insert into sys_dict (dict_type, dict_key, dict_value0)
 values ('KIND', 'finance_state', '财务状态');

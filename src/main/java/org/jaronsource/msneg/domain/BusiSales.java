@@ -117,6 +117,10 @@ public class BusiSales implements IEntity<Integer> {
 	@Column(name="huase_master")
 	private String huaseMaster;
 	
+	/** 物流状态 */
+	@Column(name="assign_state_key")
+	private String assignStateKey;
+	
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
 	}
@@ -299,6 +303,14 @@ public class BusiSales implements IEntity<Integer> {
 
 	public void setHuaseMaster(String huaseMaster) {
 		this.huaseMaster = huaseMaster;
+	}
+
+	public String getAssignStateKey() {
+		return assignStateKey;
+	}
+
+	public void setAssignStateKey(String assignStateKey) {
+		this.assignStateKey = assignStateKey;
 	}
 
 	@Override

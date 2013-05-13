@@ -53,8 +53,8 @@ public class BusiSalesItemServiceImpl extends SearchFormSupportService<BusiSales
 		
 		BusiSales busiSales = busiSalesDao.findByPk(salesId);
 		if (busiSales != null) {
-			if (!StringUtils.equals(busiSales.getSalesStateKey(), assignStateKey)) { 
-				busiSales.setSalesStateKey(assignStateKey);
+			if (!StringUtils.equals(busiSales.getAssignStateKey(), assignStateKey)) { 
+				busiSales.setAssignStateKey(assignStateKey);
 				//busiSalesDao.save(busiSales);
 			}
 			
