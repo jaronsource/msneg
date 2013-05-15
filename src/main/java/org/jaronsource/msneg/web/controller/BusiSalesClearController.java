@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesClear;
 import org.jaronsource.msneg.domain.BusiSalesItem;
+import org.jaronsource.msneg.domain.SysDept;
 import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesClearService;
 import org.jaronsource.msneg.service.BusiSalesItemService;
@@ -147,7 +148,11 @@ public class BusiSalesClearController extends BaseController {
     	BusiSalesClear busiSalesClear = busiSalesClearService.findByPk(clearId);
     	//List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(busiSalesClear.getBusiSales().getSalesId());
 		
+    	SysUser sysUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		SysDept sysDept = sysUser.getDept();
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("deptLogo", getRealPath("/WEB-INF/print/" + sysDept.getDeptLogo()));
 		paramMap.put("salesCode", busiSalesClear.getBusiSales().getSalesCode());
 		paramMap.put("clientName", busiSalesClear.getBusiSales().getBusiClient().getClientName());
 		paramMap.put("clientPhone", PhoneUtils.decode(busiSalesClear.getBusiSales().getBusiClient().getAreacode(), busiSalesClear.getBusiSales().getBusiClient().getPhone()));

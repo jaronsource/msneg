@@ -198,7 +198,7 @@
 														<c:when test="${item.assignStateKey == 'B' && state == 'B'}">
 															<input class="assign_num w_70" placeholder="批次号"/><input class="daohuoBtn" type="button" value="到货" salesItemId="${item.salesItemId }" />
 														</c:when>
-														<c:when test="${item.assignStateKey == 'C' && state == 'B'}">
+														<c:when test="${item.assignStateKey == 'C' && state == 'C'}">
 															批次号: ${item.assignNum }
 														</c:when>
 														<c:otherwise>

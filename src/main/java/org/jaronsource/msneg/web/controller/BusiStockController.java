@@ -3,12 +3,9 @@ package org.jaronsource.msneg.web.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.jaronsource.msneg.domain.BusiCategory;
-import org.jaronsource.msneg.domain.BusiItem;
 import org.jaronsource.msneg.service.BusiCategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
@@ -66,7 +64,7 @@ public class BusiStockController extends BaseController {
 	}	
 	
 	@RequestMapping(value = "/{cateId}/update", method = POST)
-    public String update(@Valid @ModelAttribute BusiCategory busiCategory, BindingResult bindingResult, Model model) {
+    public String update(@Valid @ModelAttribute BusiCategory busiCategory, BindingResult bindingResult, @RequestParam CommonsMultipartFile file, Model model) {
         if (bindingResult.hasErrors()) {
         	//List<BusiCategory> categories = busiCategoryService.findAll();
     		//model.addAttribute("categories", categories);
@@ -74,21 +72,20 @@ public class BusiStockController extends BaseController {
             return "busiStock/edit";
         }
 
-        busiCategoryService.save(busiCategory);
+        String basePath = getRealPath("/upload/stock/");
+        busiCategoryService.save(busiCategory, basePath, file);
         return "history:/busiStock";
     }	
 	
 	@RequestMapping(value = "/create", method = GET)
     public String create(Model model) {
-		List<BusiCategory> categories = busiCategoryService.findAll();
-		model.addAttribute("categories", categories);
-		BusiItem busiItem = new BusiItem();
-        model.addAttribute("busiItem", busiItem);
+		BusiCategory busiCategory = new BusiCategory();
+        model.addAttribute("busiCategory", busiCategory);
         return "busiStock/edit";
     }
     
 	@RequestMapping(value = "/create", method = POST)
-    public String create(@Valid BusiCategory busiCategory, BindingResult bindingResult, Model model) {
+    public String create(@Valid BusiCategory busiCategory, BindingResult bindingResult, @RequestParam CommonsMultipartFile file, Model model) {
         if (bindingResult.hasErrors()) {
         	//List<BusiCategory> categories = busiCategoryService.findAll();
     		//model.addAttribute("categories", categories);
@@ -96,7 +93,8 @@ public class BusiStockController extends BaseController {
             return "busiStock/edit";
         }
         busiCategory.setItemStockAmount(0);
-        busiCategoryService.save(busiCategory);
+        String basePath = getRealPath("/upload/stock/");
+        busiCategoryService.save(busiCategory, basePath, file);
         return "history:/busiStock";
     }	
     

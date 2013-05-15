@@ -12,31 +12,48 @@ truncate table busi_preord;
 
 truncate table sys_dept;
 
-insert into sys_dept (dept_code, dept_name, dept_type_key) values ('01N', '销售一部', 'A');
-insert into sys_dept (dept_code, dept_name, dept_type_key) values ('02N', '销售二部', 'A');
-insert into sys_dept (dept_code, dept_name, dept_type_key) values ('03N', '销售三部', 'A');
-insert into sys_dept (dept_code, dept_name, dept_type_key) values ('04N', '销售四部', 'A');
-insert into sys_dept (dept_code, dept_name, dept_type_key) values ('CW', '财务一部', 'B');
-insert into sys_dept (dept_code, dept_name, dept_type_key) values ('CK', '仓库一部', 'C');
-insert into sys_dept (dept_code, dept_name, dept_type_key) values ('YEWB', '业务部', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (1, '01N', '销售一部', '迈思琪壁纸&墙饰（家天下精品店）', '松原市家天下家居广场一期E04外街门市', '0438-6953030', '0438-6953131', '0438-6593123', 'msneg@163.com', 'dept_logo01.jpg', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (2, '02N', '销售二部', '瑞典·摩曼壁纸 松原旗舰店', '松原市康宁街2418号火炬商企楼（昊祥装饰对面）', '0438-6162020', '0438-6953131', '0438-6593123', 'msneg@163.com', 'dept_logo02.jpg', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (3, '03N', '销售三部', '维斯戴克（美国）墙纸 家居多媒体验松原馆', '松原中东瑞家 二期 中厅商业步行街', '0438-2982070', '0438-6953131', '0438-6593123', 'msneg@163.com', 'dept_logo03.jpg', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (4, '04N', '销售四部', '德国汉高·百得粘合剂全系列 松原总代理', '松原中东瑞家 二期 商业步行街南门', '0438-2982720', '0438-6953131', '15164444966', 'msneg@163.com', 'dept_logo04.jpg', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (5, '05N', '销售五部', '美国·铂芙艺术涂漆空间体验馆—松原店', '松原中东瑞家 二期 商业步行街南门', '0438-2982720', '0438-6953131', '0438-6593123', 'msneg@163.com', 'dept_logo05.jpg', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (6, '06N', '销售六部', '靓点墙饰·靓点艺术玻璃马赛克销售中心', '松原中东瑞家 二期 中厅商业步行街', '0438-2983645', '0438-6953131', '13756783645', 'msneg@163.com', 'dept_logo06.jpg', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (7, '07N', '销售七部', '松原市迈思琪装潢材料有限公司', '松原市家天下家居广场一期E04外街门市', '0438-6953123', '0438-6953131', '15134335988', 'msneg@163.com', 'dept_logo07.jpg', 'A');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (8, '01FINANCE', '财务一部', '', '', '', '', '', 'msneg@163.com', 'dept_logo01.jpg', 'B');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (9, '01ASSIGN', '配货一部', '', '', '', '', '', 'msneg@163.com', 'dept_logo01.jpg', 'C');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (10, '01MANAGER', '总经办（部）', '', '', '', '', '', 'msneg@163.com', 'dept_logo01.jpg', 'M');
+insert into sys_dept (dept_id, dept_code, dept_name, dept_remarks, dept_address, dept_phone, dept_fax, dept_service_phone, dept_email, dept_logo, dept_type_key) values (11, '99N', '总经理（部）', '', '', '', '', '', 'msneg@163.com', 'dept_logo01.jpg', 'S');
 
 truncate table sys_user;
 
-insert into sys_user (dept_id, user_name, real_name, passwd) values (7, 'admin', 'admin', 'admin');
-insert into sys_user (dept_id, user_name, real_name, passwd) values (7, 'yl', '总经理于林', 'yl');
-insert into sys_user (dept_id, user_name, real_name, passwd) values (1, 'xs1', '销售小李', 'xs1');
-insert into sys_user (dept_id, user_name, real_name, passwd) values (2, 'xs2', '销售小张', 'xs2');
-insert into sys_user (dept_id, user_name, real_name, passwd) values (5, 'cw', '财务小王', 'cw');
-insert into sys_user (dept_id, user_name, real_name, passwd) values (6, 'ck', '仓库小赵', 'ck');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (10, 'admin', 'admin', 'YL5988');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (11, 'YL6555', 'YL6555', 'YL27297479');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (1, 'msneg', 'msneg', '6953030');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (2, 'mmpaper', 'mmpaper', '6162020');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (3, 'versedeco', 'versedeco', '2982070');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (4, 'pattex', 'pattex', '15164444966');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (5, 'boff', 'boff', '2982720');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (6, 'liangdian', 'liangdian', '2983645');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (7, 'gongcheng', 'gongcheng', '13756706555');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (8, 'caiwu01', 'caiwu01', 'caiwuchen');
+insert into sys_user (dept_id, user_name, real_name, passwd) values (9, 'peihuo01', 'peihuo01', 'peihuolang');
+
 
 truncate table sys_userrole;
 
-insert into sys_userrole (user_id, role_id) values (3, 1);
-insert into sys_userrole (user_id, role_id) values (4, 1);
-insert into sys_userrole (user_id, role_id) values (5, 2);
-insert into sys_userrole (user_id, role_id) values (6, 3);
 insert into sys_userrole (user_id, role_id) values (1, 4);
 insert into sys_userrole (user_id, role_id) values (2, 4);
+insert into sys_userrole (user_id, role_id) values (3, 1);
+insert into sys_userrole (user_id, role_id) values (4, 1);
+insert into sys_userrole (user_id, role_id) values (5, 1);
+insert into sys_userrole (user_id, role_id) values (6, 1);
+insert into sys_userrole (user_id, role_id) values (7, 1);
+
+insert into sys_userrole (user_id, role_id) values (8, 1);
+insert into sys_userrole (user_id, role_id) values (9, 1);
+insert into sys_userrole (user_id, role_id) values (10, 2);
+insert into sys_userrole (user_id, role_id) values (11, 3);
+
 
 
 truncate table sys_func;
@@ -58,10 +75,10 @@ insert into sys_func (func_id, func_groupcode, func_name, func_url, func_order, 
 
 truncate table sys_role;
 
-insert into sys_role (role_name) value ('销售员');
+insert into sys_role (role_name) value ('销售');
 insert into sys_role (role_name) value ('财务');
 insert into sys_role (role_name) value ('仓库');
-insert into sys_role (role_name) value ('业务部');
+insert into sys_role (role_name) value ('总经办');
 
 truncate table sys_rolefunc;
 
@@ -77,6 +94,7 @@ insert into sys_rolefunc (role_id, func_id) values (2, 4);
 insert into sys_rolefunc (role_id, func_id) values (2, 7);
 insert into sys_rolefunc (role_id, func_id) values (2, 8);
 insert into sys_rolefunc (role_id, func_id) values (2, 9);
+insert into sys_rolefunc (role_id, func_id) values (2, 13);
 insert into sys_rolefunc (role_id, func_id) values (3, 2);
 insert into sys_rolefunc (role_id, func_id) values (3, 5);
 insert into sys_rolefunc (role_id, func_id) values (3, 8);

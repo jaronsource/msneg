@@ -15,6 +15,7 @@ import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccesun.framework.core.dao.support.IDao;
 import com.ccesun.framework.core.service.SearchFormSupportService;
@@ -103,6 +104,7 @@ public class BusiOrdersServiceImpl extends SearchFormSupportService<BusiOrders, 
 	}
 
 	@Override
+	@Transactional
 	public BusiOrders save(BusiOrders busiOrders) {
 
 		BusiClient busiClient = busiOrders.getBusiClient();

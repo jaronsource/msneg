@@ -78,7 +78,7 @@ $(function() {
 			<c:forEach items="${busiSalesReturnList }" var="entry" varStatus="status">
 				<li url="${pageContext.request.contextPath }/busiSalesReturn/${entry.returnId}/print"><a href="#return-${status.index }" <c:if test="${entry.billStateKey == 'B' }">class="invalid"</c:if>>返销单</a></li>	
 			</c:forEach>
-			<c:if test="${busiSales.billStateKey == 'D'}">
+			<c:if test="${busiSales.billStateKey == 'C'}">
 				<li><a href="#this" ><span class="money">结算金额: ¥ ${salesSummary }</span></a></li>	
 			</c:if>
 		</ul>

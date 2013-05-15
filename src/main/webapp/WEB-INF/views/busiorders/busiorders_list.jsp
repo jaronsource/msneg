@@ -110,7 +110,7 @@
 			<c:forEach items="${busiOrdersPage.content}" var="entry">
 			<tr>
 				<td>${entry.createTime }</td>
-				<td><a href="#this">${entry.ordersCode }</a></td>
+				<td><a href="${pageContext.request.contextPath}/busiOrders/${entry.ordersId}/show">${entry.ordersCode }</a></td>
 				<td class="tl nowrap">${entry.busiClient.clientName } | ${entry.busiClient.cellPhone } | ${entry.busiClient.address }</td>
 				<td><dict:lookupDictValue key="${entry.ordersStateKey }" type="orders_state" /></td>
 				<td class="tl">${entry.sysDept.deptName }</td>
@@ -133,7 +133,9 @@
 	<script>
 		function useOrders(ordersId) {
 			if (confirm('确定使用此定单吗？')) {
-				window.location='busiOrders/useOrders?ordersId=' + ordersId;
+				window.ordersId = ordersId;
+				$('#useOrdersDialog').dialog('open');
+				//window.location='busiOrders/useOrders?ordersId=' + ordersId;
 			} 
 		}
 
@@ -152,3 +154,32 @@
 	</div>	
 </div>
 </div>
+<div id="useOrdersDialog">
+	销售单号：<input name="salesCode" id="salesCode" />
+</div>
+<script>
+	
+	$('#salesCode').autocomplete({
+		source : function(request, response) {
+			
+			$.getJSON('${pageContext.request.contextPath}/busiSales/ajaxFindSalesBySalesCode', request, function(data) {
+				response(data); 
+			});
+		}
+		,autoFocus: true
+	});
+	
+	$('#useOrdersDialog').dialog({autoOpen: false, title: '填写定金单号', 
+		buttons: [
+		          {text: "确定", click: function() {
+		        	  var ordersId = window.ordersId;
+		        	  var salesCode = $('#salesCode').val();
+		        	  window.location='${pageContext.request.contextPath}/busiOrders/useOrders?ordersId=' + ordersId + "&salesCode=" + salesCode;
+		        	  $( this ).dialog( "close" );
+		          }},
+		          {text: "取消", click: function() {
+		        	  $( this ).dialog( "close" );
+		          }},
+		          ]	
+	});
+</script>

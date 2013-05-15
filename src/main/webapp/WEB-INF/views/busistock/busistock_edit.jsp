@@ -13,8 +13,10 @@
 
 	
 	<div class="customer">
-	<form:form modelAttribute="busiCategory">
+	<form:form modelAttribute="busiCategory" enctype="multipart/form-data">
 	<form:hidden path="itemStockAmount"/>
+	<form:hidden path="itemSmallImage"/>
+	<form:hidden path="itemImage"/>
 	<table width="100%" cellspacing="0" cellpadding="0" border="1" class="tbl_w">
 		<colgroup>
 			<col width="140">
@@ -72,6 +74,10 @@
 			<tr>
 				<th>商品描述</th>
 				<td><form:input path="itemRemarks" cssClass="input_text wb90"/></td>
+			</tr>
+			<tr>
+				<th>预览图</th>
+				<td><input type="file" name="file"/></td>
 			</tr>
 			<tr>
 				<th>备注</th>

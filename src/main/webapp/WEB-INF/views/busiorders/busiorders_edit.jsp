@@ -76,13 +76,11 @@
 					<th>出单部门</th>
 					<td>${user.dept.deptName }</td>
 					<th>单据经手</th>
-					<td>${user.realName }</td>
+					<td><form:input path="handleUser" cssClass="wb90 input_text" id="handleUser"/></td>
 				</tr>
 				<tr>
 					<th>单据编号</th>
-					<td>${ordersCode }</td>
-					<th>相关备注</th>
-					<td colspan="5"><form:input path="ordersRemarks" cssClass="wb95 input_text" /></td>
+					<td colspan="7">${ordersCode }</td>
 				</tr>
 			</tbody>
 		</table>
@@ -129,19 +127,19 @@
 				</tr>
 				<tr>
 					<th>信息填写</th>
-					<td colspan="3"><textarea name="textarea" style="height:200px" class="textarea" cols="" rows=""></textarea></td>
+					<td colspan="3"><textarea name="ordersRemarks" style="height:200px" class="textarea" cols="" rows=""></textarea></td>
 							</tr>
 							<tr>
 								<th>定金用途</th>
 								<td>
 									<c:forEach items="${orders_use}" var="entry" varStatus="status">
-										<input type="radio" class="radio orders_use" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
+										<input type="radio" name="ordersUseKey" class="radio orders_use" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
 									</c:forEach>
 								</td>
 								<th>定金返还</th>
 								<td>
 									<c:forEach items="${orders_return}" var="entry" varStatus="status">
-										<input type="radio" class="radio orders_return" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
+										<input type="radio" name="ordersReturnKey" class="radio orders_return" value="${entry.dictKey}" <c:if test="${status.index == 0 }">checked="checked"</c:if>/>${entry.dictValue0}
 									</c:forEach>
 								</td>
 							</tr>

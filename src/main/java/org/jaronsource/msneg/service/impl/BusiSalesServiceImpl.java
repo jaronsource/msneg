@@ -1,6 +1,7 @@
 package org.jaronsource.msneg.service.impl;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,7 +129,16 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 
 	@Override
 	public List<BusiSales> findSalesBySalesCode(String term) {
+		
 		String jpql = "select o from BusiSales o inner join o.busiClient o2 where o.salesCode like ? and o.billStateKey like 'A%'";
+		
+		SysUser sysUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		SysDept sysDept = sysUser.getDept();
+		
+		if (StringUtils.equals(sysDept.getDeptTypeKey(), "A")) {
+			jpql += " and o.sysDept.deptId = " + sysDept.getDeptId();
+		} 
+		
 		PageRequest pageRequest = new PageRequest(1, 20);
 		return getDao().find(pageRequest, jpql, '%' + term + '%');
 	}
@@ -136,6 +146,14 @@ public class BusiSalesServiceImpl extends SearchFormSupportService<BusiSales, In
 	@Override
 	public List<BusiSales> findSalesByClientCellPhone(String term) {
 		String jpql = "select o from BusiSales o inner join o.busiClient o2 where o2.cellPhone like ? and o.billStateKey like 'A%'";
+		
+		SysUser sysUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		SysDept sysDept = sysUser.getDept();
+		
+		if (StringUtils.equals(sysDept.getDeptTypeKey(), "A")) {
+			jpql += " and o.sysDept.deptId = " + sysDept.getDeptId();
+		} 
+		
 		PageRequest pageRequest = new PageRequest(1, 20);
 		return getDao().find(pageRequest, jpql, '%' + term + '%');
 	}

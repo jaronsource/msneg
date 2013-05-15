@@ -51,13 +51,13 @@ public class BusiFinanceController extends BaseController {
 	@RequestHistory
 	public String list(@ModelAttribute SearchForm searchForm, Model model) {
 		
-		List<SysDept> depts = sysDeptService.findSalesByType("A");
+		List<SysDept> depts = sysDeptService.findSalesByType("A", "S");
 		Date now = new Date();
 		String weekTime = DateUtils.format(DateUtils.addDays(now, 7), DateUtils.PATTERN_DATETIME);
 		String monthTime = DateUtils.format(DateUtils.addDays(now, 30), DateUtils.PATTERN_DATETIME);
 		String threeMonthTime = DateUtils.format(DateUtils.addDays(now, 90), DateUtils.PATTERN_DATETIME);
 		
-		searchForm.addFormEntry("billStateKey_lk", "A%");
+		//searchForm.addFormEntry("billStateKey_lk", "A%");
 		
 		Page<BusiSales> busiSalesPage = busiSalesService.findPage(searchForm);
 		model.addAttribute("busiSalesPage", busiSalesPage);

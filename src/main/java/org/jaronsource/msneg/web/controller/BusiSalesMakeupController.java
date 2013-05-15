@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesMakeup;
+import org.jaronsource.msneg.domain.SysDept;
 import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesMakeupService;
 import org.jaronsource.msneg.service.BusiSalesService;
@@ -131,7 +132,11 @@ public class BusiSalesMakeupController extends BaseController {
     public void print(@PathVariable("makeupId") Integer makeupId, HttpServletResponse response) {
     	BusiSalesMakeup busiSalesMakeup = busiSalesMakeupService.findByPk(makeupId);
 		
+    	SysUser sysUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		SysDept sysDept = sysUser.getDept();
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("deptLogo", getRealPath("/WEB-INF/print/" + sysDept.getDeptLogo()));
 		paramMap.put("salesCode", busiSalesMakeup.getBusiSales().getSalesCode());
 		paramMap.put("clientName", busiSalesMakeup.getBusiSales().getBusiClient().getClientName());
 		paramMap.put("clientPhone", PhoneUtils.decode(busiSalesMakeup.getBusiSales().getBusiClient().getAreacode(), busiSalesMakeup.getBusiSales().getBusiClient().getPhone()));

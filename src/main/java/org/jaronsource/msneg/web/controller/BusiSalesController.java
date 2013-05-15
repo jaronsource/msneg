@@ -18,6 +18,8 @@ import net.sf.json.JSONObject;
 import org.jaronsource.msneg.domain.BusiCategory;
 import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesItem;
+import org.jaronsource.msneg.domain.SysDept;
+import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiCategoryService;
 import org.jaronsource.msneg.service.BusiSalesItemService;
 import org.jaronsource.msneg.service.BusiSalesService;
@@ -34,12 +36,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ccesun.framework.core.AppContext;
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.plugins.dictionary.DictionaryHelper;
 import com.ccesun.framework.plugins.report.JasperReportUtils;
+import com.ccesun.framework.plugins.security.SecurityTokenHolder;
 import com.ccesun.framework.util.NumberUtils;
 import com.ccesun.framework.util.StringUtils;
 
@@ -159,10 +161,15 @@ public class BusiSalesController extends BaseController {
 	@RequestMapping(value = "/{salesId}/print", method = GET)
 	@ResponseBody
     public void print(@PathVariable("salesId") Integer salesId, HttpServletResponse response) {
+		
+		SysUser sysUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		SysDept sysDept = sysUser.getDept();
+		
 		BusiSales busiSales = busiSalesService.findByPk(salesId);
 		List<BusiSalesItem> busiSalesItemList = busiSalesItemService.findSalesItemBySalesId(salesId);
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("deptLogo", getRealPath("/WEB-INF/print/" + sysDept.getDeptLogo()));
 		paramMap.put("salesCode", busiSales.getSalesCode());
 		paramMap.put("clientName", busiSales.getBusiClient().getClientName());
 		paramMap.put("clientPhone", PhoneUtils.decode(busiSales.getBusiClient().getAreacode(), busiSales.getBusiClient().getPhone()));
@@ -180,11 +187,12 @@ public class BusiSalesController extends BaseController {
 		paramMap.put("feeRemain", busiSales.getFeeRemain() == null ? "0.00" : busiSales.getFeeRemain().toString());
 		paramMap.put("createTime", StringUtils.substring(busiSales.getCreateTime(), 0, 8));
 		paramMap.put("otherRemarks", busiSales.getOtherRemarks());
-		paramMap.put("deptAddress", AppContext.getInstance().getString("deptAddress"));
-		paramMap.put("deptPhone", AppContext.getInstance().getString("deptPhone"));
-		paramMap.put("deptFax", AppContext.getInstance().getString("deptFax"));
-		paramMap.put("deptServicePhone", AppContext.getInstance().getString("deptServicePhone"));
 		paramMap.put("salesContract", busiSales.getSalesContract());
+		
+		paramMap.put("deptAddress", sysDept.getDeptAddress());
+		paramMap.put("deptPhone", sysDept.getDeptPhone());
+		paramMap.put("deptFax", sysDept.getDeptFax());
+		paramMap.put("deptServicePhone", sysDept.getDeptServicePhone());
 		
 		List<Map<String, String>> entries = new ArrayList<Map<String, String>>();
 		for (BusiSalesItem busiSalesItem : busiSalesItemList) {
@@ -271,5 +279,6 @@ public class BusiSalesController extends BaseController {
     	return result;
 
     }
+    
 }
 

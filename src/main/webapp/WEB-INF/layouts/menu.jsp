@@ -11,6 +11,7 @@
 		<a <security:hasPerm permCode="${perm.code }">
 			href="${pageContext.request.contextPath}${perm.url }"
 		</security:hasPerm>
+		
 		<security:noPerm permCode="${perm.code }">
 			href="javascript: void(0)"
 			onclick="alert('对不起，您无权操作本功能'); return false;"

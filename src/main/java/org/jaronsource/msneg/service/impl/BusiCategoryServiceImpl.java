@@ -1,5 +1,6 @@
 package org.jaronsource.msneg.service.impl;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import org.jaronsource.msneg.domain.BusiCategory;
 import org.jaronsource.msneg.service.BusiCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ccesun.framework.core.dao.support.IDao;
 import com.ccesun.framework.core.service.SearchFormSupportService;
@@ -68,6 +71,26 @@ public class BusiCategoryServiceImpl extends SearchFormSupportService<BusiCatego
 		String jpql = "select sum(o.itemStockAmount) from BusiCategory o where cateName = ? and itemName = ?";
 		Long stockCount = (Long) getDao().executeQueryOne(jpql, cateName, itemName);
 		return stockCount;
+	}
+
+	@Override
+	@Transactional
+	public void save(BusiCategory busiCategory, String basePath, CommonsMultipartFile file) {
+		
+		
+		try {
+			String ext = file.getFileItem().getName().substring(file.getFileItem().getName().lastIndexOf("."));
+			String fileName = busiCategory.getCateId() + ext;
+			String destFileName = basePath + File.separator + fileName;
+			File destFile = new File(destFileName);
+			file.getFileItem().write(destFile);
+			busiCategory.setItemSmallImage(fileName);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			save(busiCategory);
+		}
 	}
 
 }

@@ -7,6 +7,6 @@ import com.ccesun.framework.core.service.ISearchFormSupportService;
 
 public interface SysDeptService extends ISearchFormSupportService<SysDept, Integer> {
 
-	List<SysDept> findSalesByType(String deptType);
+	List<SysDept> findSalesByType(String... deptType);
 
 }

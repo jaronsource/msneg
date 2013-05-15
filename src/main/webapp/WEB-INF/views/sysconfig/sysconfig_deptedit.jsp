@@ -39,6 +39,30 @@
 				<td><form:input path="deptName" cssClass="input_text"/></td>
 			</tr>
 			<tr>
+				<th>地址</th>
+				<td><form:input path="deptAddress" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>电话</th>
+				<td><form:input path="deptPhone" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>售后服务电话</th>
+				<td><form:input path="deptServicePhone" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>E-mail</th>
+				<td><form:input path="deptEmail" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>传真</th>
+				<td><form:input path="deptFax" cssClass="input_text"/></td>
+			</tr>
+			<tr>
+				<th>部门LOGO</th>
+				<td><form:input path="deptLogo" cssClass="input_text"/></td>
+			</tr>
+			<tr>
 				<th>描述</th>
 				<td><form:input path="deptRemarks" cssClass="input_text"/></td>
 			</tr>

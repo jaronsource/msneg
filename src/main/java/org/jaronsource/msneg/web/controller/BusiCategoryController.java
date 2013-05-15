@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ccesun.framework.core.dao.support.Page;
 import com.ccesun.framework.core.dao.support.SearchForm;
@@ -71,13 +72,13 @@ public class BusiCategoryController extends BaseController {
     }
     
 	@RequestMapping(value = "/create", method = POST)
-    public String create(@Valid BusiCategory busiCategory, BindingResult bindingResult, Model model) {
+    public String create(@Valid BusiCategory busiCategory, BindingResult bindingResult, @RequestParam CommonsMultipartFile file, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("busiCategory", busiCategory);
             return "sysConfig/category/edit";
         }
-
-        busiCategoryService.save(busiCategory);
+        String basePath = getRealPath("/upload/stock/");
+        busiCategoryService.save(busiCategory, basePath, file);
         return "history:/sysConfig/category";
     }	
     

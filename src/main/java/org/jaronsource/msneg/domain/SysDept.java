@@ -34,9 +34,33 @@ public class SysDept implements IEntity<Integer> {
 	@Column(name="dept_name")
 	private String deptName;
 	
+	/** 地址 */
+	@Column(name="dept_address")
+	private String deptAddress;
+	
+	/** 电话 */
+	@Column(name="dept_phone")
+	private String deptPhone;
+	
+	/** 售后服务电话 */
+	@Column(name="dept_service_phone")
+	private String deptServicePhone;
+	
+	/** E-mail */
+	@Column(name="dept_email")
+	private String deptEmail;
+	
+	/** 传真 */
+	@Column(name="dept_fax")
+	private String deptFax;
+	
 	/** 描述 */
 	@Column(name="dept_remarks")
 	private String deptRemarks;
+	
+	/** 部门LOGO */
+	@Column(name="dept_logo")
+	private String deptLogo;
 	
 	/** 部门类型 */
 	@Column(name="dept_type_key")
@@ -82,6 +106,54 @@ public class SysDept implements IEntity<Integer> {
 		return deptTypeKey;
 	}
 	
+	public String getDeptAddress() {
+		return deptAddress;
+	}
+
+	public void setDeptAddress(String deptAddress) {
+		this.deptAddress = deptAddress;
+	}
+
+	public String getDeptPhone() {
+		return deptPhone;
+	}
+
+	public void setDeptPhone(String deptPhone) {
+		this.deptPhone = deptPhone;
+	}
+
+	public String getDeptServicePhone() {
+		return deptServicePhone;
+	}
+
+	public void setDeptServicePhone(String deptServicePhone) {
+		this.deptServicePhone = deptServicePhone;
+	}
+
+	public String getDeptEmail() {
+		return deptEmail;
+	}
+
+	public void setDeptEmail(String deptEmail) {
+		this.deptEmail = deptEmail;
+	}
+
+	public String getDeptFax() {
+		return deptFax;
+	}
+
+	public void setDeptFax(String deptFax) {
+		this.deptFax = deptFax;
+	}
+
+	public String getDeptLogo() {
+		return deptLogo;
+	}
+
+	public void setDeptLogo(String deptLogo) {
+		this.deptLogo = deptLogo;
+	}
+
 	@Override
 	@Transient
 	public boolean isNew() {

@@ -16,6 +16,8 @@ import org.jaronsource.msneg.domain.BusiSales;
 import org.jaronsource.msneg.domain.BusiSalesItem;
 import org.jaronsource.msneg.domain.BusiSalesReturn;
 import org.jaronsource.msneg.domain.BusiSalesReturnItem;
+import org.jaronsource.msneg.domain.SysDept;
+import org.jaronsource.msneg.domain.SysUser;
 import org.jaronsource.msneg.service.BusiSalesReturnItemService;
 import org.jaronsource.msneg.service.BusiSalesReturnService;
 import org.jaronsource.msneg.service.BusiSalesService;
@@ -36,6 +38,7 @@ import com.ccesun.framework.core.dao.support.SearchForm;
 import com.ccesun.framework.core.web.controller.BaseController;
 import com.ccesun.framework.plugins.dictionary.DictionaryHelper;
 import com.ccesun.framework.plugins.report.JasperReportUtils;
+import com.ccesun.framework.plugins.security.SecurityTokenHolder;
 import com.ccesun.framework.util.NumberUtils;
 import com.ccesun.framework.util.StringUtils;
 
@@ -112,7 +115,7 @@ public class BusiSalesReturnController extends BaseController {
 		String[] salesItemIds = request.getParameterValues("salesItemId");
 		String[] returnAmounts = request.getParameterValues("returnAmount");
 		String[] returnReasonKeys = request.getParameterValues("returnReasonKey");
-		String[] returnSum = request.getParameterValues("returnItemSum");
+		//String[] returnSum = request.getParameterValues("returnItemSum");
 		String[] returnPrices = request.getParameterValues("returnPrice");
 		//String[] returnMarkers0 = requst.getParameterValues("returnMarkers");
 		
@@ -158,7 +161,11 @@ public class BusiSalesReturnController extends BaseController {
     	BusiSalesReturn busiSalesReturn = busiSalesReturnService.findByPk(returnId);
     	List<BusiSalesReturnItem> salesReturnItemList = busiSalesReturnItemService.findBusiSalesReturnItemByReturnId(returnId);
 		
+    	SysUser sysUser = (SysUser) SecurityTokenHolder.getSecurityToken().getUser();
+		SysDept sysDept = sysUser.getDept();
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("deptLogo", getRealPath("/WEB-INF/print/" + sysDept.getDeptLogo()));
 		paramMap.put("salesCode", busiSalesReturn.getBusiSales().getSalesCode());
 		paramMap.put("clientName", busiSalesReturn.getBusiSales().getBusiClient().getClientName());
 		paramMap.put("clientPhone", PhoneUtils.decode(busiSalesReturn.getBusiSales().getBusiClient().getAreacode(), busiSalesReturn.getBusiSales().getBusiClient().getPhone()));
